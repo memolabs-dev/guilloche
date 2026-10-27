@@ -92,10 +92,10 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | Recette | Version | Props | Description |
 |---|---|---|---|
 | `code-block` | 1.7.0 | `code`, `label`, `language` | Bloc de code avec en-tete optionnel |
-| `description-list` | 1.3.0 | `items` | Paires libellé et valeur |
+| `description-list` | 1.3.0 | `items`, `serial` | Paires libellé et valeur |
 | `list-group` | 1.7.0 | `items` | Liste d'éléments avec valeur secondaire optionnelle |
 | `stat` | 1.3.0 | `label`, `value`, `hint`, `trend` | Indicateur chiffre |
-| `table` | 1.3.0 | `caption` | Cadre de tableau. L'application fournit `thead`, `tbody` et `tr` |
+| `table` | 1.3.0 | `caption`, `serial` | Cadre de tableau. L'application fournit `thead`, `tbody` et `tr` |
 | `timeline` | 1.3.0 | `items` | Suite d'evenements dates, dans une liste ordonnee |
 | `toast` | 1.3.0 | `id`, `title`, `message`, `type`, `autohide`, `closeLabel` | Notification transitoire |
 

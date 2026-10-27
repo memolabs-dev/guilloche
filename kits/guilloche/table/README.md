@@ -7,15 +7,17 @@ Cadre de tableau. L'application fournit `thead`, `tbody` et `tr`.
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `caption` | `null` | Titre accessible du tableau |
+| `serial` | `false` | Applique la typographie de numéro de série à la première colonne de données uniquement |
 
 ## Classes
 
 - `.ui-table__num` sur les cellules numeriques : alignement a droite et chiffres tabulaires.
+- `serial=true` marque la **première colonne** comme identifiant (Geist Mono, zéro barré, chiffres tabulaires). Pour une autre colonne, appliquer `.ui-serial` aux cellules concernées. Les montants ne doivent pas utiliser `.ui-serial`.
 
 ## Exemple
 
 ```twig
-<twig:ui:Table caption="Factures">
+<twig:ui:Table caption="Factures" serial>
   <thead><tr><th>Numéro</th><th class="ui-table__num">Montant</th></tr></thead>
   <tbody><tr><td>F-2026-010</td><td class="ui-table__num">480,00 €</td></tr></tbody>
 </twig:ui:Table>
