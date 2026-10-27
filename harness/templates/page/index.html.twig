@@ -281,5 +281,44 @@
         <p>Resultats precedents conserves.</p>
       </twig:ui:DataRegion>
     </section>
+
+    <section data-recipe="date-picker">
+      <h2>DatePicker</h2>
+      <twig:ui:DatePicker id="demo-date" label="Date d echeance" help="Format jour mois annee" />
+    </section>
+
+    <section data-recipe="file-upload">
+      <h2>FileUpload</h2>
+      <twig:ui:FileUpload id="demo-files" label="Deposer une piece" hint="PDF ou image" accept=".pdf,image/*" multiple />
+    </section>
+
+    <section data-recipe="combobox">
+      <h2>Combobox</h2>
+      <twig:ui:Combobox id="demo-combobox" label="Mission" placeholder="Rechercher une mission" :options="[
+        { value: '1', label: 'Remuneration du dirigeant' },
+        { value: '2', label: 'Audit de la structure' }
+      ]" />
+    </section>
+
+    <section data-recipe="command">
+      <h2>Command</h2>
+      <twig:ui:Command trigger="Ouvrir la palette" label="Commandes" placeholder="Rechercher" :items="[
+        { label: 'Voir les missions', href: '#' },
+        { label: 'Voir les documents', href: '#' }
+      ]" />
+    </section>
+
+    <section data-recipe="carousel">
+      <h2>Carousel</h2>
+      <twig:ui:Carousel label="Pieces jointes" previousLabel="Precedent" nextLabel="Suivant">
+        <div class="ui-card"><div class="ui-card__body">Premiere piece</div></div>
+        <div class="ui-card"><div class="ui-card__body">Deuxieme piece</div></div>
+      </twig:ui:Carousel>
+    </section>
+
+    <section data-recipe="chart">
+      <h2>Chart</h2>
+      <twig:ui:Chart label="Missions par mois" :values="[3, 5, 4, 7]" :labels="['Jan', 'Fev', 'Mar', 'Avr']" />
+    </section>
   </main>
 {% endblock %}

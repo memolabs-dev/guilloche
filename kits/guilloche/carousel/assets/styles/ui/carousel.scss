@@ -1,0 +1,47 @@
+.ui-carousel {
+    display: grid;
+    gap: var(--ui-space-3);
+}
+
+.ui-carousel__viewport {
+    display: flex;
+    gap: var(--ui-space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: var(--ui-space-2);
+
+    > * {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        min-width: 0;
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: var(--ui-focus-ring);
+        border-radius: var(--ui-radius-md);
+    }
+}
+
+.ui-carousel__controls {
+    display: flex;
+    gap: var(--ui-space-2);
+}
+
+.ui-carousel__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-pill);
+    background: var(--ui-card);
+    color: var(--ui-foreground);
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--ui-muted);
+    }
+}

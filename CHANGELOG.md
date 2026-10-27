@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0] - 2026-10-27
+
+### Ajoute
+- `date-picker` (input natif), `chart` (SVG rendu par le serveur), `carousel` (scroll-snap natif).
+- `file-upload`, `combobox`, `command` avec controleurs Stimulus.
+- Harnais : 47 composants rendus, test de contrat a 54 assertions.
+- `docs/COMPONENTS.md` : composants avances et vague de distribution.
+
 ## [1.4.0] - 2026-10-27
 
 ### Ajoute

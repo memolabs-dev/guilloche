@@ -1,0 +1,31 @@
+.ui-date-picker {
+    display: grid;
+    gap: var(--ui-space-2);
+}
+
+.ui-date-picker__label {
+    font-size: var(--ui-text-sm);
+    font-weight: 600;
+}
+
+.ui-date-picker__input {
+    min-height: 2.5rem;
+    padding: 0 var(--ui-space-3);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-input);
+    color: var(--ui-foreground);
+    font: inherit;
+    font-size: var(--ui-text-md);
+
+    &:focus-visible {
+        outline: none;
+        border-color: var(--ui-ring);
+        box-shadow: var(--ui-focus-ring);
+    }
+}
+
+.ui-date-picker__help {
+    font-size: var(--ui-text-xs);
+    color: var(--ui-muted-foreground);
+}

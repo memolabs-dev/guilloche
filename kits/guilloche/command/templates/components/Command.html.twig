@@ -1,0 +1,19 @@
+{# Ui:Command — palette de commandes. trigger ouvre un dialogue natif avec un
+   champ de recherche ; chaque entree est un lien ou un bouton. Le controleur
+   ui--command filtre et gere les fleches et Entree. #}
+{% props trigger, label, placeholder = null, items = [] %}
+<div {{ attributes.defaults({ class: 'ui-command' }) }} data-controller="ui--command">
+  <button class="ui-command__trigger" type="button" data-action="ui--command#open">{{ trigger }}</button>
+  <dialog class="ui-command__dialog" data-ui--command-target="dialog" aria-label="{{ label }}">
+    <input class="ui-command__input" type="search" placeholder="{{ placeholder ?? false }}"
+      aria-label="{{ label }}" data-ui--command-target="input"
+      data-action="input->ui--command#filter keydown->ui--command#navigate" />
+    <ul class="ui-command__list" role="listbox">
+      {% for item in items %}
+        <li class="ui-command__item" role="option" tabindex="-1"
+          data-action="click->ui--command#run keydown->ui--command#activate"
+          data-href="{{ item.href ?? '' }}">{{ item.label }}</li>
+      {% endfor %}
+    </ul>
+  </dialog>
+</div>

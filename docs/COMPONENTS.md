@@ -10,7 +10,7 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 - Une recette ne depend jamais d'une autre recette du kit : une icone necessaire est un SVG inline.
 - Les composants supposent l'enveloppe `.ui-scope` (fond, texte, reset, focus).
 
-## Livre en 1.4.0
+## Livre en 1.5.0
 
 ### Fondation et primitives
 
@@ -83,23 +83,21 @@ Les recettes `toggle`, `dialog`, `sheet` et `toast` livrent un controleur Stimul
 
 `confirm-dialog` livre le controleur `ui--confirm-dialog`, qui emet `ui:confirm` avant de fermer.
 
-## Vague 5 : composants restants
+### Composants avances
 
-| Recette | Role |
-|---|---|
-| ~~`page-header`~~ | En-tete de page avec actions |
-| ~~`filter-bar`~~ | Filtres et recherche |
-| ~~`data-region`~~ | Region de resultats avec chargement, erreur, vide |
-| ~~`form-section`~~ | Section de formulaire |
-| ~~`confirm-dialog`~~ | Confirmation d'une action destructive |
-| ~~`detail-layout`~~ | Liste et detail cote a cote |
-| ~~`sidebar`~~ | Navigation laterale |
-| `date-picker` | Selection de date |
-| `file-upload` | Depot de fichier |
-| `combobox` | Champ avec recherche dans une liste |
-| `command` | Palette de commandes |
-| `carousel` | Galerie defilante |
-| `chart` | Graphique simple en SVG |
+| Recette | Role | Props principales |
+|---|---|---|
+| `date-picker` | Selection de date native | `id`, `label`, `value`, `min`, `max` |
+| `file-upload` | Depot de fichier | `id`, `label`, `hint`, `accept`, `multiple` |
+| `combobox` | Champ avec recherche dans une liste | `id`, `label`, `options`, `placeholder` |
+| `command` | Palette de commandes | `trigger`, `label`, `items` |
+| `carousel` | Galerie defilante | `label`, `previousLabel`, `nextLabel` |
+| `chart` | Graphique SVG serveur | `type`, `values`, `labels`, `label` |
+
+`file-upload`, `combobox`, `command` et `carousel` livrent un controleur Stimulus (`ui--file-upload`, `ui--combobox`, `ui--command`, `ui--carousel`).
+
+## Vague 6 : distribution
+
 
 ## Vague 5 : distribution et qualite
 

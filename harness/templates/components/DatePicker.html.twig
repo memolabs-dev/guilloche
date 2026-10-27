@@ -1,0 +1,10 @@
+{# Ui:DatePicker — selection de date. input natif type=date : calendrier du
+   navigateur, clavier et lecteur d'ecran fonctionnent sans JavaScript. #}
+{% props id, name = null, label, value = null, min = null, max = null, help = null %}
+<label {{ attributes.defaults({ class: 'ui-date-picker' }) }} for="{{ id }}">
+  <span class="ui-date-picker__label">{{ label }}</span>
+  <input class="ui-date-picker__input" type="date" id="{{ id }}" name="{{ name ?? id }}"
+    value="{{ value ?? false }}" min="{{ min ?? false }}" max="{{ max ?? false }}"
+    {%- if help %} aria-describedby="{{ id }}-help"{% endif %} />
+  {% if help %}<span class="ui-date-picker__help" id="{{ id }}-help">{{ help }}</span>{% endif %}
+</label>
