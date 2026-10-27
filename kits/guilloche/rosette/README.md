@@ -15,10 +15,10 @@ Empreinte guillochée d'un objet : une même graine donne toujours le même dess
 
 ## Choix technique et source
 
-Le Toolkit copie les fichiers Twig et Stimulus, mais ne fournit pas d'installation automatique de classes PHP dans les composants. La recette fonctionne **sans runtime additionnel** : Stimulus calcule le tracé et le HTML initial affiche une rosette générique. Pour avoir un **rendu SSR déterministe sans aucun JavaScript**, la bibliothèque Composer fournit `Guilloche\\Signature\\RosetteGeometry::paths($seed)` : l'application calcule les courbes dans son contrôleur Symfony et les transmet dans la prop `paths`. Un exemple de fonction Twig `guilloche_rosette_paths()` est installé dans le harnais de documentation. Le rendu HTML produit contient alors les vrais chemins SVG, même avec JS désactivé.
+Le Toolkit copie les fichiers Twig et Stimulus, mais ne fournit pas d'installation automatique de classes PHP dans les composants. La recette fonctionne **sans runtime additionnel** : Stimulus calcule le tracé et le HTML initial affiche une rosette générique. Pour avoir un **rendu SSR déterministe sans aucun JavaScript**, la bibliothèque Composer fournit `Guilloche\Signature\RosetteGeometry::paths($seed)` : l'application calcule les courbes dans son contrôleur Symfony et les transmet dans la prop `paths`. Un exemple de fonction Twig `guilloche_rosette_paths()` est installé dans le harnais de documentation. Le rendu HTML produit contient alors les vrais chemins SVG, même avec JS désactivé.
 
 ```php
-use Guilloche\\Signature\\RosetteGeometry;
+use Guilloche\Signature\RosetteGeometry;
 
 return $this->render('mission/show.html.twig', [
     'reference' => $reference,
