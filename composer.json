@@ -4,11 +4,24 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/memolabs-dev/guilloche",
+    "keywords": [
+        "symfony",
+        "design-system",
+        "twig",
+        "components",
+        "ux-toolkit",
+        "css",
+        "stimulus"
+    ],
     "authors": [
         {
             "name": "Guillaume Flambard"
         }
     ],
+    "support": {
+        "issues": "https://github.com/memolabs-dev/guilloche/issues",
+        "source": "https://github.com/memolabs-dev/guilloche"
+    },
     "require": {
         "php": ">=8.4",
         "symfony/ux-twig-component": "^3.6"

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1] - 2026-10-27
+
+### Ajoute
+- `docs/PACKAGIST.md` : metadonnees, procedure de publication et tags.
+- README : installation du paquet sans Packagist, par source VCS.
+- `composer.json` : `keywords` et `support`.
+
 ## [1.6.0] - 2026-10-27
 
 ### Ajoute
