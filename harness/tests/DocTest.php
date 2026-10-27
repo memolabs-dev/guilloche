@@ -38,6 +38,17 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-rosette[aria-hidden="true"] svg[aria-hidden="true"]');
     }
 
+    public function testRosettesHaveTheirDeterministicPathsBeforeJavaScript(): void
+    {
+        self::createClient()->request('GET', '/components/rosette');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ui-rosette__main[d^="M"]');
+        $this->assertSelectorNotExists('.ui-rosette__main[d="M50 6a44 44 0 1 1-.1 0z"]');
+        $this->assertSelectorCount(58, '.ui-rosette__main');
+        $this->assertSelectorExists('.ui-rosette__counter[d^="M"]');
+    }
+
     public function testSerialTableStylesTheFirstColumnOnly(): void
     {
         self::createClient()->request('GET', '/components/table');

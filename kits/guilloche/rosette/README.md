@@ -11,10 +11,26 @@ Empreinte guillochée d'un objet : une même graine donne toujours le même dess
 | `progress` | `null` | 0 à 100 : le trait principal s'arrête à la valeur |
 | `loading` | `false` | Le trait se trace en boucle (1,1 s) |
 | `label` | `null` | Nom accessible ; sans label, la rosette est décorative |
+| `paths` | `null` | `{ main, counter }` : chemins SVG calculés par PHP et rendus dans le HTML ; JS est alors facultatif |
 
 ## Choix technique et source
 
-Le Toolkit ne permet pas à une recette de livrer une classe PHP : `copy-files` n'accepte que `%COMPONENTS_DIR%` et `%CONTROLLERS_DIR%` (schéma `schema-kit-recipe-v1.json`, branche 3.x du dépôt `symfony/ux-toolkit`). Le calcul vit donc dans un contrôleur Stimulus, `ui--rosette`, avec un tracé de repli rendu par le serveur.
+Le Toolkit copie les fichiers Twig et Stimulus, mais ne fournit pas d'installation automatique de classes PHP dans les composants. La recette fonctionne **sans runtime additionnel** : Stimulus calcule le tracé et le HTML initial affiche une rosette générique. Pour avoir un **rendu SSR déterministe sans aucun JavaScript**, la bibliothèque Composer fournit `Guilloche\Signature\RosetteGeometry::paths($seed)` : l'application calcule les courbes dans son contrôleur Symfony et les transmet dans la prop `paths`. Un exemple de fonction Twig `guilloche_rosette_paths()` est installé dans le harnais de documentation. Le rendu HTML produit contient alors les vrais chemins SVG, même avec JS désactivé.
+
+```php
+use Guilloche\Signature\RosetteGeometry;
+
+return $this->render('mission/show.html.twig', [
+    'reference' => $reference,
+    'rosettePaths' => RosetteGeometry::paths($reference),
+]);
+```
+
+```twig
+<twig:ui:Rosette :seed="reference" :paths="rosettePaths" label="Empreinte de la mission" />
+```
+
+Il faut installer `memolabs-dev/guilloche` comme dépendance Composer pour disposer du calculateur côté PHP. La recette Twig elle-même reste autonome : si `paths` est omis, elle conserve son repli client. Le calcul n'emploie aucun compteur statique et reste stable sous FrankenPHP.
 
 Le contrôleur part de la graine, la hache en FNV-1a et en dérive cinq paramètres indépendants (lobes, profondeur, rotation, copies tissées, inclinaison). Aucun compteur statique : l'identifiant vient de la graine et de la taille, donc rien ne survit d'une requête à l'autre sous FrankenPHP.
 

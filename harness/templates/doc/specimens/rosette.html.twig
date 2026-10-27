@@ -2,12 +2,12 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Tailles</h3></div>
   <div class="ds__example-render">
-    <twig:ui:Rosette seed="AR-2026-042" :size="16" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="20" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="24" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="32" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="64" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="16" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="20" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="24" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="32" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="40" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="64" :paths="guilloche_rosette_paths('AR-2026-042')" />
   </div>
   {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :size="32" />') }}
 </div>
@@ -15,10 +15,10 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Progression et chargement</h3></div>
   <div class="ds__example-render">
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="25" label="Avancement 25 %" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="60" label="Avancement 60 %" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="100" label="Terminé" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="32" loading label="Chargement" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="25" label="Avancement 25 %" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="60" label="Avancement 60 %" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="100" label="Terminé" :paths="guilloche_rosette_paths('AR-2026-042')" />
+    <twig:ui:Rosette seed="AR-2026-042" :size="32" loading label="Chargement" :paths="guilloche_rosette_paths('AR-2026-042')" />
   </div>
   {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :progress="60" label="Avancement 60 %" />') }}
 </div>
@@ -26,54 +26,54 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Planche : 48 références</h3></div>
   <div class="ds__example-render ds__planche">
-      <twig:ui:Rosette seed="AR-2026-001" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-002" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-003" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-004" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-005" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-006" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-007" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-008" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-009" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-010" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-011" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-012" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-013" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-014" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-015" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-016" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-017" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-018" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-019" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-020" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-021" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-022" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-023" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-024" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-025" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-026" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-027" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-028" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-029" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-030" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-031" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-032" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-033" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-034" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-035" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-036" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-037" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-038" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-039" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-040" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-041" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-042" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-043" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-044" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-045" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-046" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-047" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-048" :size="32" />
+      <twig:ui:Rosette seed="AR-2026-001" :size="32" :paths="guilloche_rosette_paths('AR-2026-001')" />
+      <twig:ui:Rosette seed="AR-2026-002" :size="32" :paths="guilloche_rosette_paths('AR-2026-002')" />
+      <twig:ui:Rosette seed="AR-2026-003" :size="32" :paths="guilloche_rosette_paths('AR-2026-003')" />
+      <twig:ui:Rosette seed="AR-2026-004" :size="32" :paths="guilloche_rosette_paths('AR-2026-004')" />
+      <twig:ui:Rosette seed="AR-2026-005" :size="32" :paths="guilloche_rosette_paths('AR-2026-005')" />
+      <twig:ui:Rosette seed="AR-2026-006" :size="32" :paths="guilloche_rosette_paths('AR-2026-006')" />
+      <twig:ui:Rosette seed="AR-2026-007" :size="32" :paths="guilloche_rosette_paths('AR-2026-007')" />
+      <twig:ui:Rosette seed="AR-2026-008" :size="32" :paths="guilloche_rosette_paths('AR-2026-008')" />
+      <twig:ui:Rosette seed="AR-2026-009" :size="32" :paths="guilloche_rosette_paths('AR-2026-009')" />
+      <twig:ui:Rosette seed="AR-2026-010" :size="32" :paths="guilloche_rosette_paths('AR-2026-010')" />
+      <twig:ui:Rosette seed="AR-2026-011" :size="32" :paths="guilloche_rosette_paths('AR-2026-011')" />
+      <twig:ui:Rosette seed="AR-2026-012" :size="32" :paths="guilloche_rosette_paths('AR-2026-012')" />
+      <twig:ui:Rosette seed="AR-2026-013" :size="32" :paths="guilloche_rosette_paths('AR-2026-013')" />
+      <twig:ui:Rosette seed="AR-2026-014" :size="32" :paths="guilloche_rosette_paths('AR-2026-014')" />
+      <twig:ui:Rosette seed="AR-2026-015" :size="32" :paths="guilloche_rosette_paths('AR-2026-015')" />
+      <twig:ui:Rosette seed="AR-2026-016" :size="32" :paths="guilloche_rosette_paths('AR-2026-016')" />
+      <twig:ui:Rosette seed="AR-2026-017" :size="32" :paths="guilloche_rosette_paths('AR-2026-017')" />
+      <twig:ui:Rosette seed="AR-2026-018" :size="32" :paths="guilloche_rosette_paths('AR-2026-018')" />
+      <twig:ui:Rosette seed="AR-2026-019" :size="32" :paths="guilloche_rosette_paths('AR-2026-019')" />
+      <twig:ui:Rosette seed="AR-2026-020" :size="32" :paths="guilloche_rosette_paths('AR-2026-020')" />
+      <twig:ui:Rosette seed="AR-2026-021" :size="32" :paths="guilloche_rosette_paths('AR-2026-021')" />
+      <twig:ui:Rosette seed="AR-2026-022" :size="32" :paths="guilloche_rosette_paths('AR-2026-022')" />
+      <twig:ui:Rosette seed="AR-2026-023" :size="32" :paths="guilloche_rosette_paths('AR-2026-023')" />
+      <twig:ui:Rosette seed="AR-2026-024" :size="32" :paths="guilloche_rosette_paths('AR-2026-024')" />
+      <twig:ui:Rosette seed="AR-2026-025" :size="32" :paths="guilloche_rosette_paths('AR-2026-025')" />
+      <twig:ui:Rosette seed="AR-2026-026" :size="32" :paths="guilloche_rosette_paths('AR-2026-026')" />
+      <twig:ui:Rosette seed="AR-2026-027" :size="32" :paths="guilloche_rosette_paths('AR-2026-027')" />
+      <twig:ui:Rosette seed="AR-2026-028" :size="32" :paths="guilloche_rosette_paths('AR-2026-028')" />
+      <twig:ui:Rosette seed="AR-2026-029" :size="32" :paths="guilloche_rosette_paths('AR-2026-029')" />
+      <twig:ui:Rosette seed="AR-2026-030" :size="32" :paths="guilloche_rosette_paths('AR-2026-030')" />
+      <twig:ui:Rosette seed="AR-2026-031" :size="32" :paths="guilloche_rosette_paths('AR-2026-031')" />
+      <twig:ui:Rosette seed="AR-2026-032" :size="32" :paths="guilloche_rosette_paths('AR-2026-032')" />
+      <twig:ui:Rosette seed="AR-2026-033" :size="32" :paths="guilloche_rosette_paths('AR-2026-033')" />
+      <twig:ui:Rosette seed="AR-2026-034" :size="32" :paths="guilloche_rosette_paths('AR-2026-034')" />
+      <twig:ui:Rosette seed="AR-2026-035" :size="32" :paths="guilloche_rosette_paths('AR-2026-035')" />
+      <twig:ui:Rosette seed="AR-2026-036" :size="32" :paths="guilloche_rosette_paths('AR-2026-036')" />
+      <twig:ui:Rosette seed="AR-2026-037" :size="32" :paths="guilloche_rosette_paths('AR-2026-037')" />
+      <twig:ui:Rosette seed="AR-2026-038" :size="32" :paths="guilloche_rosette_paths('AR-2026-038')" />
+      <twig:ui:Rosette seed="AR-2026-039" :size="32" :paths="guilloche_rosette_paths('AR-2026-039')" />
+      <twig:ui:Rosette seed="AR-2026-040" :size="32" :paths="guilloche_rosette_paths('AR-2026-040')" />
+      <twig:ui:Rosette seed="AR-2026-041" :size="32" :paths="guilloche_rosette_paths('AR-2026-041')" />
+      <twig:ui:Rosette seed="AR-2026-042" :size="32" :paths="guilloche_rosette_paths('AR-2026-042')" />
+      <twig:ui:Rosette seed="AR-2026-043" :size="32" :paths="guilloche_rosette_paths('AR-2026-043')" />
+      <twig:ui:Rosette seed="AR-2026-044" :size="32" :paths="guilloche_rosette_paths('AR-2026-044')" />
+      <twig:ui:Rosette seed="AR-2026-045" :size="32" :paths="guilloche_rosette_paths('AR-2026-045')" />
+      <twig:ui:Rosette seed="AR-2026-046" :size="32" :paths="guilloche_rosette_paths('AR-2026-046')" />
+      <twig:ui:Rosette seed="AR-2026-047" :size="32" :paths="guilloche_rosette_paths('AR-2026-047')" />
+      <twig:ui:Rosette seed="AR-2026-048" :size="32" :paths="guilloche_rosette_paths('AR-2026-048')" />
   </div>
   {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :size="32" />') }}
 </div>
