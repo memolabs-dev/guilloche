@@ -39,12 +39,15 @@ document.querySelectorAll('[data-ui--rosette-seed-value]').forEach((element) => 
     const main = element.querySelector('.ui-rosette__main');
     const counter = element.querySelector('.ui-rosette__counter');
     if (!main || !counter) return;
-    const p = parameters(element.getAttribute('data-ui--rosette-seed-value') || 'guilloche');
-    main.setAttribute('d', trace(p));
-    counter.setAttribute('d', trace({ ...p, petals: p.petals + 2, phase: p.phase + Math.PI / p.copies }));
+    const ssr = element.getAttribute('data-ui--rosette-ssr-value') === 'true';
+    if (!ssr) {
+        const p = parameters(element.getAttribute('data-ui--rosette-seed-value') || 'guilloche');
+        main.setAttribute('d', trace(p));
+        counter.setAttribute('d', trace({ ...p, petals: p.petals + 2, phase: p.phase + Math.PI / p.copies }));
+    }
     const rawProgress = Number(element.getAttribute('data-ui--rosette-progress-value') ?? 100);
     const progress = Number.isFinite(rawProgress) ? Math.min(100, Math.max(0, rawProgress)) : 100;
-    if (progress < 100) {
+    if (!ssr && progress < 100) {
         const length = main.getTotalLength();
         main.style.strokeDasharray = String(length);
         main.style.strokeDashoffset = String(length * (1 - progress / 100));
