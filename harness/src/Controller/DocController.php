@@ -22,7 +22,23 @@ final class DocController extends AbstractController
     #[Route('/components/{recipe}', name: 'app_recipe')]
     public function recipe(string $recipe, RecipeCatalog $catalog): Response
     {
-        $item = $catalog->find($recipe) ?? throw $this->createNotFoundException(sprintf('Composant "%s" introuvable.', $recipe));
+        $all = $catalog->all();
+        $index = null;
+        foreach ($all as $position => $entry) {
+            if ($entry['name'] === $recipe) {
+                $index = $position;
+                break;
+            }
+        }
+
+        if (null === $index) {
+            throw $this->createNotFoundException(sprintf('Composant "%s" introuvable.', $recipe));
+        }
+
+        $item = $all[$index];
+        $item['hasExamples'] = is_file(sprintf('%s/templates/doc/specimens/%s.html.twig', $this->getParameter('kernel.project_dir'), $item['name']));
+        $item['previous'] = $all[$index - 1] ?? null;
+        $item['next'] = $all[$index + 1] ?? null;
 
         return $this->render('doc/recipe.html.twig', [
             'item' => $item,

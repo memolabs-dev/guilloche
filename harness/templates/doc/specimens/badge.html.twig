@@ -1,5 +1,24 @@
-<div class="ds__specimen">
-  <twig:ui:Badge tone="success">Valide</twig:ui:Badge>
-  <twig:ui:Badge tone="danger" variant="solid">En retard</twig:ui:Badge>
-  <twig:ui:Badge tone="info" variant="outline">Information</twig:ui:Badge>
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Tons</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render">
+    <twig:ui:Badge tone="neutral">Neutre</twig:ui:Badge>
+    <twig:ui:Badge tone="primary">Primaire</twig:ui:Badge>
+    <twig:ui:Badge tone="success">Valide</twig:ui:Badge>
+    <twig:ui:Badge tone="warning">En attente</twig:ui:Badge>
+    <twig:ui:Badge tone="danger">En retard</twig:ui:Badge>
+    <twig:ui:Badge tone="info">Information</twig:ui:Badge>
+  </div>
+  {{ m.code('<twig:ui:Badge tone="success">Valide</twig:ui:Badge>
+<twig:ui:Badge tone="danger">En retard</twig:ui:Badge>') }}
+</div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Variantes</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render">
+    <twig:ui:Badge tone="success" variant="soft">Soft</twig:ui:Badge>
+    <twig:ui:Badge tone="success" variant="solid">Solid</twig:ui:Badge>
+    <twig:ui:Badge tone="success" variant="outline">Outline</twig:ui:Badge>
+  </div>
+  {{ m.code('<twig:ui:Badge tone="success" variant="solid">Valide</twig:ui:Badge>') }}
 </div>

@@ -1,4 +1,31 @@
-<twig:ui:Table caption="Factures">
-  <thead><tr><th scope="col">Numero</th><th scope="col" class="ui-table__num">Montant</th></tr></thead>
-  <tbody><tr><td>F-2026-010</td><td class="ui-table__num">480,00</td></tr><tr><td>F-2026-009</td><td class="ui-table__num">1 250,00</td></tr></tbody>
-</twig:ui:Table>
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Tableau simple</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:Table caption="Factures">
+      <thead><tr><th scope="col">Numero</th><th scope="col">Objet</th><th scope="col" class="ui-table__num">Montant</th></tr></thead>
+      <tbody>
+        <tr><td>F-2026-010</td><td>Accompagnement d octobre</td><td class="ui-table__num">480,00</td></tr>
+        <tr><td>F-2026-009</td><td>Audit de structure</td><td class="ui-table__num">1 250,00</td></tr>
+      </tbody>
+    </twig:ui:Table>
+  </div>
+  {{ m.code('<twig:ui:Table caption="Factures">
+  <thead><tr><th scope="col">Numero</th></tr></thead>
+  <tbody><tr><td>F-2026-010</td></tr></tbody>
+</twig:ui:Table>') }}
+</div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Avec statuts</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:Table>
+      <thead><tr><th scope="col">Mission</th><th scope="col">Etat</th></tr></thead>
+      <tbody>
+        <tr><td>Remuneration du dirigeant</td><td><twig:ui:Badge tone="success">Valide</twig:ui:Badge></td></tr>
+        <tr><td>Audit de structure</td><td><twig:ui:Badge tone="warning">En attente</twig:ui:Badge></td></tr>
+      </tbody>
+    </twig:ui:Table>
+  </div>
+  {{ m.code('<td><twig:ui:Badge tone="success">Valide</twig:ui:Badge></td>') }}
+</div>

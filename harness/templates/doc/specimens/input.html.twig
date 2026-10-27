@@ -1,1 +1,19 @@
-<twig:ui:Input id="s-input" placeholder="Nom de la mission" aria-label="Nom de la mission" />
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Types natifs</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:Input id="x-text" placeholder="Nom de la mission" aria-label="Nom de la mission" />
+    <twig:ui:Input id="x-mail" type="email" placeholder="prenom@exemple.fr" aria-label="Adresse e-mail" />
+    <twig:ui:Input id="x-search" type="search" placeholder="Rechercher" aria-label="Rechercher" />
+  </div>
+  {{ m.code('<twig:ui:Input id="email" type="email" placeholder="prenom@exemple.fr" aria-label="Adresse e-mail" />') }}
+</div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Etats</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:Input id="x-disabled" placeholder="Desactive" disabled aria-label="Desactive" />
+    <twig:ui:Input id="x-invalid" placeholder="Invalide" invalid aria-label="Invalide" />
+  </div>
+  {{ m.code('<twig:ui:Input id="champ" placeholder="Desactive" disabled />') }}
+</div>

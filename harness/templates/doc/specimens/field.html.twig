@@ -1,3 +1,24 @@
-<twig:ui:Field id="s-field" label="Rechercher" help="Nom ou categorie" required>
-  <twig:ui:Input id="s-field" describedBy="s-field-help" required />
-</twig:ui:Field>
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Champ avec aide</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:Field id="x-name" label="Nom de la mission" help="Visible par votre interlocuteur" required>
+      <twig:ui:Input id="x-name" describedBy="x-name-help" required />
+    </twig:ui:Field>
+  </div>
+  {{ m.code('<twig:ui:Field id="name" label="Nom de la mission" help="Visible par votre interlocuteur" required>
+  <twig:ui:Input id="name" describedBy="name-help" required />
+</twig:ui:Field>') }}
+</div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Champ invalide</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:Field id="x-email" label="Adresse e-mail" error="Adresse invalide">
+      <twig:ui:Input id="x-email" type="email" invalid describedBy="x-email-error" />
+    </twig:ui:Field>
+  </div>
+  {{ m.code('<twig:ui:Field id="email" label="Adresse e-mail" error="Adresse invalide">
+  <twig:ui:Input id="email" type="email" invalid describedBy="email-error" />
+</twig:ui:Field>') }}
+</div>

@@ -398,3 +398,161 @@ body {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
+
+.ds__theme {
+    justify-self: start;
+    padding: 4px 10px;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-sm);
+    background: transparent;
+    color: var(--ui-muted-foreground);
+    font: inherit;
+    font-size: var(--ui-text-xs);
+    cursor: pointer;
+}
+
+.ds__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 200px;
+    gap: var(--ui-space-8);
+    align-items: start;
+}
+
+.ds__content {
+    display: grid;
+    gap: var(--ui-space-6);
+    min-width: 0;
+}
+
+.ds__toc {
+    position: sticky;
+    top: var(--ui-space-6);
+    display: grid;
+    gap: 4px;
+    font-size: var(--ui-text-sm);
+}
+
+.ds__toc p {
+    margin: 0 0 var(--ui-space-1);
+    font-family: var(--ui-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ui-muted-foreground);
+}
+
+.ds__toc a {
+    padding: 3px 8px;
+    border-left: 2px solid transparent;
+    color: var(--ui-muted-foreground);
+    text-decoration: none;
+}
+
+.ds__toc a[aria-current] {
+    border-left-color: var(--ui-primary);
+    color: var(--ui-foreground);
+}
+
+.ds__examples {
+    display: grid;
+    gap: var(--ui-space-4);
+}
+
+.ds__example {
+    display: grid;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    overflow: hidden;
+    background: var(--ui-card);
+}
+
+.ds__example-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-2) var(--ui-space-4);
+    border-bottom: 1px solid var(--ui-border);
+}
+
+.ds__example-title {
+    margin: 0;
+    font-size: var(--ui-text-sm);
+    font-weight: 600;
+}
+
+.ds__example-note {
+    font-size: var(--ui-text-xs);
+    color: var(--ui-muted-foreground);
+}
+
+.ds__example-copy {
+    padding: 2px 8px;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-sm);
+    background: transparent;
+    color: var(--ui-muted-foreground);
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.ds__example-render {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-6);
+}
+
+.ds__example-render--column {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.ds__example-code {
+    border-top: 1px solid var(--ui-border);
+    background: var(--ui-muted);
+}
+
+.ds__example-code pre {
+    margin: 0;
+    padding: var(--ui-space-4);
+    overflow-x: auto;
+    font-family: var(--ui-font-mono);
+    font-size: var(--ui-text-sm);
+    line-height: 1.6;
+}
+
+.ds__pager {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--ui-space-3);
+    padding-top: var(--ui-space-4);
+    border-top: 1px solid var(--ui-border);
+    font-size: var(--ui-text-sm);
+}
+
+.ds__pager a {
+    color: var(--ui-foreground);
+    text-decoration: none;
+}
+
+.ds__pager a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 72rem) {
+    .ds__layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ds__toc {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--ui-space-2);
+    }
+}

@@ -1,6 +1,36 @@
-<div class="ds__specimen">
-  <twig:ui:Button intent="primary">Enregistrer</twig:ui:Button>
-  <twig:ui:Button intent="secondary">Annuler</twig:ui:Button>
-  <twig:ui:Button intent="ghost">Ignorer</twig:ui:Button>
-  <twig:ui:Button intent="danger">Supprimer</twig:ui:Button>
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Intents</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render">
+    <twig:ui:Button intent="primary">Enregistrer</twig:ui:Button>
+    <twig:ui:Button intent="secondary">Annuler</twig:ui:Button>
+    <twig:ui:Button intent="outline">Contour</twig:ui:Button>
+    <twig:ui:Button intent="ghost">Discret</twig:ui:Button>
+    <twig:ui:Button intent="danger">Supprimer</twig:ui:Button>
+  </div>
+  {{ m.code('<twig:ui:Button intent="primary">Enregistrer</twig:ui:Button>
+<twig:ui:Button intent="danger">Supprimer</twig:ui:Button>') }}
+</div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Tailles</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render">
+    <twig:ui:Button size="sm">Petit</twig:ui:Button>
+    <twig:ui:Button size="md">Moyen</twig:ui:Button>
+    <twig:ui:Button size="lg">Grand</twig:ui:Button>
+  </div>
+  {{ m.code('<twig:ui:Button size="sm">Petit</twig:ui:Button>
+<twig:ui:Button size="lg">Grand</twig:ui:Button>') }}
+</div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Etats</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
+  <div class="ds__example-render">
+    <twig:ui:Button loading>Enregistrement</twig:ui:Button>
+    <twig:ui:Button disabled>Desactive</twig:ui:Button>
+    <twig:ui:Button href="#">Lien de navigation</twig:ui:Button>
+  </div>
+  {{ m.code('<twig:ui:Button loading>Enregistrement</twig:ui:Button>
+<twig:ui:Button disabled>Desactive</twig:ui:Button>
+<twig:ui:Button href="{{ path(\'app_billing\') }}">Ouvrir</twig:ui:Button>') }}
 </div>

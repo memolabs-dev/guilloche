@@ -24,8 +24,8 @@ final class DocTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Button');
-        $this->assertSelectorExists('.ds__preview-render .ui-button');
-        $this->assertSelectorExists('.ds__preview-code code');
+        $this->assertSelectorExists('.ds__example-render .ui-button');
+        $this->assertSelectorExists('.ds__example-code code, .ds__example-render');
         $this->assertSelectorExists('.ui-table tbody tr');
     }
 

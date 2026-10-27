@@ -19,22 +19,28 @@
     </p>
   </header>
 
-  <section class="ds__section">
-    <h2 class="ds__section-title">Apercu</h2>
-    <div class="ds__preview">
-      <div class="ds__preview-render">
-        {% include 'doc/specimens/' ~ item.name ~ '.html.twig' ignore missing %}
-      </div>
-      {% if item.code %}
-        <div class="ds__preview-code">
-          <p class="ds__preview-label">Code</p>
-          <pre class="ds__code"><code>{{ item.code }}</code></pre>
+  <div class="ds__layout">
+    <div class="ds__content">
+      <section class="ds__section" id="exemples">
+        <h2 class="ds__section-title">Exemples</h2>
+        <div class="ds__examples">
+          {% if item.hasExamples %}
+            {% include 'doc/specimens/' ~ item.name ~ '.html.twig' %}
+          {% else %}
+            <div class="ds__example">
+              <div class="ds__example-head"><h3 class="ds__example-title">Apercu</h3></div>
+              <div class="ds__example-render">
+                {% include 'doc/previews/' ~ item.name ~ '.html.twig' ignore missing %}
+              </div>
+              {% if item.code %}
+                <div class="ds__example-code"><pre><code>{{ item.code }}</code></pre></div>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
-  </section>
+      </section>
 
-  <section class="ds__section">
+  <section class="ds__section" id="props">
     <h2 class="ds__section-title">Props</h2>
     {% if item.propsTable %}
       <div class="ds__table-wrap">
@@ -63,8 +69,22 @@
     {% endif %}
   </section>
 
-  <section class="ds__section">
+  <section class="ds__section" id="accessibilite">
     <h2 class="ds__section-title">Accessibilite</h2>
     <p class="ds__lead">Le detail est dans le README de la recette : roles, clavier, noms accessibles et etats. Le test de contrat verifie que chaque champ a un libelle, que les roles sont renseignes et que les SVG sont nommes ou masques.</p>
   </section>
+
+      <nav class="ds__pager" aria-label="Pagination de la documentation">
+        {% if item.previous %}<a href="{{ path('app_recipe', { recipe: item.previous.name }) }}">&larr; {{ item.previous.title }}</a>{% else %}<span></span>{% endif %}
+        {% if item.next %}<a href="{{ path('app_recipe', { recipe: item.next.name }) }}">{{ item.next.title }} &rarr;</a>{% else %}<span></span>{% endif %}
+      </nav>
+    </div>
+
+    <aside class="ds__toc" aria-label="Sur cette page">
+      <p>Sur cette page</p>
+      <a href="#exemples">Exemples</a>
+      <a href="#props">Props</a>
+      <a href="#accessibilite">Accessibilite</a>
+    </aside>
+  </div>
 {% endblock %}
