@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kit:
+    name: Recettes, CSS et contrat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Dart Sass
+        run: npm install -g sass@1.106.1
+      - name: Schemas et recettes
+        run: ./bin/lint-recipes
+      - name: CSS du kit
+        run: ./bin/build-css
+      - name: dist/guilloche.css a jour
+        run: git diff --exit-code dist/guilloche.css
+      - name: Dependances du harnais
+        run: composer install --no-interaction --no-progress --no-scripts
+        working-directory: harness
+      - name: CSS compile du harnais
+        run: php bin/console sass:build
+        working-directory: harness
+      - name: Assets du harnais
+        run: php bin/console asset-map:compile
+        working-directory: harness
+      - name: Test de contrat
+        run: vendor/bin/phpunit -c phpunit.dist.xml
+        working-directory: harness
+      - name: Journal du harnais si echec
+        if: failure()
+        run: tail -50 harness/var/log/dev.log 2>/dev/null || true
