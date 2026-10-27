@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# Copie les templates, controleurs et styles des recettes du kit dans le harnais
+# de contrat, et regenere son point d'entree Sass. Le harnais ne doit jamais
+# diverger du kit publie.
+# Usage : ./bin/sync-harness
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+KIT="$ROOT/kits/guilloche"
+TEMPLATES="$ROOT/harness/templates/components"
+CONTROLLERS="$ROOT/harness/assets/controllers"
+STYLES="$ROOT/harness/assets/styles/ui"
+
+mkdir -p "$TEMPLATES" "$CONTROLLERS" "$STYLES"
+
+find "$KIT" -path "*/templates/components/*.html.twig" -exec cp {} "$TEMPLATES/" \;
+find "$KIT" -path "*/assets/controllers/*.js" -exec cp {} "$CONTROLLERS/" \;
+find "$KIT" -path "*/assets/styles/ui/*.scss" -exec cp {} "$STYLES/" \;
+
+ORDER="tokens reset typography button icon badge card separator skeleton kbd alert avatar progress field input textarea select checkbox switch"
+{
+    echo "// Fichier genere par bin/sync-harness : ne pas editer a la main."
+    echo "// Ordre : tokens, base, puis un fichier par composant."
+    for name in $ORDER; do
+        if [[ -f "$STYLES/_${name}.scss" || -f "$STYLES/${name}.scss" ]]; then
+            echo "@use './ui/${name}';"
+        fi
+    done
+} > "$ROOT/harness/assets/styles/app.scss"
+
+echo "Harnais synchronise depuis $KIT"
+find "$TEMPLATES" -maxdepth 1 -name "*.html.twig" | wc -l | xargs echo "Templates :"
+echo "Point d'entree Sass regenere : harness/assets/styles/app.scss"

@@ -1,0 +1,15 @@
+.ui-kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    padding: 0.125rem 0.375rem;
+    border: 1px solid var(--ui-border);
+    border-bottom-width: 2px;
+    border-radius: var(--ui-radius-sm);
+    background: var(--ui-muted);
+    color: var(--ui-muted-foreground);
+    font-family: var(--ui-font-mono);
+    font-size: var(--ui-text-xs);
+    line-height: 1.4;
+}

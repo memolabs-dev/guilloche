@@ -1,0 +1,12 @@
+{# Ui:Separator — trait de separation. orientation : horizontal|vertical ;
+   label : texte optionnel, rendu avec role="separator" et aria-label. #}
+{% props orientation = 'horizontal', label = null %}
+{% set vertical = orientation == 'vertical' %}
+<div {{ attributes.defaults({
+  class: 'ui-separator ui-separator--' ~ orientation ~ (label ? ' ui-separator--labelled' : ''),
+  role: 'separator',
+  'aria-orientation': orientation,
+  'aria-label': label ?? false
+}) }}>
+  {% if label %}<span class="ui-separator__label">{{ label }}</span>{% endif %}
+</div>

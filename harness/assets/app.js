@@ -1,4 +1,2 @@
-import './styles/app.scss';
-import { startStimulusApp } from '@symfony/stimulus-bridge';
-
-export const app = startStimulusApp(import.meta.glob('./controllers/*.js', { eager: true }));
+// Le harnais ne charge aucun JavaScript. Les styles du kit passent par
+// <link rel="stylesheet" href="{{ asset('styles/app.scss') }}"> dans base.html.twig.

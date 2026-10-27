@@ -1,0 +1,14 @@
+{# Ui:Avatar — image ou initiales. initials : texte de repli ; label : nom
+   accessible de la personne ou de l organisation. #}
+{% props initials = null, src = null, label = null, size = 'md' %}
+<span {{ attributes.defaults({
+  class: 'ui-avatar ui-avatar--' ~ size,
+  role: 'img',
+  'aria-label': label ?? initials ?? false
+}) }}>
+  {% if src %}
+    <img class="ui-avatar__image" src="{{ src }}" alt="" loading="lazy" decoding="async" />
+  {% else %}
+    <span class="ui-avatar__initials" aria-hidden="true">{{ initials }}</span>
+  {% endif %}
+</span>

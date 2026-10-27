@@ -1,0 +1,11 @@
+{# Ui:Progress — avancement borne. label : nom accessible obligatoire.
+   value et max sont des nombres ; showValue affiche le pourcentage. #}
+{% props value = 0, max = 100, label, showValue = false %}
+{% set clamped = max > 0 ? min(max, max(0, value)) : 0 %}
+{% set percent = max > 0 ? (clamped / max * 100)|round : 0 %}
+<div {{ attributes.defaults({ class: 'ui-progress' }) }}>
+  <div class="ui-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="{{ max }}" aria-valuenow="{{ clamped }}" aria-label="{{ label }}">
+    <span class="ui-progress__bar" style="width: {{ percent }}%"></span>
+  </div>
+  {% if showValue %}<span class="ui-progress__value" aria-hidden="true">{{ percent }}%</span>{% endif %}
+</div>

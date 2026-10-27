@@ -1,0 +1,29 @@
+.ui-field {
+    display: grid;
+    gap: var(--ui-space-2);
+    min-width: 0;
+}
+
+.ui-field__label {
+    font-size: var(--ui-text-sm);
+    font-weight: 600;
+    color: var(--ui-foreground);
+}
+
+.ui-field__required {
+    color: var(--ui-danger);
+}
+
+.ui-field__help {
+    font-size: var(--ui-text-xs);
+    color: var(--ui-muted-foreground);
+}
+
+.ui-field__error {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+    font-size: var(--ui-text-xs);
+    font-weight: 600;
+    color: var(--ui-danger);
+}

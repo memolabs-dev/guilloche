@@ -1,0 +1,66 @@
+.ui-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-3);
+    min-height: 2.5rem;
+    font-size: var(--ui-text-md);
+    cursor: pointer;
+    position: relative;
+}
+
+.ui-switch.is-disabled {
+    cursor: not-allowed;
+    color: var(--ui-muted-foreground);
+}
+
+.ui-switch__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.ui-switch__track {
+    position: relative;
+    width: 2.5rem;
+    height: 1.5rem;
+    flex: none;
+    border-radius: var(--ui-radius-pill);
+    background: var(--ui-border);
+    transition: background-color var(--ui-duration) var(--ui-ease);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0.1875rem;
+        left: 0.1875rem;
+        width: 1.125rem;
+        height: 1.125rem;
+        border-radius: 50%;
+        background: #ffffff;
+        box-shadow: var(--ui-shadow-sm);
+        transition: transform var(--ui-duration) var(--ui-ease);
+    }
+}
+
+.ui-switch__input:checked + .ui-switch__track {
+    background: var(--ui-primary);
+
+    &::before {
+        transform: translateX(1rem);
+    }
+}
+
+.ui-switch__input:focus-visible + .ui-switch__track {
+    outline: none;
+    box-shadow: var(--ui-focus-ring);
+}
+
+.ui-switch__input:disabled + .ui-switch__track {
+    opacity: 0.5;
+}
