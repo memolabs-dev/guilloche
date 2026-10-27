@@ -1,0 +1,43 @@
+.ui-collapsible__trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+    padding: var(--ui-space-2) 0;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &::before {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        border-right: 1.6px solid currentColor;
+        border-bottom: 1.6px solid currentColor;
+        transform: rotate(-45deg);
+        transition: transform var(--ui-duration) var(--ui-ease);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: var(--ui-focus-ring);
+        border-radius: var(--ui-radius-sm);
+    }
+}
+
+.ui-collapsible[open] .ui-collapsible__trigger::before {
+    transform: rotate(45deg);
+}
+
+.ui-collapsible__content {
+    padding: var(--ui-space-1) 0 var(--ui-space-3) var(--ui-space-4);
+    font-size: var(--ui-text-sm);
+    line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-collapsible__trigger::before { transition: none; }
+}

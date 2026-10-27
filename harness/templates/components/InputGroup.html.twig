@@ -1,0 +1,13 @@
+{# Ui:InputGroup — champ avec prefixe ou suffixe. prefix et suffix sont des
+   textes passes en props ; l'input reste natif et garde ses attributs. #}
+{% props id, name = null, type = 'text', prefix = null, suffix = null, placeholder = null, value = null, describedBy = null, invalid = false, disabled = false, required = false %}
+<div {{ attributes.defaults({ class: 'ui-input-group' ~ (invalid ? ' is-invalid' : '') }) }}>
+  {% if prefix %}<span class="ui-input-group__addon">{{ prefix }}</span>{% endif %}
+  <input class="ui-input-group__input" type="{{ type }}" id="{{ id }}" name="{{ name ?? id }}"
+    placeholder="{{ placeholder ?? false }}" value="{{ value ?? false }}"
+    {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif %}
+    {{- invalid ? ' aria-invalid="true"' }}
+    {{- disabled ? ' disabled' }}
+    {{- required ? ' required' }} />
+  {% if suffix %}<span class="ui-input-group__addon">{{ suffix }}</span>{% endif %}
+</div>

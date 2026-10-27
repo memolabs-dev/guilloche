@@ -1,0 +1,22 @@
+.ui-button-group {
+    display: inline-flex;
+    align-items: stretch;
+
+    > * {
+        border-radius: 0;
+    }
+
+    > :first-child {
+        border-start-start-radius: var(--ui-radius-md);
+        border-end-start-radius: var(--ui-radius-md);
+    }
+
+    > :last-child {
+        border-start-end-radius: var(--ui-radius-md);
+        border-end-end-radius: var(--ui-radius-md);
+    }
+
+    > * + * {
+        margin-inline-start: -1px;
+    }
+}

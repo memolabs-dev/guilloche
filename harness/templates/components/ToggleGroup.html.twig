@@ -1,0 +1,6 @@
+{# Ui:ToggleGroup — groupe de bascules. role="group" et aria-label nomment le
+   groupe ; chaque bascule garde son propre aria-pressed. #}
+{% props label %}
+<div {{ attributes.defaults({ class: 'ui-toggle-group', role: 'group', 'aria-label': label }) }}>
+  {% block content %}{% endblock %}
+</div>

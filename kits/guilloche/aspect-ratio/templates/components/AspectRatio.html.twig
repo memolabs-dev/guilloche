@@ -1,0 +1,6 @@
+{# Ui:AspectRatio — conteneur qui garde un rapport largeur/hauteur. ratio :
+   valeur CSS aspect-ratio, par exemple 16/9 ou 1/1. Le contenu est rogne. #}
+{% props ratio = '16/9' %}
+<div {{ attributes.defaults({ class: 'ui-aspect-ratio', style: '--ui-aspect: ' ~ ratio }) }}>
+  {% block content %}{% endblock %}
+</div>

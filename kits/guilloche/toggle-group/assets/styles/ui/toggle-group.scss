@@ -1,0 +1,19 @@
+.ui-toggle-group {
+    display: inline-flex;
+    align-items: stretch;
+    padding: 0.125rem;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-muted);
+
+    > * {
+        border-radius: var(--ui-radius-sm);
+        border: 0;
+        background: transparent;
+    }
+
+    > .is-pressed {
+        background: var(--ui-card);
+        box-shadow: var(--ui-shadow-sm);
+    }
+}

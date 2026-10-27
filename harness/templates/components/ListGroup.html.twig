@@ -1,0 +1,15 @@
+{# Ui:ListGroup — liste d'elements avec meta optionnelle. items : liste de
+   { label, href, meta }. Un element sans href est rendu en texte. #}
+{% props items = [] %}
+<ul {{ attributes.defaults({ class: 'ui-list-group' }) }}>
+  {% for item in items %}
+    <li class="ui-list-group__item">
+      {% if item.href is defined and item.href %}
+        <a class="ui-list-group__link" href="{{ item.href }}">{{ item.label }}</a>
+      {% else %}
+        <span class="ui-list-group__label">{{ item.label }}</span>
+      {% endif %}
+      {% if item.meta is defined and item.meta %}<span class="ui-list-group__meta">{{ item.meta }}</span>{% endif %}
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,7 @@
+{# Ui:ButtonGroup — boutons contigus. Le conteneur porte role="group" et un nom
+   accessible ; les bordures internes sont fusionnees, les coins restent seuls
+   arrondis aux extremites. #}
+{% props label = null %}
+<div {{ attributes.defaults({ class: 'ui-button-group', role: 'group', 'aria-label': label ?? false }) }}>
+  {% block content %}{% endblock %}
+</div>

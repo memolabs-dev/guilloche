@@ -1,0 +1,9 @@
+{
+    "$schema": "../../../schema-kit-recipe-v1.json",
+    "type": "component",
+    "name": "ToggleGroup",
+    "version-added": "1.7.0",
+    "family": "navigation",
+    "copy-files": { "templates/components/": "%COMPONENTS_DIR%/" },
+    "dependencies": { "composer": ["symfony/ux-twig-component:^3.6"] }
+}

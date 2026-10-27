@@ -1,0 +1,7 @@
+{# Ui:Collapsible — section repliable neutre. details et summary natifs : aucun
+   JavaScript, clavier et annonce fonctionnent. open affiche la section ouverte. #}
+{% props summary, open = false %}
+<details {{ attributes.defaults({ class: 'ui-collapsible' }) }} {{ open ? 'open' }}>
+  <summary class="ui-collapsible__trigger">{{ summary }}</summary>
+  <div class="ui-collapsible__content">{% block content %}{% endblock %}</div>
+</details>

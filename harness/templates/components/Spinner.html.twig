@@ -1,0 +1,9 @@
+{# Ui:Spinner — indicateur de chargement autonome. Avec label, il est annonce
+   comme statut ; sans label, il est purement decoratif. #}
+{% props label = null, size = 'md' %}
+<span {{ attributes.defaults({
+  class: 'ui-spinner ui-spinner--' ~ size,
+  role: label ? 'status' : false,
+  'aria-label': label ?? false,
+  'aria-hidden': label ? false : 'true'
+}) }}></span>
