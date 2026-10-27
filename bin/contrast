@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+"""Contraste des tokens du kit, dans le theme neutre et le theme de marque.
+
+Lit les blocs de kits/guilloche/theme/assets/styles/ui/_tokens.scss, resout les
+variables et verifie les paires de texte et de bordure.
+"""
+from __future__ import annotations
+
+import math
+import re
+import sys
+from pathlib import Path
+
+TOKENS = Path(__file__).resolve().parent.parent / "kits/guilloche/theme/assets/styles/ui/_tokens.scss"
+TEXT = 4.5
+UI = 3.0
+
+PAIRS = [
+    ("foreground", "background", TEXT),
+    ("foreground", "card", TEXT),
+    ("muted-foreground", "background", TEXT),
+    ("muted-foreground", "card", TEXT),
+    ("primary-foreground", "primary", TEXT),
+    ("border-strong", "background", UI),
+    ("danger", "danger-soft", TEXT),
+    ("success", "success-soft", TEXT),
+    ("warning", "warning-soft", TEXT),
+    ("info", "info-soft", TEXT),
+]
+
+BLOCKS = {
+    "neutre clair": r"^:root \{",
+    "neutre sombre": r"^\[data-ui-theme='dark'\] \{",
+    "marque clair": r"^\[data-ui-brand='guilloche'\] \{",
+    "marque sombre": r"^\[data-ui-brand='guilloche'\]\[data-ui-theme='dark'\] \{",
+}
+
+
+def parse_blocks(css: str) -> dict[str, dict[str, str]]:
+    blocks: dict[str, dict[str, str]] = {}
+    current = None
+    for line in css.splitlines():
+        stripped = line.strip()
+        for name, pattern in BLOCKS.items():
+            if re.match(pattern, stripped):
+                current = {}
+                blocks[name] = current
+                break
+        else:
+            if stripped == "}" or stripped.startswith("@"):
+                current = None
+                continue
+            if current is not None:
+                match = re.match(r"(--ui-[\w-]+):\s*([^;]+);", stripped)
+                if match:
+                    current[match.group(1)] = match.group(2).strip()
+    return blocks
+
+
+def resolve(name: str, values: dict[str, str], depth: int = 0) -> str:
+    if depth > 10:
+        raise ValueError(f"boucle de variables sur {name}")
+    value = values[name]
+    match = re.fullmatch(r"var\((--ui-[\w-]+)\)", value)
+    if match:
+        return resolve(match.group(1), values, depth + 1)
+    return value
+
+
+def to_rgb(value: str) -> tuple[float, float, float]:
+    if value.startswith("#"):
+        value = value[1:]
+        if len(value) == 3:
+            value = "".join(ch * 2 for ch in value)
+        return tuple(int(value[i : i + 2], 16) / 255 for i in (0, 2, 4))  # type: ignore[return-value]
+    match = re.fullmatch(r"oklch\(([\d.]+)%?\s+([\d.]+)\s+([\d.]+)(?:deg)?\)", value)
+    if not match:
+        raise ValueError(f"couleur non geree : {value}")
+    lightness = float(match.group(1))
+    if lightness > 1:
+        lightness /= 100
+    chroma, hue = float(match.group(2)), math.radians(float(match.group(3)))
+    a, b = chroma * math.cos(hue), chroma * math.sin(hue)
+    l_ = lightness + 0.3963377774 * a + 0.2158037573 * b
+    m_ = lightness - 0.1055613458 * a - 0.0638541728 * b
+    s_ = lightness - 0.0894841775 * a - 1.2914855480 * b
+    l, m, s = l_**3, m_**3, s_**3
+    r = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
+    g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
+    bl = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+    def gamma(channel: float) -> float:
+        channel = min(1.0, max(0.0, channel))
+        return 12.92 * channel if channel <= 0.0031308 else 1.055 * channel ** (1 / 2.4) - 0.055
+
+    return tuple(gamma(channel) for channel in (r, g, bl))  # type: ignore[return-value]
+
+
+def luminance(rgb: tuple[float, float, float]) -> float:
+    linear = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def ratio(a: tuple[float, float, float], b: tuple[float, float, float]) -> float:
+    high, low = sorted([luminance(a), luminance(b)], reverse=True)
+    return (high + 0.05) / (low + 0.05)
+
+
+def main() -> int:
+    blocks = parse_blocks(TOKENS.read_text())
+    failures = 0
+    for name, values in blocks.items():
+        print(f"\n{name}")
+        for fg, bg, minimum in PAIRS:
+            fg_key, bg_key = f"--ui-{fg}", f"--ui-{bg}"
+            if fg_key not in values or bg_key not in values:
+                print(f"  MANQUE {fg}/{bg}")
+                failures += 1
+                continue
+            value = ratio(to_rgb(resolve(fg_key, values)), to_rgb(resolve(bg_key, values)))
+            ok = value >= minimum
+            print(f"  {'OK  ' if ok else 'FAIL'} {fg}/{bg} {value:.2f} (min {minimum})")
+            if not ok:
+                failures += 1
+    print(f"\n{failures} echec(s)")
+    return 1 if failures else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

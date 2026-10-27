@@ -31,6 +31,8 @@ jobs:
         run: npm install -g sass@1.106.1
       - name: Schemas et recettes
         run: ./bin/lint-recipes
+      - name: Contraste des tokens
+        run: ./bin/contrast
       - name: CSS du kit
         run: ./bin/build-css
       - name: dist/guilloche.css a jour
