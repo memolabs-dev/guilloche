@@ -90,5 +90,8 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('.ui-direction[dir="rtl"]');
         $this->assertSelectorExists('ul.ui-context-menu__list[role="menu"]');
         $this->assertSelectorExists('.ui-resizable__handle[role="separator"]');
+
+        $this->assertSelectorExists('.ui-calendar__grid .ui-calendar__day.is-selected[aria-current="date"]');
+        $this->assertSelectorExists('.ui-input-otp__input[maxlength="1"]');
     }
 }

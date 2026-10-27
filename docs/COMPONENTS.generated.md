@@ -33,11 +33,13 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 
 | Recette | Version | Props | Description |
 |---|---|---|---|
+| `calendar` | 1.9.0 | `label`, `month`, `days`, `previousLabel`, `nextLabel`, `previous`, `next` | Grille de jours. Les jours sont calcules par le serveur et passes au composant |
 | `checkbox` | 1.1.0 | `id`, `name`, `label`, `checked`, `disabled`, `describedBy` | Case a cocher native, habillee sans perdre la semantique |
 | `date-picker` | 1.5.0 | `id`, `name`, `label`, `value`, `min`, `max`, `help` | Selection de date, avec le calendrier natif du navigateur |
 | `field` | 1.1.0 | `id`, `label`, `help`, `error`, `required` | Enveloppe de champ : label, aide, erreur. Le controle natif passe dans le slot |
 | `input` | 1.1.0 | `id`, `type`, `name`, `placeholder`, `value`, `describedBy`, `invalid`, `disabled`, `required` | Champ de saisie natif |
 | `input-group` | 1.7.0 | `id`, `name`, `type`, `prefix`, `suffix`, `placeholder`, `value`, `describedBy`, `invalid`, `disabled`, `required` | Champ avec prefixe ou suffixe, sans perdre l'input natif |
+| `input-otp` | 1.9.0 | `id`, `name`, `length`, `label` | Code a usage unique, une case par caractere |
 | `radio-group` | 1.3.0 | `id`, `name`, `label`, `options`, `value`, `disabled` | Choix unique parmi plusieurs options |
 | `select` | 1.1.0 | `id`, `name`, `options`, `value`, `placeholder`, `describedBy`, `invalid`, `disabled`, `required` | Liste deroulante native |
 | `slider` | 1.3.0 | `id`, `name`, `min`, `max`, `step`, `value`, `label` | Valeur sur un intervalle, avec `input type="range"` natif |

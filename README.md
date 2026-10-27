@@ -31,7 +31,7 @@ Guilloche se positionne donc comme un **design system natif Symfony pour les app
 
 ## Catalogue
 
-Le kit livre la fondation (`theme`) et 64 composants : primitives, formulaires, navigation et surfaces, donnees, patterns d'ecran, composants avances, groupes, listes, media et navigation avancee (barre, menus, carte au survol, zone defilante, sens d'ecriture, menu contextuel, panneau redimensionnable).
+Le kit livre la fondation (`theme`) et 66 composants : primitives, formulaires, navigation et surfaces, donnees, patterns d'ecran, composants avances, groupes, listes, media, navigation avancee, calendrier et code a usage unique.
 
 Le catalogue detaille, les principes et les vagues suivantes sont dans [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
 

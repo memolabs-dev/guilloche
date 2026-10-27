@@ -1,0 +1,24 @@
+.ui-input-otp {
+    display: flex;
+    gap: var(--ui-space-2);
+}
+
+.ui-input-otp__input {
+    width: 2.5rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-input);
+    color: var(--ui-foreground);
+    font: inherit;
+    font-size: var(--ui-text-lg);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+
+    &:focus-visible {
+        outline: none;
+        border-color: var(--ui-ring);
+        box-shadow: var(--ui-focus-ring);
+    }
+}

@@ -1,0 +1,11 @@
+{# Ui:InputOtp — code a usage unique. Chaque case est un input natif d'un
+   caractere ; le controleur ui--input-otp avance le focus, revient en arriere
+   et repartit un code colle. Le nom envoye est un tableau de cases. #}
+{% props id, name = null, length = 6, label %}
+<div {{ attributes.defaults({ class: 'ui-input-otp', role: 'group', 'aria-label': label }) }} data-controller="ui--input-otp">
+  {% for i in 1..length %}
+    <input class="ui-input-otp__input" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code"
+      id="{{ id }}-{{ i }}" name="{{ name ?? id }}[]" aria-label="{{ label }} {{ i }}"
+      data-ui--input-otp-target="input" data-action="input->ui--input-otp#next keydown->ui--input-otp#back paste->ui--input-otp#paste" />
+  {% endfor %}
+</div>

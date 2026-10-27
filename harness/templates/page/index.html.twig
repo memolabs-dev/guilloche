@@ -442,5 +442,22 @@
         <p>Panneau redimensionnable.</p>
       </twig:ui:Resizable>
     </section>
+
+    <section data-recipe="calendar">
+      <h2>Calendar</h2>
+      <twig:ui:Calendar label="Novembre 2026" month="Novembre 2026"
+        previousLabel="Octobre" nextLabel="Decembre"
+        previous="#" next="#"
+        :days="[
+          { label: '', empty: true }, { label: '1', href: '#', selected: true },
+          { label: '2', href: '#' }, { label: '3', href: '#' },
+          { label: '4', href: '#', disabled: true }, { label: '5', href: '#' }
+        ]" />
+    </section>
+
+    <section data-recipe="input-otp">
+      <h2>InputOtp</h2>
+      <twig:ui:InputOtp id="demo-otp" label="Code de verification" :length="6" />
+    </section>
   </main>
 {% endblock %}
