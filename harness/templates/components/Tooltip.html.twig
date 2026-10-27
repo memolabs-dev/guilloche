@@ -1,0 +1,9 @@
+{# Ui:Tooltip — aide courte au survol et au focus. text est le contenu de la
+   bulle, le slot est l'element ancre. La bulle est reliee par aria-describedby,
+   donc elle est annoncee meme quand elle n'est pas visible. #}
+{% props text, id = null %}
+{% set bubbleId = id ?? 'ui-tooltip-' ~ random() %}
+<span {{ attributes.defaults({ class: 'ui-tooltip' }) }}>
+  <span class="ui-tooltip__anchor" tabindex="0" aria-describedby="{{ bubbleId }}">{% block content %}{% endblock %}</span>
+  <span class="ui-tooltip__bubble" role="tooltip" id="{{ bubbleId }}">{{ text }}</span>
+</span>

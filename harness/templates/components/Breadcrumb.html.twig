@@ -1,0 +1,16 @@
+{# Ui:Breadcrumb — fil d'Ariane. items : liste de { label, href } ; le dernier
+   element est rendu comme page courante quand il n'a pas de href. #}
+{% props items = [], label = 'Breadcrumb' %}
+<nav {{ attributes.defaults({ class: 'ui-breadcrumb', 'aria-label': label }) }}>
+  <ol class="ui-breadcrumb__list">
+    {% for item in items %}
+      <li class="ui-breadcrumb__item">
+        {% if item.href is defined and item.href %}
+          <a class="ui-breadcrumb__link" href="{{ item.href }}">{{ item.label }}</a>
+        {% else %}
+          <span class="ui-breadcrumb__current" aria-current="page">{{ item.label }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</nav>

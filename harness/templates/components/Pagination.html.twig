@@ -1,0 +1,27 @@
+{# Ui:Pagination — navigation entre pages. items : liste de { label, href, current }
+   ou { label, href, disabled }. Le libelle des fleches vient des props previous
+   et next pour ne rien imposer en dur. #}
+{% props items = [], previous = null, next = null, label = 'Pagination' %}
+<nav {{ attributes.defaults({ class: 'ui-pagination', 'aria-label': label }) }}>
+  {% if previous %}
+    <a class="ui-pagination__step{{ previous.disabled|default(false) ? ' is-disabled' : '' }}" href="{{ previous.href ?? '#' }}" rel="prev" {{ previous.disabled|default(false) ? 'aria-disabled="true" tabindex="-1"' }}>
+      <span aria-hidden="true">&larr;</span><span>{{ previous.label }}</span>
+    </a>
+  {% endif %}
+  <ol class="ui-pagination__list">
+    {% for item in items %}
+      <li>
+        {% if item.current|default(false) %}
+          <span class="ui-pagination__page is-current" aria-current="page">{{ item.label }}</span>
+        {% else %}
+          <a class="ui-pagination__page" href="{{ item.href ?? '#' }}">{{ item.label }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+  {% if next %}
+    <a class="ui-pagination__step{{ next.disabled|default(false) ? ' is-disabled' : '' }}" href="{{ next.href ?? '#' }}" rel="next" {{ next.disabled|default(false) ? 'aria-disabled="true" tabindex="-1"' }}>
+      <span>{{ next.label }}</span><span aria-hidden="true">&rarr;</span>
+    </a>
+  {% endif %}
+</nav>

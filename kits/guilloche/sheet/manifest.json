@@ -1,0 +1,14 @@
+{
+    "$schema": "../../../schema-kit-recipe-v1.json",
+    "type": "component",
+    "name": "Sheet",
+    "version-added": "1.2.0",
+    "copy-files": {
+        "templates/components/": "%COMPONENTS_DIR%/",
+        "assets/controllers/": "%CONTROLLERS_DIR%/"
+    },
+    "dependencies": {
+        "composer": ["symfony/ux-twig-component:^3.6"],
+        "importmap": ["@hotwired/stimulus"]
+    }
+}

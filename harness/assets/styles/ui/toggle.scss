@@ -1,0 +1,31 @@
+.ui-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ui-space-2);
+    min-height: 2.25rem;
+    padding: 0 var(--ui-space-3);
+    border: 1px solid transparent;
+    border-radius: var(--ui-radius-md);
+    background: transparent;
+    color: var(--ui-foreground);
+    font-size: var(--ui-text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--ui-duration-fast) var(--ui-ease), border-color var(--ui-duration-fast) var(--ui-ease);
+
+    &:hover {
+        background: var(--ui-muted);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: var(--ui-focus-ring);
+    }
+}
+
+.ui-toggle.is-pressed {
+    border-color: var(--ui-border);
+    background: var(--ui-muted);
+    font-weight: 600;
+}

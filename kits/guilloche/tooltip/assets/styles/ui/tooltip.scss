@@ -1,0 +1,40 @@
+.ui-tooltip {
+    position: relative;
+    display: inline-flex;
+}
+
+.ui-tooltip__anchor {
+    display: inline-flex;
+    border-radius: var(--ui-radius-sm);
+}
+
+.ui-tooltip__bubble {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(0.25rem);
+    z-index: 10;
+    max-width: 16rem;
+    padding: var(--ui-space-2) var(--ui-space-3);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-foreground);
+    color: var(--ui-background);
+    font-size: var(--ui-text-xs);
+    line-height: 1.4;
+    white-space: normal;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--ui-duration-fast) var(--ui-ease), transform var(--ui-duration-fast) var(--ui-ease), visibility var(--ui-duration-fast);
+    pointer-events: none;
+}
+
+.ui-tooltip:hover .ui-tooltip__bubble,
+.ui-tooltip:focus-within .ui-tooltip__bubble {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-tooltip__bubble { transition: none; }
+}
