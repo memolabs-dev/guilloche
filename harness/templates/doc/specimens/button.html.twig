@@ -2,14 +2,14 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Intents</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render">
-    <twig:ui:Button intent="primary">Enregistrer</twig:ui:Button>
-    <twig:ui:Button intent="secondary">Annuler</twig:ui:Button>
-    <twig:ui:Button intent="outline">Contour</twig:ui:Button>
-    <twig:ui:Button intent="ghost">Discret</twig:ui:Button>
-    <twig:ui:Button intent="danger">Supprimer</twig:ui:Button>
+    <twig:ui:Button>Enregistrer</twig:ui:Button>
+    <twig:ui:Button variant="secondary">Annuler</twig:ui:Button>
+    <twig:ui:Button variant="outline">Contour</twig:ui:Button>
+    <twig:ui:Button variant="ghost">Discret</twig:ui:Button>
+    <twig:ui:Button variant="danger">Supprimer</twig:ui:Button>
   </div>
-  {{ m.code('<twig:ui:Button intent="primary">Enregistrer</twig:ui:Button>
-<twig:ui:Button intent="danger">Supprimer</twig:ui:Button>') }}
+  {{ m.code('<twig:ui:Button>Enregistrer</twig:ui:Button>
+<twig:ui:Button variant="danger">Supprimer</twig:ui:Button>') }}
 </div>
 
 <div class="ds__example">

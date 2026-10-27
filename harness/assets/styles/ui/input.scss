@@ -2,7 +2,7 @@
 .ui-textarea,
 .ui-select {
     width: 100%;
-    min-height: 2.5rem;
+    height: 36px;
     padding: 0 var(--ui-space-3);
     border: 1px solid var(--ui-border);
     border-radius: var(--ui-radius-md);
@@ -17,7 +17,7 @@
     }
 
     &:hover:not(:disabled) {
-        border-color: color-mix(in srgb, var(--ui-foreground) 30%, var(--ui-border));
+        border-color: var(--ui-border-strong);
     }
 
     &:focus-visible {

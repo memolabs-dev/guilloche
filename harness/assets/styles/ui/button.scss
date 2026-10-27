@@ -1,92 +1,89 @@
-// Ui:Button — primitives du kit Guilloche.
-// Tokens : --ui-*. Aucune classe utilitaire externe, aucun reset concurrent.
+// Ui:Button — echelle de controles fixe, variants par tokens.
+// Hauteurs 32 / 36 / 40, padding 10 / 12 / 16, rayon 6.
 .ui-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--ui-space-2);
+    height: 36px;
+    padding: 0 var(--ui-space-3);
+    border: 1px solid transparent;
+    border-radius: var(--ui-radius-md);
     font-family: inherit;
     font-size: var(--ui-text-md);
     font-weight: 500;
-    line-height: 1.5;
-    border: 1px solid transparent;
-    border-radius: calc(var(--ui-radius-md, 0.5rem));
+    line-height: 1;
     cursor: pointer;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
     text-decoration: none;
+    transition: background-color var(--ui-duration-fast) var(--ui-ease), border-color var(--ui-duration-fast) var(--ui-ease), color var(--ui-duration-fast) var(--ui-ease);
 }
 
 .ui-button:where(button) {
     margin: 0;
-    padding: 0;
     background: none;
     font: inherit;
     color: inherit;
 }
 
+.ui-button--sm { height: 32px; padding-inline: 10px; font-size: var(--ui-text-sm); }
+.ui-button--md { height: 36px; padding-inline: var(--ui-space-3); }
+.ui-button--lg { height: 40px; padding-inline: var(--ui-space-4); }
+
 .ui-button--primary {
-    --ui-btn-bg: var(--ui-primary, #16301f);
-    --ui-btn-fg: var(--ui-primary-foreground, #ffffff);
-    --ui-btn-border: var(--ui-primary, #16301f);
-    background-color: var(--ui-btn-bg);
-    color: var(--ui-btn-fg);
-    border-color: var(--ui-btn-border);
+    background: var(--ui-primary);
+    color: var(--ui-primary-foreground);
+
+    &:hover { background: var(--ui-primary-hover); }
 }
 
 .ui-button--secondary {
-    --ui-btn-bg: transparent;
-    --ui-btn-fg: var(--ui-foreground, #111827);
-    --ui-btn-border: var(--ui-border, #e5e7eb);
-    background-color: var(--ui-btn-bg);
-    color: var(--ui-btn-fg);
-    border-color: var(--ui-btn-border);
+    background: var(--ui-secondary);
+    color: var(--ui-secondary-foreground);
+
+    &:hover { background: var(--ui-accent); }
 }
 
 .ui-button--outline {
-    --ui-btn-bg: transparent;
-    --ui-btn-fg: var(--ui-foreground, #111827);
-    --ui-btn-border: var(--ui-foreground, #111827);
-    background-color: var(--ui-btn-bg);
-    color: var(--ui-btn-fg);
-    border-color: var(--ui-btn-border);
+    border-color: var(--ui-border-strong);
+    background: var(--ui-surface);
+    color: var(--ui-foreground);
+
+    &:hover { background: var(--ui-accent); }
 }
 
 .ui-button--ghost {
-    --ui-btn-bg: transparent;
-    --ui-btn-fg: var(--ui-foreground, #111827);
-    --ui-btn-border: transparent;
-    background-color: var(--ui-btn-bg);
-    color: var(--ui-btn-fg);
-    border-color: var(--ui-btn-border);
+    background: transparent;
+    color: var(--ui-foreground);
+
+    &:hover { background: var(--ui-accent); }
+}
+
+.ui-button--link {
+    height: auto;
+    padding: 0;
+    background: transparent;
+    color: var(--ui-foreground);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover { color: var(--ui-muted-foreground); }
 }
 
 .ui-button--danger {
-    --ui-btn-bg: var(--ui-danger, #dc2626);
-    --ui-btn-fg: var(--ui-danger-foreground, #ffffff);
-    --ui-btn-border: var(--ui-danger, #dc2626);
-    background-color: var(--ui-btn-bg);
-    color: var(--ui-btn-fg);
-    border-color: var(--ui-btn-border);
+    background: var(--ui-danger);
+    color: var(--ui-danger-foreground);
+
+    &:hover { background: color-mix(in srgb, var(--ui-danger) 88%, black); }
 }
 
-.ui-button--sm { padding: var(--ui-space-1) var(--ui-space-3); font-size: var(--ui-text-sm); }
-.ui-button--md { padding: var(--ui-space-2) var(--ui-space-4); }
-.ui-button--lg { padding: var(--ui-space-3) var(--ui-space-5); font-size: var(--ui-text-lg); }
-
-.ui-button:where(:not(.is-loading):not(:disabled)):hover {
-    filter: brightness(0.95);
+.ui-button:focus-visible {
+    outline: none;
+    box-shadow: var(--ui-focus-ring);
 }
 
-.ui-button:where(:disabled), .ui-button[aria-disabled="true"] {
+.ui-button:where(:disabled), .ui-button[aria-disabled='true'] {
     opacity: 0.5;
-    cursor: not-allowed;
     pointer-events: none;
-}
-
-.ui-button.is-loading {
-    position: relative;
-    overflow: hidden;
-    opacity: 0.9;
 }
 
 .ui-button.is-loading:disabled {
@@ -95,8 +92,8 @@
 }
 
 .ui-button__spinner {
-    width: 1rem;
-    height: 1rem;
+    width: 16px;
+    height: 16px;
     animation: ui-spin 0.8s linear infinite;
 }
 
@@ -109,4 +106,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-button__spinner { animation: none; }
 }
