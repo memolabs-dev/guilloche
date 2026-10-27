@@ -12,6 +12,10 @@
   <header class="ds__header">
     <h1 class="ds__title">{{ item.title }}</h1>
     <p class="ds__lead">{{ item.description }}</p>
+    <div class="ds__actions">
+      <a class="ui-button ui-button--secondary ui-button--sm" href="https://github.com/memolabs-dev/guilloche/tree/main/kits/guilloche/{{ item.name }}">Voir la source</a>
+      <button class="ui-button ui-button--secondary ui-button--sm" type="button" data-copy-page>Copier la page en Markdown</button>
+    </div>
     <p class="ds__meta">
       <span class="ui-badge ui-badge--neutral ui-badge--soft">{{ item.family }}</span>
       <span class="ui-badge ui-badge--neutral ui-badge--outline">v{{ item.version }}</span>
@@ -20,7 +24,7 @@
   </header>
 
   <div class="ds__layout">
-    <div class="ds__content">
+    <div class="ds__content" data-doc="{{ item.name }}">
       <section class="ds__section" id="exemples">
         <h2 class="ds__section-title">Exemples</h2>
         <div class="ds__examples">
@@ -87,4 +91,5 @@
       <a href="#accessibilite">Accessibilité</a>
     </aside>
   </div>
+  <template id="doc-scss">{{ item.scss }}</template>
 {% endblock %}

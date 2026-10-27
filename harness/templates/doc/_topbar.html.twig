@@ -1,0 +1,18 @@
+<header class="ds__topbar">
+  <a class="ds__brand" href="{{ path('app_home') }}">Guilloche</a>
+  <nav class="ds__topnav" aria-label="Documentation">
+    <a href="{{ path('app_home') }}">Docs</a>
+    <a href="{{ path('app_home') }}#primitives">Composants</a>
+  </nav>
+  <div class="ds__search">
+    <input type="search" placeholder="Rechercher un composant" aria-label="Rechercher un composant" data-doc-search autocomplete="off" />
+    <ul class="ds__search-results" data-doc-search-results hidden>
+      {% for family, items in families %}{% for item in items %}
+        <li><a href="{{ path('app_recipe', { recipe: item.name }) }}" data-search-item>{{ item.title }}</a></li>
+      {% endfor %}{% endfor %}
+    </ul>
+  </div>
+  <a class="ds__toplink" href="https://github.com/memolabs-dev/guilloche">GitHub</a>
+  <span class="ds__version">v1.10.0</span>
+  <button class="ds__theme" type="button" data-doc-theme aria-label="Changer de thème">Système</button>
+</header>

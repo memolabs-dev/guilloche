@@ -9,6 +9,7 @@
     <script src="{{ asset('doc.js') }}" defer></script>
   </head>
   <body class="ui-scope">
+    {% include 'doc/_topbar.html.twig' %}
     <div class="ds">
       {% include 'doc/_rail.html.twig' %}
       <main class="ds__main">{% block body %}{% endblock %}</main>
