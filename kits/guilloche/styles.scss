@@ -85,3 +85,6 @@
 @use 'stack/assets/styles/ui/stack';
 @use 'floating-label/assets/styles/ui/floating-label';
 @use 'scrollspy/assets/styles/ui/scrollspy';
+
+// Signature facultative, jamais imposée aux contrôles.
+@use 'seal/assets/styles/ui/seal';

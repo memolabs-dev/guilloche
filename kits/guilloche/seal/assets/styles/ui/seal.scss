@@ -1,0 +1,62 @@
+.ui-seal {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+    font-size: var(--ui-text-sm);
+    line-height: 1.4;
+}
+
+.ui-seal__mark {
+    display: inline-flex;
+    flex: none;
+    color: var(--ui-foreground);
+}
+
+.ui-seal__mark svg {
+    display: block;
+}
+
+.ui-seal__text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--ui-space-1);
+}
+
+.ui-seal__text time {
+    color: var(--ui-muted-foreground);
+    font-size: var(--ui-text-xs);
+    font-variant-numeric: tabular-nums;
+}
+
+.ui-seal--pending .ui-seal__mark {
+    color: var(--ui-attention);
+}
+
+.ui-seal--pending .ui-seal__mark circle {
+    stroke-dasharray: 3 4;
+}
+
+.ui-seal--pending .ui-seal__text {
+    color: var(--ui-muted-foreground);
+}
+
+.ui-seal--validated .ui-seal__mark {
+    color: var(--ui-foreground);
+}
+
+.ui-seal.is-fresh .ui-seal__trace {
+    stroke-dasharray: 1200;
+    animation: ui-seal-print 520ms var(--ui-ease) both;
+}
+
+@keyframes ui-seal-print {
+    from { stroke-dashoffset: 1200; }
+    to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-seal.is-fresh .ui-seal__trace {
+        animation: none;
+        stroke-dasharray: none;
+    }
+}
