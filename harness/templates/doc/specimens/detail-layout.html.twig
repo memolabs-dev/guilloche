@@ -1,0 +1,4 @@
+<twig:ui:DetailLayout label="Missions">
+  {% block list %}<twig:ui:ListGroup :items="[{ label: 'Remuneration du dirigeant', href: '#', meta: '75 %' }, { label: 'Audit de la structure', href: '#', meta: '45 %' }]" />{% endblock %}
+  {% block detail %}<twig:ui:Card title="Remuneration du dirigeant"><p>Detail de la mission.</p></twig:ui:Card>{% endblock %}
+</twig:ui:DetailLayout>

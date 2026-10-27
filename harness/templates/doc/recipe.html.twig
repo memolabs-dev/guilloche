@@ -1,0 +1,70 @@
+{% extends 'doc/base.html.twig' %}
+
+{% block title %}{{ item.title }} · Guilloche{% endblock %}
+
+{% block body %}
+  <nav class="ds__crumbs" aria-label="Fil d Ariane">
+    <a href="{{ path('app_home') }}">Catalogue</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">{{ item.title }}</span>
+  </nav>
+
+  <header class="ds__header">
+    <h1 class="ds__title">{{ item.title }}</h1>
+    <p class="ds__lead">{{ item.description }}</p>
+    <p class="ds__meta">
+      <span class="ui-badge ui-badge--neutral ui-badge--soft">{{ item.family }}</span>
+      <span class="ui-badge ui-badge--neutral ui-badge--outline">v{{ item.version }}</span>
+      <span class="ds__mono">ui:{{ item.title }}</span>
+    </p>
+  </header>
+
+  <section class="ds__section">
+    <h2 class="ds__section-title">Apercu</h2>
+    <div class="ds__preview">
+      <div class="ds__preview-render">
+        {% include 'doc/specimens/' ~ item.name ~ '.html.twig' ignore missing %}
+      </div>
+      {% if item.code %}
+        <div class="ds__preview-code">
+          <p class="ds__preview-label">Code</p>
+          <pre class="ds__code"><code>{{ item.code }}</code></pre>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="ds__section">
+    <h2 class="ds__section-title">Props</h2>
+    {% if item.propsTable %}
+      <div class="ds__table-wrap">
+        <table class="ui-table">
+          <thead><tr><th scope="col">Prop</th><th scope="col">Defaut</th><th scope="col">Role</th></tr></thead>
+          <tbody>
+            {% for row in item.propsTable %}
+              <tr><td><code>{{ row.name }}</code></td><td><code>{{ row.default }}</code></td><td>{{ row.role }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% elseif item.props %}
+      <div class="ds__table-wrap">
+        <table class="ui-table">
+          <thead><tr><th scope="col">Prop</th></tr></thead>
+          <tbody>
+            {% for prop in item.props %}
+              <tr><td><code>{{ prop }}</code></td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>Aucune prop : le composant prend son contenu par le slot.</p>
+    {% endif %}
+  </section>
+
+  <section class="ds__section">
+    <h2 class="ds__section-title">Accessibilite</h2>
+    <p class="ds__lead">Le detail est dans le README de la recette : roles, clavier, noms accessibles et etats. Le test de contrat verifie que chaque champ a un libelle, que les roles sont renseignes et que les SVG sont nommes ou masques.</p>
+  </section>
+{% endblock %}

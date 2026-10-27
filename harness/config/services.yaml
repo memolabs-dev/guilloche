@@ -1,24 +1,11 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-parameters:
-
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: true
+        autoconfigure: true
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-
-when@test:
-    services:
-        # Les 400 et 404 attendus par les tests ne polluent pas la sortie.
-        logger:
-            class: Psr\Log\NullLogger
+    App\Doc\RecipeCatalog:
+        arguments:
+            $kitDir: '%kernel.project_dir%/../kits/guilloche'
