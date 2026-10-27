@@ -1,0 +1,22 @@
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Sans signature (par défaut)</h3></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:PageHeader title="Missions" description="Suivi des dossiers en cours" headingLevel="3" />
+  </div>
+  {{ m.code('<twig:ui:PageHeader title="Missions" description="Suivi des dossiers en cours" />') }}
+</div>
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Contre-jour en thème sombre</h3></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:PageHeader title="Mission AR-2026-042" description="Dossier de référence" headingLevel="3" watermark />
+  </div>
+  {{ m.code('<twig:ui:PageHeader title="Mission AR-2026-042" watermark />') }}
+</div>
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Empreinte calculée par le serveur</h3></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:PageHeader title="Archive" headingLevel="3" watermark watermarkPath="M5 50 Q50 5 95 50 Q50 95 5 50 Z" />
+  </div>
+  {{ m.code('<twig:ui:PageHeader title="Archive" watermark :watermarkPath="paths.main" />') }}
+</div>
