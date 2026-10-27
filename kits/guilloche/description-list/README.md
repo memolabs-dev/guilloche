@@ -13,7 +13,7 @@ Paires libellé et valeur.
 
 ```twig
 <twig:ui:DescriptionList :items="[
-  { term: 'Numéro', description: 'F-2026-010' },
+  { term: 'Numéro', description: 'F-2026-010', serial: true, prefix: 'N° ' },
   { term: 'Échéance', description: '30 novembre 2026' }
 ]" />
 ```
