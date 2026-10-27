@@ -1,0 +1,86 @@
+#!/usr/bin/env php
+<?php
+/**
+ * check-harness — contrat de synchronisation en lecture seule.
+ *
+ * Chaque fichier copié par bin/sync-harness doit être identique à sa source.
+ * Ne corrige jamais le checkout : en local, lancer bin/sync-harness après
+ * avoir vérifié les modifications non committées.
+ */
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+$kit = $root . '/kits/guilloche';
+$harness = $root . '/harness';
+$errors = [];
+$checked = 0;
+$destinations = [];
+
+$copyPatterns = [
+    'templates/components/*.html.twig' => 'templates/components',
+    'assets/controllers/*.js' => 'assets/controllers',
+    'assets/styles/ui/*.scss' => 'assets/styles/ui',
+];
+
+$check = static function (string $source, string $destination) use (&$errors, &$checked, &$destinations, $root): void {
+    $sourceRelative = substr($source, strlen($root) + 1);
+    $targetRelative = substr($destination, strlen($root) + 1);
+
+    if (isset($destinations[$targetRelative])) {
+        $errors[] = sprintf(
+            'Collision: %s et %s copient tous deux vers %s',
+            $destinations[$targetRelative],
+            $sourceRelative,
+            $targetRelative,
+        );
+        return;
+    }
+
+    $destinations[$targetRelative] = $sourceRelative;
+    ++$checked;
+
+    if (!is_file($destination)) {
+        $errors[] = sprintf('Copie absente: %s -> %s', $sourceRelative, $targetRelative);
+    } elseif (hash_file('sha256', $source) !== hash_file('sha256', $destination)) {
+        $errors[] = sprintf('Copie divergente: %s -> %s', $sourceRelative, $targetRelative);
+    }
+};
+
+foreach ($copyPatterns as $pattern => $directory) {
+    foreach (glob($kit . '/*/' . $pattern) ?: [] as $source) {
+        $check($source, $harness . '/' . $directory . '/' . basename($source));
+    }
+}
+
+// Les polices et feuilles CSS du thème sont aussi copiées par sync-harness.
+foreach (glob($kit . '/theme/assets/*.css') ?: [] as $source) {
+    $check($source, $harness . '/assets/' . basename($source));
+}
+
+$fontSource = $kit . '/theme/assets/fonts';
+if (is_dir($fontSource)) {
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($fontSource, FilesystemIterator::SKIP_DOTS),
+    );
+    foreach ($files as $file) {
+        if (!$file->isFile()) {
+            continue;
+        }
+        $source = $file->getPathname();
+        $suffix = substr($source, strlen($fontSource) + 1);
+        $check($source, $harness . '/assets/fonts/' . $suffix);
+    }
+}
+
+if ($checked === 0) {
+    $errors[] = 'Aucun fichier source trouvé : arborescence du kit inattendue';
+}
+
+if ($errors) {
+    fwrite(STDERR, implode(PHP_EOL, $errors) . PHP_EOL);
+    fwrite(STDERR, sprintf("%d erreur(s) de synchronisation (%d fichiers vérifiés).%s", count($errors), $checked, PHP_EOL));
+    fwrite(STDERR, "Comparer les différences, puis lancer ./bin/sync-harness si la régénération est voulue." . PHP_EOL);
+    exit(1);
+}
+
+echo sprintf("Harnais conforme : %d fichiers identiques au kit.%s", $checked, PHP_EOL);
