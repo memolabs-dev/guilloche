@@ -22,7 +22,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | Recette | Version | Props | Description |
 |---|---|---|---|
 | `rosette` | 2.0.0 | `seed`, `size`, `progress`, `loading`, `label`, `paths` | Empreinte guillochée d'un objet : une même graine donne toujours le même dessin |
-| `seal` | 2.0.0 | `text`, `by`, `at`, `atLabel`, `label`, `state`, `fresh`, `size` | Sépare ce qu'une IA a proposé de ce qu'une personne a validé |
+| `seal` | 2.0.0 | `text`, `by`, `at`, `atLabel`, `label`, `state`, `fresh`, `size`, `path` | Sépare ce qu'une IA a proposé de ce qu'une personne a validé |
 
 ## Primitives
 
