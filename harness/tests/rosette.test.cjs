@@ -80,3 +80,9 @@ test('progress is clamped to 0–100 to avoid negative or overflowing dash offse
     assert.equal(render('AR-2026-042', '150').main.style.strokeDashoffset, undefined);
     assert.equal(render('AR-2026-042', 'invalid').main.style.strokeDashoffset, undefined);
 });
+
+test('harness and installed-kit Twig recipes remain byte-for-byte aligned', () => {
+    const kitTemplate = path.resolve(__dirname, '../../kits/guilloche/rosette/templates/components/Rosette.html.twig');
+    const harnessTemplate = path.resolve(__dirname, '../templates/components/Rosette.html.twig');
+    assert.equal(readFileSync(harnessTemplate, 'utf8'), readFileSync(kitTemplate, 'utf8'));
+});
