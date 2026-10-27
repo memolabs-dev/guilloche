@@ -9,3 +9,7 @@ services:
     App\Doc\RecipeCatalog:
         arguments:
             $kitDir: '%kernel.project_dir%/../kits/guilloche'
+
+    # Explicit registration: exercise the same one-time service tag as consuming apps.
+    App\Twig\AutoGeometrySubscriber:
+        tags: ['kernel.event_subscriber']
