@@ -621,6 +621,13 @@ body {
     align-items: stretch;
 }
 
+// Small seals are metadata, not hero artwork: keep examples concise.
+.ds__example-render--compact {
+    min-height: 120px;
+    padding: var(--ui-space-5);
+}
+
+
 .ds__example-code {
     border-top: 1px solid var(--ui-border);
     background: var(--ui-muted);
