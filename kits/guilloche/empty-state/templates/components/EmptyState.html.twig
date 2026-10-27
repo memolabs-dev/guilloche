@@ -3,11 +3,11 @@
 {% props title, message = null, watermark = false, watermarkPath = null %}
 <div {{ attributes.defaults({ class: 'ui-empty-state' ~ (watermark ? ' ui-empty-state--watermark' : '') }) }}>
   {% if watermark %}
-    <svg class="ui-empty-state__watermark" aria-hidden="true" focusable="false" viewBox="-100 -100 200 200" fill="none" stroke="currentColor" stroke-width="0.9">
+    <svg class="ui-empty-state__watermark" aria-hidden="true" focusable="false" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.9">
       {% if watermarkPath %}
         <path d="{{ watermarkPath }}" />
       {% else %}
-        <g>
+        <g transform="translate(50 50) scale(0.53)">
           {% for rotation in [0, 30, 60, 90, 120, 150] %}
             <ellipse cx="0" cy="0" rx="91" ry="34" transform="rotate({{ rotation }})" />
           {% endfor %}
