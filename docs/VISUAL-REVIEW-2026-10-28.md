@@ -20,3 +20,7 @@ La revue humaine a effectivement examiné les échantillons `button-mobile-light
 ## Ce qui reste à valider avant une présentation commerciale
 
 La CI prouve un rendu fonctionnel en Chromium, pas l'absence de tous les problèmes visuels. Il reste pertinent d'effectuer des tests exploratoires au clavier et lecteur d'écran, une comparaison visuelle complète sur toutes les captures à taille originale, et un parcours du **Guilloche Workspace** déployé (la réussite d'un workflow GitHub ne démontre pas à elle seule la mise à jour du domaine public).
+
+## Réconciliation des changements parallèles
+
+Une deuxième PR de compactage a été fusionnée en parallèle (#43) après la PR #42. La variante responsive de #42 reste la seule règle effective ; la déclaration redondante issue de #43 a été supprimée. Les extraits Twig de `Seal` ont été réalignés sur le vrai contrat `by` seul, désormais pris en charge automatiquement par `AutoGeometrySubscriber`.
