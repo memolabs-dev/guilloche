@@ -25,16 +25,15 @@ class AutoGeometrySubscriber implements EventSubscriberInterface
     {
         $name = $event->getMetadata()?->getName();
         $data = $event->getData();
-        if (str_contains(strtolower((string) $name), 'rosette')) {
-            throw new \RuntimeException('DEBUG PreMount '.json_encode(['name' => $name, 'template' => $event->getMetadata()?->getTemplate(), 'keys' => array_keys($data)]));
-        }
 
         if ($name === 'ui:Rosette' || $name === 'Rosette') {
+            error_log('Guilloche SSR before '.json_encode(['keys' => array_keys($data), 'seed' => $data['seed'] ?? null]));
             if (($data['paths'] ?? null) !== null || !isset($data['seed'])) {
                 return; // explicit SVG takes priority
             }
             $data['paths'] = RosetteGeometry::paths((string) $data['seed']);
             $event->setData($data);
+            error_log('Guilloche SSR after '.json_encode(['keys' => array_keys($event->getData()), 'pathlen' => strlen($data['paths']['main'])]));
 
             return;
         }
