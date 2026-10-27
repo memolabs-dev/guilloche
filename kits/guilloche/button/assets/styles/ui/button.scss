@@ -21,7 +21,8 @@
 .ui-button:where(button) {
     margin: 0;
     background: none;
-    font: inherit;
+    font-family: inherit;
+    font-size: inherit;
     color: inherit;
 }
 

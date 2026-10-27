@@ -1,0 +1,9 @@
+/* Police de l'identite Guilloche. Utilisee seulement quand
+   [data-ui-brand='guilloche'] est pose. */
+@font-face {
+    font-family: 'Bodoni Moda Variable';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('fonts/bodoni-moda/bodoni-moda-latin-opsz-normal.woff2') format('woff2-variations');
+}

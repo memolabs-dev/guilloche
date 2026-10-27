@@ -1,8 +1,6 @@
 // Entree SCSS du kit Guilloche.
 // Ordre : tokens, base, puis un fichier par composant.
 // Compiler avec ./bin/build-css pour produire dist/guilloche.css.
-@use 'theme/assets/styles/ui/fonts';
-@use 'theme/assets/styles/ui/brand-fonts';
 @use 'theme/assets/styles/ui/tokens';
 @use 'theme/assets/styles/ui/reset';
 @use 'theme/assets/styles/ui/typography';
