@@ -45,3 +45,14 @@
     font-family: var(--ui-font-mono);
     font-size: 0.875em;
 }
+
+// Références métier : sobres, tabulaires et avec zéro barré.
+// Table(serial=true) cible uniquement la première colonne de données ;
+// .ui-serial s'utilise librement dans les autres cellules et listes.
+.ui-scope :where(.ui-serial, .ui-table--serial-first tbody tr > :first-child) {
+    font-family: var(--ui-font-mono);
+    font-size: var(--ui-text-xs);
+    font-variant-numeric: tabular-nums slashed-zero;
+    color: var(--ui-muted-foreground);
+    overflow-wrap: anywhere;
+}
