@@ -5,45 +5,43 @@ declare(strict_types=1);
 namespace Guilloche\Signature;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\UX\TwigComponent\Event\PreRenderEvent;
+use Symfony\UX\TwigComponent\Event\PreMountEvent;
 
 /**
- * Optional Symfony integration: resolve deterministic SVG before Twig renders
- * copied UX Toolkit recipes, so <twig:ui:Rosette seed="…"/> is fully SSR.
+ * One-time Symfony integration for copied UX Toolkit recipes.
  *
- * Register this class once as a service (kernel.event_subscriber); without it,
- * the original recipes remain standalone and their JS fallback still works.
+ * PreMountEvent is used intentionally: for anonymous Twig Components the
+ * props are present in the mounting data, before Twig's {% props %} tag
+ * consumes them. PreRenderEvent is too late for this binding.
  */
 class AutoGeometrySubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
-        return [PreRenderEvent::class => 'onPreRender'];
+        return [PreMountEvent::class => 'onPreMount'];
     }
 
-    public function onPreRender(PreRenderEvent $event): void
+    public function onPreMount(PreMountEvent $event): void
     {
-        $name = $event->getTemplate();
-        $variables = $event->getVariables();
+        $name = $event->getMetadata()?->getName();
+        $data = $event->getData();
 
-        // Restrict to Guilloche's own two component templates. The exact
-        // install location depends on the configured Toolkit subdirectory.
-        if (preg_match('~^components/(?:ui/|Ui/)?Rosette\.html\.twig$~', $name)) {
-            if (($variables['paths'] ?? null) !== null || !isset($variables['seed'])) {
-                return; // explicit caller-provided paths win
+        if ($name === 'ui:Rosette' || $name === 'Rosette') {
+            if (($data['paths'] ?? null) !== null || !isset($data['seed'])) {
+                return; // explicit SVG takes priority
             }
-            $variables['paths'] = RosetteGeometry::paths((string) $variables['seed']);
-            $event->setVariables($variables);
+            $data['paths'] = RosetteGeometry::paths((string) $data['seed']);
+            $event->setData($data);
 
             return;
         }
 
-        if (preg_match('~^components/(?:ui/|Ui/)?Seal\.html\.twig$~', $name)) {
-            if (($variables['path'] ?? null) !== null || !isset($variables['by'])) {
+        if ($name === 'ui:Seal' || $name === 'Seal') {
+            if (($data['path'] ?? null) !== null || !isset($data['by'])) {
                 return;
             }
-            $variables['path'] = RosetteGeometry::sealPath((string) $variables['by']);
-            $event->setVariables($variables);
+            $data['path'] = RosetteGeometry::sealPath((string) $data['by']);
+            $event->setData($data);
         }
     }
 }
