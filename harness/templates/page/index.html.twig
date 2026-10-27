@@ -382,5 +382,65 @@
       <h2>Marker</h2>
       <p>La mission <twig:ui:Marker>Remuneration du dirigeant</twig:ui:Marker> est a votre tour.</p>
     </section>
+
+    <section data-recipe="navbar">
+      <h2>Navbar</h2>
+      <twig:ui:Navbar brand="Guilloche" brandHref="#" toggleLabel="Ouvrir la navigation" label="Navigation principale">
+        <a href="#" aria-current="page">Accueil</a>
+        <a href="#">Missions</a>
+        <a href="#">Documents</a>
+      </twig:ui:Navbar>
+    </section>
+
+    <section data-recipe="navigation-menu">
+      <h2>NavigationMenu</h2>
+      <twig:ui:NavigationMenu label="Sections" :items="[
+        { label: 'Accueil', href: '#', current: true },
+        { label: 'Ressources', items: [{ label: 'Guides', href: '#' }, { label: 'Modeles', href: '#' }] }
+      ]" />
+    </section>
+
+    <section data-recipe="menubar">
+      <h2>Menubar</h2>
+      <twig:ui:Menubar label="Application" :items="[
+        { label: 'Fichier', items: [{ label: 'Nouveau', href: '#' }, { label: 'Ouvrir', href: '#' }] },
+        { label: 'Edition', href: '#' }
+      ]" />
+    </section>
+
+    <section data-recipe="hover-card">
+      <h2>HoverCard</h2>
+      <twig:ui:HoverCard label="Camille Martin">
+        <p>Interlocutrice sur trois missions. Repond sous 24 heures.</p>
+      </twig:ui:HoverCard>
+    </section>
+
+    <section data-recipe="scroll-area">
+      <h2>ScrollArea</h2>
+      <twig:ui:ScrollArea maxHeight="8rem" label="Historique">
+        <p>Ligne 1</p><p>Ligne 2</p><p>Ligne 3</p><p>Ligne 4</p><p>Ligne 5</p><p>Ligne 6</p><p>Ligne 7</p>
+      </twig:ui:ScrollArea>
+    </section>
+
+    <section data-recipe="direction">
+      <h2>Direction</h2>
+      <twig:ui:Direction dir="rtl">
+        <p>Contenu en sens inverse.</p>
+      </twig:ui:Direction>
+    </section>
+
+    <section data-recipe="context-menu">
+      <h2>ContextMenu</h2>
+      <twig:ui:ContextMenu label="Actions" :items="[{ label: 'Ouvrir', href: '#' }, { label: 'Copier', href: '#' }]">
+        <p>Clic droit dans cette zone.</p>
+      </twig:ui:ContextMenu>
+    </section>
+
+    <section data-recipe="resizable">
+      <h2>Resizable</h2>
+      <twig:ui:Resizable label="Redimensionner le panneau">
+        <p>Panneau redimensionnable.</p>
+      </twig:ui:Resizable>
+    </section>
   </main>
 {% endblock %}

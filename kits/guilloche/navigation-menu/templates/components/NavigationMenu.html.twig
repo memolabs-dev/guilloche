@@ -1,0 +1,24 @@
+{# Ui:NavigationMenu — navigation avec sous-menus. Chaque groupe repose sur
+   details et summary : ouverture, clavier et fermeture sans JavaScript. #}
+{% props items = [], label = 'Navigation' %}
+<nav {{ attributes.defaults({ class: 'ui-navigation-menu', 'aria-label': label }) }}>
+  <ul class="ui-navigation-menu__list">
+    {% for item in items %}
+      <li class="ui-navigation-menu__item">
+        {% if item.items is defined and item.items %}
+          <details class="ui-navigation-menu__group">
+            <summary class="ui-navigation-menu__trigger">{{ item.label }}</summary>
+            <ul class="ui-navigation-menu__panel">
+              {% for sub in item.items %}
+                <li><a href="{{ sub.href ?? '#' }}">{{ sub.label }}</a></li>
+              {% endfor %}
+            </ul>
+          </details>
+        {% else %}
+          <a class="ui-navigation-menu__link" href="{{ item.href ?? '#' }}"
+            {{ item.current|default(false) ? 'aria-current="page"' }}>{{ item.label }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0] - 2026-10-27
+
+### Ajoute
+- Navigation : `navbar`, `navigation-menu`, `menubar`.
+- Surfaces : `hover-card`, `scroll-area`, `direction`.
+- Interactions : `context-menu` et `resizable`, avec controleurs Stimulus.
+- Harnais : 64 composants rendus, contrat et accessibilite a 139 assertions.
+
 ## [1.7.0] - 2026-10-27
 
 ### Ajoute

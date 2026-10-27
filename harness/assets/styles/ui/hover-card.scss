@@ -1,0 +1,39 @@
+.ui-hover-card {
+    position: relative;
+    display: inline-flex;
+}
+
+.ui-hover-card__trigger {
+    display: inline-flex;
+    border-bottom: 1px dashed currentColor;
+    cursor: help;
+}
+
+.ui-hover-card__panel {
+    position: absolute;
+    top: calc(100% + var(--ui-space-2));
+    left: 0;
+    z-index: 20;
+    width: min(20rem, calc(100vw - 2rem));
+    padding: var(--ui-space-4);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    background: var(--ui-card);
+    color: var(--ui-card-foreground);
+    box-shadow: var(--ui-shadow-md);
+    font-size: var(--ui-text-sm);
+    line-height: 1.6;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--ui-duration-fast) var(--ui-ease), visibility var(--ui-duration-fast);
+}
+
+.ui-hover-card:hover .ui-hover-card__panel,
+.ui-hover-card:focus-within .ui-hover-card__panel {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-hover-card__panel { transition: none; }
+}

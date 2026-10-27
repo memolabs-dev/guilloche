@@ -1,0 +1,10 @@
+{# Ui:Resizable — panneau redimensionnable. La poignee est un separateur
+   focusable ; les fleches du clavier ajustent la largeur, le pointeur la fait
+   glisser. Le contenu vient du slot. #}
+{% props label = 'Resize' %}
+<div {{ attributes.defaults({ class: 'ui-resizable' }) }} data-controller="ui--resizable">
+  <div class="ui-resizable__panel" data-ui--resizable-target="panel">{% block content %}{% endblock %}</div>
+  <div class="ui-resizable__handle" role="separator" aria-orientation="vertical" tabindex="0" aria-label="{{ label }}"
+    data-ui--resizable-target="handle"
+    data-action="pointerdown->ui--resizable#start keydown->ui--resizable#step"></div>
+</div>

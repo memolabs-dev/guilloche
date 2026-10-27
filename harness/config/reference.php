@@ -773,6 +773,16 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     stimulus?: StimulusConfig,
  *     twig_component?: TwigComponentConfig,
  *     symfonycasts_sass?: SymfonycastsSassConfig,
+ *     "when@dev"?: array{
+ *         imports?: ImportsConfig,
+ *         parameters?: ParametersConfig,
+ *         services?: ServicesConfig,
+ *         framework?: FrameworkConfig,
+ *         twig?: TwigConfig,
+ *         stimulus?: StimulusConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         symfonycasts_sass?: SymfonycastsSassConfig,
+ *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -865,6 +875,7 @@ namespace Symfony\Component\Routing\Loader\Configurator;
  *     deprecated?: array{package:string, version:string, message?:string},
  * }
  * @psalm-type RoutesConfig = array{
+ *     "when@dev"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     "when@test"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     ...<string, RouteConfig|ImportConfig|AliasConfig>
  * }

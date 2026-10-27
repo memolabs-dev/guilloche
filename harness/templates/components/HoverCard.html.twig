@@ -1,0 +1,9 @@
+{# Ui:HoverCard — carte d'apercu au survol et au focus. label est l'element
+   ancre ; le contenu de la carte vient du slot. La carte est reliee par
+   aria-describedby et reste accessible au clavier par focus-within. #}
+{% props label, id = null %}
+{% set cardId = id ?? 'ui-hover-card-' ~ random() %}
+<span {{ attributes.defaults({ class: 'ui-hover-card' }) }}>
+  <span class="ui-hover-card__trigger" tabindex="0" aria-describedby="{{ cardId }}">{{ label }}</span>
+  <span class="ui-hover-card__panel" id="{{ cardId }}">{% block content %}{% endblock %}</span>
+</span>

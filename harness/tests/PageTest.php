@@ -81,5 +81,14 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('.ui-input-group__input[aria-describedby="demo-group-help"]');
         $this->assertSelectorExists('.ui-code-block__pre > code');
         $this->assertSelectorExists('mark.ui-marker');
+
+        $this->assertSelectorExists('header.ui-navbar nav[aria-label]');
+        $this->assertSelectorExists('nav.ui-navigation-menu details.ui-navigation-menu__group');
+        $this->assertSelectorExists('nav.ui-menubar [role="menubar"]');
+        $this->assertSelectorExists('.ui-hover-card__panel[id]');
+        $this->assertSelectorExists('.ui-scroll-area[role="region"][tabindex="0"]');
+        $this->assertSelectorExists('.ui-direction[dir="rtl"]');
+        $this->assertSelectorExists('ul.ui-context-menu__list[role="menu"]');
+        $this->assertSelectorExists('.ui-resizable__handle[role="separator"]');
     }
 }

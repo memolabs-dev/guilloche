@@ -1,0 +1,29 @@
+.ui-resizable {
+    display: flex;
+    align-items: stretch;
+    min-height: 8rem;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    overflow: hidden;
+}
+
+.ui-resizable__panel {
+    width: 50%;
+    min-width: 10rem;
+    overflow: auto;
+    padding: var(--ui-space-3);
+}
+
+.ui-resizable__handle {
+    width: 0.375rem;
+    flex: none;
+    background: var(--ui-border);
+    cursor: col-resize;
+    touch-action: none;
+
+    &:hover,
+    &:focus-visible {
+        outline: none;
+        background: var(--ui-ring);
+    }
+}

@@ -1,0 +1,18 @@
+{# Ui:Navbar — barre de navigation. brand et brandHref sont des props ; les liens
+   viennent du slot. Le controleur ui--navbar ouvre et ferme la navigation sur
+   petit ecran ; sur grand ecran, tout reste visible. #}
+{% props brand = null, brandHref = null, label = 'Navigation', toggleLabel %}
+<header {{ attributes.defaults({ class: 'ui-navbar' }) }} data-controller="ui--navbar">
+  <div class="ui-navbar__bar">
+    {% if brand %}
+      <a class="ui-navbar__brand" href="{{ brandHref ?? '#' }}">{{ brand }}</a>
+    {% endif %}
+    <button class="ui-navbar__toggle" type="button" aria-expanded="false" aria-label="{{ toggleLabel }}"
+      data-action="ui--navbar#toggle" data-ui--navbar-target="toggle">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="ui-navbar__nav" aria-label="{{ label }}" data-ui--navbar-target="nav">
+      {% block content %}{% endblock %}
+    </nav>
+  </div>
+</header>

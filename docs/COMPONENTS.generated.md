@@ -51,10 +51,18 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `accordion` | 1.2.0 | `summary`, `open` | Section repliable. Repose sur `details` et `summary` natifs : ouverture, clavier et annonce fonctionnent sans JavaScript |
 | `breadcrumb` | 1.2.0 | `items`, `label` | Fil d'Ariane |
 | `collapsible` | 1.7.0 | `summary`, `open` | Section repliable neutre, sans bordure ni titre de section |
+| `context-menu` | 1.8.0 | `items`, `label` | Menu au clic droit |
 | `dialog` | 1.2.0 | `id`, `title`, `trigger`, `description` | Boite modale native (`<dialog>`) |
+| `direction` | 1.8.0 | `dir` | Conteneur avec sens d'ecriture explicite |
 | `dropdown-menu` | 1.3.0 | `label`, `items` | Menu d'actions ou de liens. Repose sur `details` et `summary` : ouverture, clavier et fermeture fonctionnent sans JavaScript |
+| `hover-card` | 1.8.0 | `label`, `id` | Carte d'apercu au survol et au focus |
+| `menubar` | 1.8.0 | `items`, `label` | Barre de menus horizontale, avec sous-menus natifs |
+| `navbar` | 1.8.0 | `brand`, `brandHref`, `label`, `toggleLabel` | Barre de navigation avec marque, liens et bascule mobile |
+| `navigation-menu` | 1.8.0 | `items`, `label` | Navigation avec sous-menus, a base de `details` et `summary` |
 | `pagination` | 1.2.0 | `items`, `previous`, `next`, `label` | Navigation entre pages |
 | `popover` | 1.3.0 | `label` | Panneau flottant ancre. Repose sur `details` et `summary` : ouverture au clavier et fermeture natives, sans JavaScript |
+| `resizable` | 1.8.0 | `label` | Panneau redimensionnable avec une poignee |
+| `scroll-area` | 1.8.0 | `maxHeight`, `label` | Zone defilante bornee, pour les listes longues dans une carte |
 | `sheet` | 1.2.0 | `id`, `title`, `trigger`, `description`, `side` | Panneau lateral modal, ancre a droite ou a gauche |
 | `tabs` | 1.2.0 | `items`, `label` | Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne |
 | `toggle` | 1.2.0 | `pressed`, `label` | Bouton a deux etats, rendu avec `aria-pressed` |

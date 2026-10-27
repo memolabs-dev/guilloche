@@ -1,0 +1,13 @@
+.ui-scroll-area {
+    max-height: var(--ui-scroll-max, 16rem);
+    overflow-y: auto;
+    padding-inline-end: var(--ui-space-2);
+    scrollbar-width: thin;
+    scrollbar-color: var(--ui-border) transparent;
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: var(--ui-focus-ring);
+        border-radius: var(--ui-radius-md);
+    }
+}
