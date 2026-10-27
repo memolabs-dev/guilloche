@@ -104,3 +104,57 @@ Règle : les statuts s'affichent en **texte et icône colorés sur fond `-soft` 
 5. Pas de nouveau framework CSS : tokens maison, comme décidé dans le README.
 
 Livrer en petites PR : (a) tokens et thème neutre + thème de marque, (b) échelle des contrôles et variants, (c) surfaces, (d) coquille de doc, (e) bugs de finition. Chaque PR avec ses captures avant/après.
+
+---
+
+## Passe 2 (27 octobre 2026, 21 h 45) : pourquoi ça fait encore daté
+
+Après `94926a2` (fondation neutre) et `c897ff7` (échelle des contrôles), les couleurs sont bonnes mais le rendu reste « vieux » face à Base UI (base-ui.com), shadcn/ui (ui.shadcn.com, onglet Base UI) et Bootstrap 6 (`6.0.0-alpha.1`, getbootstrap.com/docs/6.0). Relevé dans le navigateur, mesures par `getComputedStyle` et onglet réseau.
+
+### Bloquant 1 : aucune police ne se charge
+
+Toutes les requêtes de police répondent **404** : `/fonts/inter/inter-latin-*.woff2`, `/fonts/fira-code/…`, `/fonts/bodoni-moda/…`. `document.fonts` donne `Inter 400 error`, `document.fonts.check('14px Inter')` vaut `false`. Tout le site s'affiche dans la police système de secours.
+
+Cause : `kits/guilloche/theme/assets/styles/ui/_fonts.scss` écrit `url('../../fonts/…')`. Une fois compilé par SassBundle dans `app-*.css`, ce chemin relatif ne passe pas par AssetMapper et tombe sur `/fonts/`, qui n'existe pas. Les fichiers sont pourtant dans `harness/assets/fonts/`.
+
+À faire : des URL que AssetMapper réécrit (chemin relatif au fichier source qu'il résout et versionne), puis vérifier dans l'onglet réseau que chaque woff2 répond 200 et que `document.fonts.check('14px Inter')` vaut `true`. Ajouter ce contrôle au test e2e : une police qui ne charge pas doit faire échouer la CI.
+
+Et puisque les trois références utilisent **Geist** (Bootstrap 6 : `font-family: Geist, -apple-system, …`), passer le thème neutre sur Geist + Geist Mono (licence OFL, à vendorer). Inter reste acceptable, mais elle doit charger. Bodoni ne doit plus être demandée du tout hors du thème de marque : aujourd'hui elle est encore téléchargée par défaut.
+
+### Bloquant 2 : le thème sombre ne s'applique jamais
+
+`<html data-ui-theme="light">` est écrit en dur. Avec un système en sombre (`prefers-color-scheme: dark` vrai), la doc reste blanche. Les trois références suivent le système par défaut et offrent une bascule Clair / Sombre / Système dans la barre du haut. Faire pareil : pas d'attribut par défaut, le contrôleur de thème ne le pose que sur choix explicite, choix gardé en `localStorage`.
+
+### Ce qui date la page de doc
+
+| Aujourd'hui | Base UI, shadcn, Bootstrap 6 |
+|---|---|
+| Titre de page à 50 px | 30 à 36 px, graisse 600, interlettrage -0,02 em |
+| Trait `hr` sous chaque titre de section | Aucun trait : l'espacement sépare |
+| Carte d'exemple avec un en-tête « Intents » + bouton « COPIER » en mono capitales | Un seul bloc : une **scène d'aperçu** large (220 à 300 px de haut, composant centré, rien d'autre), collée à son bloc code |
+| Code gris sans coloration, sans numéros | Coloration syntaxique, numéros de ligne (shadcn), onglets de fichiers (`index.html.twig`, `button.scss`), icône copier en haut à droite |
+| Catalogue : carte blanche + puits gris imbriqué + numéro de version mono + description | Liste ou grille plate ; pas de boîte dans une boîte ; pas de version par composant |
+| Sidebar : logo souligné avec un point, « design system · 1.10.0 » en mono, bouton « Contraste », libellés de groupes en mono capitales | Logo simple, groupes en 13 px casse normale gris, items 14 px, actif en pastille `accent` |
+| Pas de barre du haut | Barre fixe : logo, liens Docs / Composants, recherche `⌘K`, GitHub, version, bascule de thème |
+| Pas de sommaire | Sommaire « Sur cette page » à droite au-delà de 1280 px (Bootstrap 6) |
+| Rien en tête de fiche | Rangée d'actions sous la description : « Voir la source », « Copier la page en Markdown » (Base UI, shadcn) |
+
+### Ce qui date encore les composants
+
+- **Bouton** : la graisse calculée est 400 (le SCSS dit 500 mais quelque chose l'écrase ; à trouver). Passer à 500. `danger` est encore un rouge brique plein (`#a02f29`) : le passer en rouge net (`oklch(0.577 0.245 27)` côté shadcn) et prévoir un variant `danger` discret (texte rouge sur fond `-soft`) pour les usages courants.
+- **Badge** : « En retard » en rouge plein. Tous les badges de statut en fond `-soft` + texte coloré ; plein seulement pour un compteur.
+- **Rayons** : shadcn v4 et Bootstrap 6 sont à 8 px sur les contrôles et 12 à 14 px sur les cartes et la scène d'aperçu. 6 px fait plus ancien.
+- **DatePicker** : l'input natif `jj/mm/aaaa` avec l'icône du navigateur jure à côté du reste. Habiller l'input (icône calendrier à nous, popover avec le composant Calendar) en gardant le natif comme repli sans JS.
+- **Calendar** : une rangée de 5 jours n'est pas un calendrier. Grille 7 colonnes, en-têtes de jours, jours hors mois atténués, aujourd'hui marqué, sélection en `primary`.
+- **Accents** : toujours absents (« controleurs », « distribues », « apercu », « Etiquette », « representer », « Echeance », « Selection », « semantique », « categorie », « Accompagnement d octobre »). C'est le premier signe d'amateurisme pour un lecteur français.
+
+### Ordre de travail
+
+1. Polices (bloquant 1), avec le contrôle e2e.
+2. Thème sombre par défaut système (bloquant 2).
+3. Gabarit de fiche : barre du haut, scène d'aperçu + code coloré à onglets, sommaire, titres.
+4. Sidebar et page catalogue.
+5. Bouton, badge, rayons, DatePicker, Calendar.
+6. Accents partout.
+
+Preuve attendue à chaque étape : captures 1440 px et 390 px, en clair et en sombre, **à côté de la même page sur ui.shadcn.com** (Button, Badge, Calendar, Date Picker). Si on ne peut pas dire laquelle des deux est la nôtre sans lire le nom, c'est bon.

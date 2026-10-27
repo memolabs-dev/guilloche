@@ -1,34 +1,35 @@
 .ui-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.125rem 0.5rem;
+    gap: var(--ui-space-1);
+    height: 20px;
+    padding: 0 var(--ui-space-2);
     border: 1px solid transparent;
-    border-radius: var(--ui-radius-pill);
+    border-radius: var(--ui-radius-sm);
     font-size: var(--ui-text-xs);
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1;
     white-space: nowrap;
 }
 
-.ui-badge--neutral { --ui-badge-color: var(--ui-muted-foreground); --ui-badge-on: var(--ui-background); }
-.ui-badge--primary { --ui-badge-color: var(--ui-primary); --ui-badge-on: var(--ui-primary-foreground); }
-.ui-badge--success { --ui-badge-color: var(--ui-success); --ui-badge-on: var(--ui-success-foreground); }
-.ui-badge--warning { --ui-badge-color: var(--ui-warning); --ui-badge-on: var(--ui-warning-foreground); }
-.ui-badge--danger { --ui-badge-color: var(--ui-danger); --ui-badge-on: var(--ui-danger-foreground); }
-.ui-badge--info { --ui-badge-color: var(--ui-info); --ui-badge-on: var(--ui-info-foreground); }
+.ui-badge--neutral { --ui-badge-color: var(--ui-foreground); --ui-badge-soft: var(--ui-muted); --ui-badge-on: var(--ui-background); }
+.ui-badge--primary { --ui-badge-color: var(--ui-primary); --ui-badge-soft: var(--ui-accent); --ui-badge-on: var(--ui-primary-foreground); }
+.ui-badge--success { --ui-badge-color: var(--ui-success); --ui-badge-soft: var(--ui-success-soft); --ui-badge-on: var(--ui-success-foreground); }
+.ui-badge--warning { --ui-badge-color: var(--ui-warning); --ui-badge-soft: var(--ui-warning-soft); --ui-badge-on: var(--ui-warning-foreground); }
+.ui-badge--danger { --ui-badge-color: var(--ui-danger); --ui-badge-soft: var(--ui-danger-soft); --ui-badge-on: var(--ui-danger-foreground); }
+.ui-badge--info { --ui-badge-color: var(--ui-info); --ui-badge-soft: var(--ui-info-soft); --ui-badge-on: var(--ui-info-foreground); }
 
 .ui-badge--soft {
-    background: color-mix(in srgb, var(--ui-badge-color) 12%, transparent);
+    background: var(--ui-badge-soft);
     color: var(--ui-badge-color);
 }
 
 .ui-badge--solid {
     background: var(--ui-badge-color);
-    color: var(--ui-badge-on, var(--ui-background));
+    color: var(--ui-badge-on);
 }
 
 .ui-badge--outline {
-    border-color: color-mix(in srgb, var(--ui-badge-color) 45%, transparent);
+    border-color: var(--ui-border-strong);
     color: var(--ui-badge-color);
 }
