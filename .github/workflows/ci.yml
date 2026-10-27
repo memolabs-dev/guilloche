@@ -31,6 +31,8 @@ jobs:
         run: npm install -g sass@1.106.1
       - name: Schemas et recettes
         run: ./bin/lint-recipes
+      - name: Miroir du kit dans le harnais
+        run: php bin/check-harness
       - name: Contraste des tokens
         run: ./bin/contrast
       - name: Geometrie et progression des rosettes
