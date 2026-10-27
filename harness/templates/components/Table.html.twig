@@ -1,0 +1,10 @@
+{# Ui:Table — cadre de tableau. caption est le titre accessible du tableau ;
+   l'application fournit thead, tbody et tr. Les cellules numeriques portent
+   la classe ui-table__num pour aligner les chiffres. #}
+{% props caption = null %}
+<div class="ui-table-wrapper">
+  <table {{ attributes.defaults({ class: 'ui-table' }) }}>
+    {% if caption %}<caption class="ui-table__caption">{{ caption }}</caption>{% endif %}
+    {% block content %}{% endblock %}
+  </table>
+</div>

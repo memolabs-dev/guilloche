@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.0] - 2026-10-27
+
+### Ajoute
+- Donnees : `table`, `description-list`, `stat`, `empty-state`, `timeline`, `toast`.
+- Formulaires : `radio-group`, `slider`.
+- Navigation et surfaces : `dropdown-menu`, `popover`.
+- Controleur `ui--toast` (fermeture et `autohide`).
+- Harnais : 34 composants rendus, test de contrat a 40 assertions.
+- `docs/COMPONENTS.md` : catalogue regroupe par famille et vagues suivantes.
+
 ## [1.2.0] - 2026-10-27
 
 ### Ajoute

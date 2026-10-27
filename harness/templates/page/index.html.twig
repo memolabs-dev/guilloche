@@ -159,5 +159,73 @@
         <twig:ui:Icon name="search" />
       </twig:ui:Tooltip>
     </section>
+
+    <section data-recipe="table">
+      <h2>Table</h2>
+      <twig:ui:Table caption="Factures">
+        <thead><tr><th scope="col">Numero</th><th scope="col" class="ui-table__num">Montant</th></tr></thead>
+        <tbody><tr><td>F-2026-010</td><td class="ui-table__num">480,00</td></tr></tbody>
+      </twig:ui:Table>
+    </section>
+
+    <section data-recipe="description-list">
+      <h2>DescriptionList</h2>
+      <twig:ui:DescriptionList :items="[
+        { term: 'Numero', description: 'F-2026-010' },
+        { term: 'Echeance', description: '30 novembre 2026' }
+      ]" />
+    </section>
+
+    <section data-recipe="stat">
+      <h2>Stat</h2>
+      <twig:ui:Stat label="Missions en cours" value="4" hint="Deux attendent votre geste" trend="up" />
+    </section>
+
+    <section data-recipe="empty-state">
+      <h2>EmptyState</h2>
+      <twig:ui:EmptyState title="Aucune mission" message="Creez une mission pour commencer." />
+    </section>
+
+    <section data-recipe="radio-group">
+      <h2>RadioGroup</h2>
+      <twig:ui:RadioGroup id="demo-radio" name="demo-radio" label="Priorite" value="normal" :options="[
+        { value: 'low', label: 'Basse' },
+        { value: 'normal', label: 'Normale' },
+        { value: 'high', label: 'Haute' }
+      ]" />
+    </section>
+
+    <section data-recipe="slider">
+      <h2>Slider</h2>
+      <twig:ui:Slider id="demo-slider" label="Volume" :value="40" />
+    </section>
+
+    <section data-recipe="timeline">
+      <h2>Timeline</h2>
+      <twig:ui:Timeline :items="[
+        { date: '26 octobre 2026', title: 'Document recu', description: 'Synthese de votre situation' },
+        { date: '24 octobre 2026', title: 'Mission ouverte', description: 'Remuneration du dirigeant' }
+      ]" />
+    </section>
+
+    <section data-recipe="toast">
+      <h2>Toast</h2>
+      <twig:ui:Toast id="demo-toast" type="success" title="Enregistre" message="La modification a ete prise en compte." />
+    </section>
+
+    <section data-recipe="dropdown-menu">
+      <h2>DropdownMenu</h2>
+      <twig:ui:DropdownMenu label="Actions" :items="[
+        { label: 'Ouvrir', href: '#' },
+        { label: 'Telecharger', href: '#' }
+      ]" />
+    </section>
+
+    <section data-recipe="popover">
+      <h2>Popover</h2>
+      <twig:ui:Popover label="Details">
+        <p>Contenu du panneau flottant.</p>
+      </twig:ui:Popover>
+    </section>
   </main>
 {% endblock %}

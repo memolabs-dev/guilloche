@@ -1,0 +1,8 @@
+{# Ui:EmptyState — etat vide. title et message sont des textes passes en props ;
+   le slot porte l'action de sortie de l'etat vide. #}
+{% props title, message = null %}
+<div {{ attributes.defaults({ class: 'ui-empty-state' }) }}>
+  <p class="ui-empty-state__title">{{ title }}</p>
+  {% if message %}<p class="ui-empty-state__message">{{ message }}</p>{% endif %}
+  {% block content %}{% endblock %}
+</div>

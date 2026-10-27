@@ -1,0 +1,7 @@
+{# Ui:Slider — valeur sur un intervalle. input natif type=range : clavier,
+   lecteur d'ecran et etapes fonctionnent sans JavaScript. #}
+{% props id, name = null, min = 0, max = 100, step = 1, value = 50, label = null %}
+<label {{ attributes.defaults({ class: 'ui-slider' }) }} for="{{ id }}">
+  {% if label %}<span class="ui-slider__label">{{ label }}</span>{% endif %}
+  <input class="ui-slider__input" type="range" id="{{ id }}" name="{{ name ?? id }}" min="{{ min }}" max="{{ max }}" step="{{ step }}" value="{{ value }}" />
+</label>

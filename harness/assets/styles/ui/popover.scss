@@ -1,0 +1,43 @@
+.ui-popover {
+    position: relative;
+    display: inline-block;
+}
+
+.ui-popover__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+    min-height: 2rem;
+    padding: 0 var(--ui-space-2);
+    border: 1px dashed var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    color: var(--ui-foreground);
+    font-size: var(--ui-text-sm);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: var(--ui-focus-ring);
+    }
+}
+
+.ui-popover__panel {
+    position: absolute;
+    top: calc(100% + var(--ui-space-2));
+    left: 0;
+    z-index: 20;
+    width: min(20rem, calc(100vw - 2rem));
+    padding: var(--ui-space-4);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    background: var(--ui-card);
+    color: var(--ui-card-foreground);
+    box-shadow: var(--ui-shadow-md);
+    font-size: var(--ui-text-sm);
+    line-height: 1.6;
+}

@@ -1,0 +1,12 @@
+{# Ui:Popover — panneau flottant ancre. Repose sur details et summary, donc
+   l'ouverture au clavier et la fermeture sont natives. label est le libelle du
+   declencheur, le slot est le contenu du panneau. #}
+{% props label %}
+<details {{ attributes.defaults({ class: 'ui-popover' }) }}>
+  <summary class="ui-popover__trigger">
+    <span>{{ label }}</span>
+  </summary>
+  <div class="ui-popover__panel">
+    {% block content %}{% endblock %}
+  </div>
+</details>
