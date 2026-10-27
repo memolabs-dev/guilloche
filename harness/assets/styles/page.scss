@@ -784,3 +784,10 @@ body {
     counter-increment: line;
     content: counter(line);
 }
+
+.ds__planche {
+    display: grid;
+    grid-template-columns: repeat(8, 32px);
+    gap: var(--ui-space-3);
+    justify-content: center;
+}

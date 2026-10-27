@@ -17,6 +17,12 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `grid` | 2.0.0 | `columns`, `min`, `gap` | Grille de contenu, fixe ou auto-ajustee |
 | `stack` | 2.0.0 | `direction`, `gap`, `align`, `justify` | Pile d'éléments avec un espacement constant |
 
+## Signature
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `rosette` | 2.0.0 | `seed`, `size`, `progress`, `loading`, `label` | Empreinte guillochée d'un objet : une même graine donne toujours le même dessin |
+
 ## Primitives
 
 | Recette | Version | Props | Description |
