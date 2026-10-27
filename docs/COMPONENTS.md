@@ -10,7 +10,7 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 - Une recette ne depend jamais d'une autre recette du kit : une icone necessaire est un SVG inline.
 - Les composants supposent l'enveloppe `.ui-scope` (fond, texte, reset, focus).
 
-## Livre en 1.3.0
+## Livre en 1.4.0
 
 ### Fondation et primitives
 
@@ -69,17 +69,31 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 
 Les recettes `toggle`, `dialog`, `sheet` et `toast` livrent un controleur Stimulus (`ui--toggle`, `ui--dialog`, `ui--sheet`, `ui--toast`) copie dans `%CONTROLLERS_DIR%`. Sans JavaScript, l'etat rendu par le serveur reste correct ; seules l'ouverture des dialogues, la bascule du toggle et la fermeture du toast en dependent.
 
-## Vague 4 : patterns metier
+### Patterns d'ecran
+
+| Recette | Role | Props principales |
+|---|---|---|
+| ~~`page-header`~~ | En-tete de page avec actions | `title`, `description`, `headingLevel` |
+| ~~`filter-bar`~~ | Filtres et recherche en GET | `action`, `method`, `submitLabel`, `label` |
+| ~~`form-section`~~ | Section de formulaire | `title`, `description` |
+| ~~`detail-layout`~~ | Liste et detail cote a cote | `label`, blocs `list` et `detail` |
+| ~~`sidebar`~~ | Navigation laterale | `label`, `items` |
+| ~~`confirm-dialog`~~ | Confirmation d'une action | `id`, `title`, `message`, `trigger`, `confirmLabel`, `cancelLabel` |
+| ~~`data-region`~~ | Region de resultats a quatre etats | `state`, `loadingMessage`, `errorMessage`, `emptyMessage` |
+
+`confirm-dialog` livre le controleur `ui--confirm-dialog`, qui emet `ui:confirm` avant de fermer.
+
+## Vague 5 : composants restants
 
 | Recette | Role |
 |---|---|
-| `page-header` | En-tete de page avec actions |
-| `filter-bar` | Filtres et recherche |
-| `data-region` | Region de resultats avec chargement, erreur, vide |
-| `form-section` | Section de formulaire |
-| `confirm-dialog` | Confirmation d'une action destructive |
-| `detail-layout` | Liste et detail cote a cote |
-| `sidebar` | Navigation laterale |
+| ~~`page-header`~~ | En-tete de page avec actions |
+| ~~`filter-bar`~~ | Filtres et recherche |
+| ~~`data-region`~~ | Region de resultats avec chargement, erreur, vide |
+| ~~`form-section`~~ | Section de formulaire |
+| ~~`confirm-dialog`~~ | Confirmation d'une action destructive |
+| ~~`detail-layout`~~ | Liste et detail cote a cote |
+| ~~`sidebar`~~ | Navigation laterale |
 | `date-picker` | Selection de date |
 | `file-upload` | Depot de fichier |
 | `combobox` | Champ avec recherche dans une liste |

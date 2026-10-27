@@ -1,0 +1,14 @@
+{# Ui:PageHeader — en-tete de page. title et description sont des textes passes
+   en props ; les actions viennent du slot. headingLevel permet d'eviter un
+   second h1 quand la page en a deja un. #}
+{% props title, description = null, headingLevel = 1 %}
+{% set heading = 'h' ~ headingLevel %}
+<header {{ attributes.defaults({ class: 'ui-page-header' }) }}>
+  <div class="ui-page-header__text">
+    <{{ heading }} class="ui-page-header__title">{{ title }}</{{ heading }}>
+    {% if description %}<p class="ui-page-header__description">{{ description }}</p>{% endif %}
+  </div>
+  {% if block.content is defined %}
+    <div class="ui-page-header__actions">{% block content %}{% endblock %}</div>
+  {% endif %}
+</header>

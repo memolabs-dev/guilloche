@@ -1,0 +1,12 @@
+{# Ui:FilterBar — barre de filtres. Le formulaire reste un formulaire GET natif,
+   donc il fonctionne sans JavaScript. submitLabel est le libelle du bouton,
+   fields vient du slot. #}
+{% props action = null, method = 'get', submitLabel = null, label = 'Filters' %}
+<form {{ attributes.defaults({ class: 'ui-filter-bar', action: action ?? false, method: method, role: 'search', 'aria-label': label }) }}>
+  <div class="ui-filter-bar__fields">{% block content %}{% endblock %}</div>
+  {% if submitLabel %}
+    <div class="ui-filter-bar__actions">
+      <button class="ui-filter-bar__submit" type="submit">{{ submitLabel }}</button>
+    </div>
+  {% endif %}
+</form>

@@ -1,0 +1,8 @@
+{# Ui:DetailLayout — liste et detail cote a cote, empiles sur petit ecran.
+   Deux blocs nommes : list et detail. Le composant ne choisit pas lequel est
+   visible : c'est l'application qui decide selon la selection. #}
+{% props label = null %}
+<div {{ attributes.defaults({ class: 'ui-detail-layout' }) }} {{ label ? 'aria-label="' ~ label ~ '"' }}>
+  <div class="ui-detail-layout__list">{% block list %}{% endblock %}</div>
+  <div class="ui-detail-layout__detail">{% block detail %}{% endblock %}</div>
+</div>
