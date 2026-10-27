@@ -791,3 +791,75 @@ body {
     gap: var(--ui-space-3);
     justify-content: center;
 }
+
+// Mobile : le contenu de la barre supérieure doit rester dans 390 px,
+// sans masquer un débordement du document par overflow-x: hidden.
+@media (max-width: 45rem) {
+    .ds__topbar {
+        gap: var(--ui-space-2);
+        padding-inline: var(--ui-space-3);
+    }
+
+    .ds__topnav,
+    .ds__toplink,
+    .ds__version {
+        display: none;
+    }
+
+    .ds__brand {
+        flex: none;
+        font-size: var(--ui-text-lg);
+    }
+
+    .ds__search {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 16rem;
+        width: auto;
+        margin-inline-start: 0;
+    }
+
+    .ds__search input {
+        min-width: 0;
+    }
+
+    .ds__theme {
+        flex: none;
+    }
+
+    .ds {
+        padding: var(--ui-space-5) var(--ui-space-3) var(--ui-space-8);
+    }
+
+    .ds__layout,
+    .ds__content,
+    .ds__examples,
+    .ds__example,
+    .ds__example-code {
+        min-width: 0;
+    }
+
+    .ds__example-render {
+        min-width: 0;
+        padding: var(--ui-space-4);
+    }
+
+    .ds__code-tabs {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .ds__code-tab {
+        flex: none;
+        white-space: nowrap;
+    }
+
+    .ds__pager a {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .ds__planche {
+        grid-template-columns: repeat(6, 32px);
+    }
+}

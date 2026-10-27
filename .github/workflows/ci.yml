@@ -60,3 +60,52 @@ jobs:
       - name: Journal du harnais si echec
         if: failure()
         run: tail -50 harness/var/log/dev.log 2>/dev/null || true
+
+  browser:
+    name: Rendu réel Chromium — bureau et mobile
+    runs-on: ubuntu-latest
+    needs: kit
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Dépendances CSS, Playwright et Chromium
+        run: |
+          npm install -g sass@1.106.1
+          npm install --no-save --no-package-lock @playwright/test@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Installer et compiler le harnais Symfony
+        run: |
+          composer install --no-interaction --no-progress --no-scripts --working-dir=harness
+          php harness/bin/console sass:build
+          php harness/bin/console asset-map:compile
+      - name: Démarrer Symfony sur un port local
+        run: |
+          php -S 127.0.0.1:8088 -t harness/public > /tmp/guilloche-browser.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8088/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/guilloche-browser.log
+          exit 1
+      - name: Tester polices, couleurs, vues et rendu sans JavaScript
+        run: node --test harness/tests/browser.e2e.cjs
+      - name: Captures de preuve (28 écrans)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guilloche-proof
+          path: harness/var/evidence/*.png
+          if-no-files-found: warn
+      - name: Journal du serveur si échec
+        if: failure()
+        run: tail -100 /tmp/guilloche-browser.log || true
