@@ -12,6 +12,7 @@ Cadre de tableau. L'application fournit `thead`, `tbody` et `tr`.
 ## Classes
 
 - `.ui-table__num` sur les cellules numeriques : alignement a droite et chiffres tabulaires.
+- `serial=true` marque la **première colonne** comme identifiant (Geist Mono, zéro barré, chiffres tabulaires). Pour une autre colonne, appliquer `.ui-serial` aux cellules concernées. Les montants ne doivent pas utiliser `.ui-serial`.
 
 ## Exemple
 
