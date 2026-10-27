@@ -30,7 +30,9 @@ document.querySelectorAll('[data-ui--seal-seed-value]').forEach((element) => {
     const path = element.querySelector('.ui-seal__trace');
     if (!path) return;
     const seed = element.getAttribute('data-ui--seal-seed-value') || 'guilloche';
-    path.setAttribute('d', trace(parameters(seed)));
+    if (element.getAttribute('data-ui--seal-ssr-value') !== 'true') {
+        path.setAttribute('d', trace(parameters(seed)));
+    }
     const seal = element.closest('.ui-seal');
     if (!seal || !seal.classList.contains('ui-seal--validated') ||
         element.getAttribute('data-ui--seal-fresh-value') !== 'true' ||
