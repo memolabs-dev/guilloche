@@ -31,7 +31,7 @@ Guilloche se positionne donc comme un **design system natif Symfony pour les app
 
 ## Catalogue
 
-Le kit livre la fondation (`theme`) et 16 composants : `button`, `icon`, `badge`, `card`, `separator`, `skeleton`, `kbd`, `alert`, `avatar`, `progress`, `field`, `input`, `textarea`, `select`, `checkbox`, `switch`.
+Le kit livre la fondation (`theme`) et 24 composants : `button`, `icon`, `badge`, `card`, `separator`, `skeleton`, `kbd`, `alert`, `avatar`, `progress`, `field`, `input`, `textarea`, `select`, `checkbox`, `switch`, `breadcrumb`, `pagination`, `toggle`, `accordion`, `tabs`, `dialog`, `sheet`, `tooltip`.
 
 Le catalogue detaille, les principes et les vagues suivantes sont dans [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
 

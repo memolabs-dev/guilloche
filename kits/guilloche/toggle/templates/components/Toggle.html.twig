@@ -1,0 +1,13 @@
+{# Ui:Toggle — bouton a deux etats. pressed pose aria-pressed ; le libelle vient
+   du slot. Le controleur ui--toggle bascule l'etat au clic si l'application
+   l'enregistre, sinon c'est le serveur qui rend l'etat. #}
+{% props pressed = false, label = null %}
+<button {{ attributes.defaults({
+  class: 'ui-toggle' ~ (pressed ? ' is-pressed' : ''),
+  type: 'button',
+  'aria-pressed': pressed ? 'true' : 'false',
+  'aria-label': label ?? false,
+  'data-controller': 'ui--toggle'
+}) }}>
+  <span class="ui-toggle__label">{% block content %}{% endblock %}</span>
+</button>

@@ -99,5 +99,65 @@
       <h2>Switch</h2>
       <twig:ui:Switch id="demo-switch" label="Theme sombre" />
     </section>
+
+    <section data-recipe="breadcrumb">
+      <h2>Breadcrumb</h2>
+      <twig:ui:Breadcrumb :items="[
+        { label: 'Accueil', href: '#' },
+        { label: 'Missions', href: '#' },
+        { label: 'Mission 42' }
+      ]" />
+    </section>
+
+    <section data-recipe="pagination">
+      <h2>Pagination</h2>
+      <twig:ui:Pagination :items="[
+        { label: '1', href: '#' },
+        { label: '2', href: '#', current: true },
+        { label: '3', href: '#' }
+      ]" :previous="{ label: 'Precedent', href: '#' }" :next="{ label: 'Suivant', href: '#' }" />
+    </section>
+
+    <section data-recipe="toggle">
+      <h2>Toggle</h2>
+      <twig:ui:Toggle :pressed="true">Favoris</twig:ui:Toggle>
+      <twig:ui:Toggle>Archive</twig:ui:Toggle>
+    </section>
+
+    <section data-recipe="accordion">
+      <h2>Accordion</h2>
+      <twig:ui:Accordion summary="Conditions de la mission" open>
+        <p>Contenu de la section.</p>
+      </twig:ui:Accordion>
+    </section>
+
+    <section data-recipe="tabs">
+      <h2>Tabs</h2>
+      <twig:ui:Tabs :items="[
+        { label: 'En cours', href: '#', current: true },
+        { label: 'Terminees', href: '#' }
+      ]" />
+    </section>
+
+    <section data-recipe="dialog">
+      <h2>Dialog</h2>
+      <twig:ui:Dialog id="demo-dialog" title="Confirmer l'envoi" trigger="Ouvrir le dialogue">
+        <p>Cette action est definitive.</p>
+      </twig:ui:Dialog>
+    </section>
+
+    <section data-recipe="sheet">
+      <h2>Sheet</h2>
+      <twig:ui:Sheet id="demo-sheet" title="Filtres" trigger="Ouvrir le panneau" side="right">
+        <p>Contenu du panneau lateral.</p>
+      </twig:ui:Sheet>
+    </section>
+
+    <section data-recipe="tooltip">
+      <h2>Tooltip</h2>
+      <twig:ui:Tooltip text="Raccourci Ctrl K">
+        <twig:ui:Icon name="search" />
+      </twig:ui:Tooltip>
+    </section>
   </main>
 {% endblock %}

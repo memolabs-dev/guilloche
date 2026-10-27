@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2026-10-27
+
+### Ajoute
+- `breadcrumb`, `pagination`, `toggle`, `accordion` (details natif), `tabs` (onglets de navigation par URL), `dialog` et `sheet` (`<dialog>` natif), `tooltip`.
+- Controleurs Stimulus `ui--toggle`, `ui--dialog`, `ui--sheet`, copies dans `%CONTROLLERS_DIR%`.
+- Harnais : page catalogue des 24 composants, test de contrat a 30 assertions.
+- `docs/COMPONENTS.md` : catalogue a jour et vagues suivantes.
+
 ## [1.1.0] - 2026-10-27
 
 ### Ajoute

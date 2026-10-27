@@ -34,5 +34,15 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('select.ui-select');
         $this->assertSelectorExists('input.ui-check__input[type="checkbox"]');
         $this->assertSelectorExists('input.ui-switch__input[role="switch"]');
+
+        $this->assertSelectorExists('nav.ui-breadcrumb[aria-label]');
+        $this->assertSelectorExists('.ui-breadcrumb__current[aria-current="page"]');
+        $this->assertSelectorExists('nav.ui-pagination .ui-pagination__page.is-current');
+        $this->assertSelectorExists('button.ui-toggle[aria-pressed="true"]');
+        $this->assertSelectorExists('details.ui-accordion[open] > summary.ui-accordion__summary');
+        $this->assertSelectorExists('.ui-tabs__tab.is-current[aria-current="page"]');
+        $this->assertSelectorExists('dialog.ui-dialog#demo-dialog');
+        $this->assertSelectorExists('dialog.ui-sheet.ui-sheet--right#demo-sheet');
+        $this->assertSelectorExists('.ui-tooltip__bubble[role="tooltip"]');
     }
 }

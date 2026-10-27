@@ -10,7 +10,7 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 - Une recette ne depend jamais d'une autre recette du kit : une icone necessaire est un SVG inline.
 - Les composants supposent l'enveloppe `.ui-scope` (fond, texte, reset, focus).
 
-## Livre en 1.1.0
+## Livre en 1.2.0
 
 | Recette | Role | Props principales |
 |---|---|---|
@@ -31,21 +31,16 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 | `select` | Liste native | `id`, `options`, `value`, `placeholder`, `invalid` |
 | `checkbox` | Case native habillee | `id`, `label`, `checked`, `disabled` |
 | `switch` | Interrupteur binaire | `id`, `label`, `checked`, `disabled` |
+| `breadcrumb` | Fil d'Ariane | `items`, `label` |
+| `pagination` | Navigation entre pages | `items`, `previous`, `next`, `label` |
+| `toggle` | Bouton a deux etats (`aria-pressed`) | `pressed`, `label` |
+| `accordion` | Section repliable native (`details`) | `summary`, `open` |
+| `tabs` | Onglets de navigation par URL | `items`, `label` |
+| `dialog` | Boite modale native | `id`, `title`, `trigger`, `description` |
+| `sheet` | Panneau lateral modal | `id`, `title`, `trigger`, `description`, `side` |
+| `tooltip` | Aide courte survol et focus | `text`, `id` |
 
-## Vague 2 : navigation et surfaces
-
-| Recette | Role |
-|---|---|
-| `tabs` | Onglets avec panneaux, navigation clavier |
-| `breadcrumb` | Fil d'Ariane |
-| `pagination` | Pagination de liste |
-| `accordion` | Sections repliables |
-| `dialog` | Boite modale native (`<dialog>`) |
-| `sheet` | Panneau lateral |
-| `dropdown-menu` | Menu d'actions |
-| `popover` | Contenu flottant ancre |
-| `tooltip` | Aide courte au survol et au focus |
-| `toggle` / `toggle-group` | Bascule d'etat |
+Les recettes `toggle`, `dialog` et `sheet` livrent un controleur Stimulus (`ui--toggle`, `ui--dialog`, `ui--sheet`) copie dans `%CONTROLLERS_DIR%`. Sans JavaScript, l'etat rendu par le serveur reste correct ; seules l'ouverture des dialogues et la bascule du toggle en dependent.
 
 ## Vague 3 : donnees
 
@@ -62,6 +57,9 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 | `slider` | Valeur sur un intervalle |
 | `date-picker` | Selection de date |
 | `file-upload` | Depot de fichier |
+| `dropdown-menu` | Menu d'actions |
+| `popover` | Contenu flottant ancre |
+| `toggle-group` | Groupe de bascules |
 
 ## Vague 4 : patterns metier
 
@@ -85,7 +83,7 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 
 ## Ajouter un composant
 
-1. Creer `kits/guilloche/<nom>/` avec `manifest.json`, `README.md`, `templates/components/<Nom>.html.twig` et `assets/styles/ui/<nom>.scss`.
+1. Creer `kits/guilloche/<nom>/` avec `manifest.json`, `README.md`, `templates/components/<Nom>.html.twig`, `assets/styles/ui/<nom>.scss` et, si besoin, `assets/controllers/`.
 2. Ne dependre d'aucune autre recette ; les icones sont des SVG inline.
 3. Ajouter le composant a `kits/guilloche/styles.scss` et a l'ordre de `bin/sync-harness`.
 4. Rendre le composant dans `harness/templates/page/index.html.twig` et l'assertion correspondante dans `harness/tests/PageTest.php`.
