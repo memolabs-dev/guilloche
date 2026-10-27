@@ -50,6 +50,10 @@
     --ui-info-soft: oklch(0.965 0.02 255);
     --ui-info-foreground: oklch(0.985 0 0);
 
+    --ui-attention: oklch(0.5 0.13 45);
+    --ui-attention-soft: oklch(0.98 0.018 55);
+    --ui-attention-line: oklch(0.84 0.07 50);
+
     // Formes
     --ui-radius-sm: 4px;
     --ui-radius-md: 8px;
@@ -127,6 +131,9 @@
     --ui-info-soft: oklch(0.26 0.04 255);
     --ui-info-foreground: oklch(0.18 0.02 255);
 
+    --ui-attention: oklch(0.78 0.11 55);
+    --ui-attention-soft: oklch(0.27 0.05 50);
+    --ui-attention-line: oklch(0.45 0.08 50);
     --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
     --ui-shadow-md: 0 4px 12px oklch(0 0 0 / 0.4), 0 1px 2px oklch(0 0 0 / 0.2);
     --ui-shadow-lg: 0 16px 40px oklch(0 0 0 / 0.5), 0 2px 8px oklch(0 0 0 / 0.3);
@@ -161,6 +168,9 @@
     --ui-accent: #e3e9e0;
     --ui-ring: #1f5a33;
 
+    --ui-attention: #a34614;
+    --ui-attention-soft: #f7ebdd;
+    --ui-attention-line: #c27530;
     --ui-danger: #a02f29;
     --ui-danger-soft: #f6e0dc;
     --ui-danger-foreground: #ffffff;
@@ -200,6 +210,9 @@
     --ui-accent: #183022;
     --ui-ring: #9fd8b0;
 
+    --ui-attention: #eaa96a;
+    --ui-attention-soft: #33230f;
+    --ui-attention-line: #c98546;
     --ui-danger: #f1a49a;
     --ui-danger-soft: #2a1210;
     --ui-danger-foreground: #2a0f0c;
@@ -248,6 +261,9 @@
         --ui-info: oklch(0.74 0.1 255);
         --ui-info-soft: oklch(0.26 0.04 255);
         --ui-info-foreground: oklch(0.18 0.02 255);
+        --ui-attention: oklch(0.78 0.11 55);
+        --ui-attention-soft: oklch(0.27 0.05 50);
+        --ui-attention-line: oklch(0.45 0.08 50);
         --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
         --ui-shadow-md: 0 4px 12px oklch(0 0 0 / 0.4), 0 1px 2px oklch(0 0 0 / 0.2);
         --ui-shadow-lg: 0 16px 40px oklch(0 0 0 / 0.5), 0 2px 8px oklch(0 0 0 / 0.3);
