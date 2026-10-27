@@ -123,6 +123,27 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-seal time[datetime="2026-10-12T10:30:00"]');
     }
 
+    public function testPreRenderSubscriberComputesDistinctStablePathsFromSeedOnly(): void
+    {
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/components/rosette');
+        $this->assertResponseIsSuccessful();
+
+        $shapes = $crawler->filter('.ds__planche .ui-rosette__main')->each(
+            static fn ($node): string => (string) $node->attr('d')
+        );
+        self::assertCount(48, $shapes);
+        self::assertCount(48, array_unique($shapes));
+        self::assertTrue(strlen($shapes[0]) > 1000);
+        $client->request('GET', '/components/seal');
+        $this->assertResponseIsSuccessful();
+        $again = $client->request('GET', '/components/rosette');
+        $shapesAgain = $again->filter('.ds__planche .ui-rosette__main')->each(
+            static fn ($node): string => (string) $node->attr('d')
+        );
+        self::assertSame($shapes, $shapesAgain, 'Path geometry must not depend on render instance or request');
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');

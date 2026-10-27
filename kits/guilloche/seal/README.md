@@ -52,3 +52,7 @@ Le harnais de documentation fournit aussi la fonction Twig d'exemple `guilloche_
 Le sceau est un indicateur visuel de validation **fourni par l'application**, pas une preuve cryptographique ou une signature électronique. Le serveur reste responsable de l'identité et des droits du valideur.
 
 L'animation n'est ajoutée par Stimulus qu'au premier affichage d'un événement `fresh` : aucune animation sans JavaScript, ni en mode `prefers-reduced-motion`. L'identifiant d'événement est dérivé de `by` et `at` ; fournir une date distincte pour chaque validation.
+
+## Mode Symfony automatique — by seule
+
+Le même `Guilloche\Signature\AutoGeometrySubscriber` que pour la rosette complète le tracé de `Seal` automatiquement d'après la prop `by`. Après **une seule déclaration de service** dans `config/services.yaml`, `<twig:ui:Seal text="Validé" by="42" />` contient déjà les chemins du signataire côté serveur. Une prop `path` explicite conserve la priorité. Sans le service, le fallback de la recette continue de fonctionner.
