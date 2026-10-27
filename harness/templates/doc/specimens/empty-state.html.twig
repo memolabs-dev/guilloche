@@ -1,0 +1,15 @@
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">État vide standard</h3></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:EmptyState title="Aucune mission" message="Créez une mission pour commencer." />
+  </div>
+  {{ m.code('<twig:ui:EmptyState title="Aucune mission" />') }}
+</div>
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Filigrane discret en sombre</h3></div>
+  <div class="ds__example-render ds__example-render--column">
+    <twig:ui:EmptyState title="Aucun dossier" message="Le prochain dossier apparaîtra ici." watermark />
+  </div>
+  {{ m.code('<twig:ui:EmptyState title="Aucun dossier" watermark />') }}
+</div>

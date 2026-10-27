@@ -33,3 +33,42 @@
     align-items: center;
     gap: var(--ui-space-2);
 }
+
+// Une signature au plus par écran : filigrane strictement opt-in et en
+// contre-jour. Le contenu est au premier plan, sans perte de contraste.
+.ui-page-header--watermark {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.ui-page-header--watermark > :not(.ui-page-header__watermark) {
+    position: relative;
+    z-index: 1;
+}
+
+.ui-page-header__watermark {
+    display: none;
+    position: absolute;
+    width: clamp(15rem, 28vw, 25rem);
+    height: auto;
+    top: -9rem;
+    right: -6rem;
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+}
+
+[data-ui-theme='dark'] .ui-page-header__watermark {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-ui-theme]):not([data-ui-brand='guilloche']) .ui-page-header__watermark {
+        display: block;
+    }
+}
+
+[data-ui-theme='light'] .ui-page-header__watermark {
+    display: none;
+}

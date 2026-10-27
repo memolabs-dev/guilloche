@@ -35,7 +35,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `button` | 1.0.0 | `variant`, `intent`, `appearance`, `size`, `type`, `href`, `disabled`, `loading` | Composant bouton natif Symfony, installé par le Symfony UX Toolkit. Aucun libellé en dur : le texte est passé par le slot |
 | `button-group` | 1.7.0 | `label` | Boutons contigus, avec des coins arrondis aux extremites seulement |
 | `card` | 1.1.0 | `title`, `description`, `footer` | Surface de contenu avec en-tete et pied optionnels |
-| `empty-state` | 1.3.0 | `title`, `message` | Etat vide, avec une action de sortie dans le slot |
+| `empty-state` | 1.3.0 | `title`, `message`, `watermark`, `watermarkPath` | Etat vide, avec une action de sortie dans le slot |
 | `icon` | 1.1.0 | `name`, `size` | Jeu d'icônes au trait, décoratif par défaut. Aucun libellé en dur |
 | `kbd` | 1.1.0 | aucune | Touche ou raccourci clavier |
 | `marker` | 1.7.0 | aucune | Passage surligne dans un texte |
@@ -109,7 +109,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `detail-layout` | 1.4.0 | `label` | Liste et detail cote a cote sur grand écran, empiles sur mobile |
 | `filter-bar` | 1.4.0 | `action`, `method`, `submitLabel`, `label` | Barre de filtres sous forme de formulaire GET : elle fonctionne sans JavaScript et l'URL porte l'etat |
 | `form-section` | 1.4.0 | `title`, `description` | Section de formulaire avec titre et description |
-| `page-header` | 1.4.0 | `title`, `description`, `headingLevel` | En-tete de page avec titre, description et actions |
+| `page-header` | 1.4.0 | `title`, `description`, `headingLevel`, `watermark`, `watermarkPath` | En-tete de page avec titre, description et actions |
 | `sidebar` | 1.4.0 | `label`, `items` | Navigation laterale, sans JavaScript |
 
 ## Composants avances
