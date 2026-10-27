@@ -35,11 +35,33 @@ Le kit livre la fondation (`theme`) et 47 composants : primitives, formulaires, 
 
 Le catalogue detaille, les principes et les vagues suivantes sont dans [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
 
-## Installation de la recette bouton
+## Installation
+
+Comme dependance Composer, une fois le paquet publie sur Packagist :
+
+```shell
+composer require memolabs-dev/guilloche
+```
+
+Sans publication, declarer la source VCS dans le projet consommateur :
+
+```json
+{
+    "repositories": [
+        { "type": "vcs", "url": "https://github.com/memolabs-dev/guilloche" }
+    ]
+}
+```
+
+Puis installer une recette avec le Toolkit :
 
 ```shell
 php bin/console ux:install button --kit guilloche
 ```
+
+Sans Composer, le depot peut etre clone : les styles sont dans `kits/guilloche/**/assets/styles/ui/` et le CSS precompile dans `dist/guilloche.css`.
+
+La procedure de publication est dans [`docs/PACKAGIST.md`](docs/PACKAGIST.md).
 
 ## Provenance
 
