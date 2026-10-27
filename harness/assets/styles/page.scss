@@ -264,6 +264,20 @@ body {
     text-decoration: underline;
 }
 
+.ds__rail-toggle {
+    display: none;
+    align-items: center;
+    height: 36px;
+    padding: 0 var(--ui-space-3);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-surface);
+    color: var(--ui-foreground);
+    font: inherit;
+    font-size: var(--ui-text-sm);
+    cursor: pointer;
+}
+
 .ds__nav-family {
     margin: var(--ui-space-4) 0 2px;
     padding-inline: var(--ui-space-2);
@@ -540,6 +554,20 @@ body {
 
 .ds__pager a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 60rem) {
+    .ds__rail-toggle {
+        display: inline-flex;
+    }
+
+    .ds__nav {
+        display: none;
+    }
+
+    .ds__nav.is-open {
+        display: grid;
+    }
 }
 
 @media (max-width: 72rem) {

@@ -12,7 +12,8 @@
   <a class="ds__brand" href="{{ path('app_home') }}">Guilloche</a>
   <p class="ds__version">design system · 1.10.0</p>
   <button class="ds__theme" type="button" data-doc-theme aria-label="Changer de thème">Contraste</button>
-  <nav class="ds__nav" aria-label="Composants">
+  <button class="ds__rail-toggle" type="button" data-doc-nav aria-expanded="false">Navigation</button>
+  <nav class="ds__nav" aria-label="Composants" data-doc-nav-panel>
     <a class="ds__nav-home" href="{{ path('app_home') }}">Catalogue</a>
     {% for family, items in families %}
       <p class="ds__nav-family">{{ labels[family] ?? family }}</p>
