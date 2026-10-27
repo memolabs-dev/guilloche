@@ -15,10 +15,11 @@ export default class extends Controller {
         main.setAttribute('d', this.trace(parameters));
         counter.setAttribute('d', this.trace({ ...parameters, petals: parameters.petals + 2, phase: parameters.phase + Math.PI / parameters.copies }));
 
-        if (this.progressValue < 100) {
+        const progress = Number.isFinite(this.progressValue) ? Math.min(100, Math.max(0, this.progressValue)) : 100;
+        if (progress < 100) {
             const length = main.getTotalLength();
             main.style.strokeDasharray = String(length);
-            main.style.strokeDashoffset = String(length * (1 - this.progressValue / 100));
+            main.style.strokeDashoffset = String(length * (1 - progress / 100));
         }
     }
 
@@ -51,7 +52,7 @@ export default class extends Controller {
                 const radius = 45 * Math.cos(petals * t);
                 const x = radius * Math.cos(t + rotation) * skew;
                 const y = radius * Math.sin(t + rotation);
-                points.push(`${step === 0 && copy === 0 ? 'M' : 'L'}${(50 + x).toFixed(2)} ${(50 + y).toFixed(2)}`);
+                points.push(`${step === 0 ? 'M' : 'L'}${(50 + x).toFixed(2)} ${(50 + y).toFixed(2)}`);
             }
         }
         return points.join(' ');
