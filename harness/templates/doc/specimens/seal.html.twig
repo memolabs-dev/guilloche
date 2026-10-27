@@ -6,7 +6,7 @@
     <twig:ui:Seal text="Signé par C. Martin" by="camille" at="2026-10-14T09:00:00" atLabel="14 oct." />
     <twig:ui:Seal text="En attente de votre validation" by="guillaume" state="pending" />
   </div>
-  {{ m.code('<twig:ui:Seal text="Validé par vous" by="guillaume" at="2026-10-12" atLabel="12 oct." :path="guilloche_seal_path(\'guillaume\')" />') }}
+  {{ m.code('<twig:ui:Seal text="Validé par vous" by="guillaume" at="2026-10-12" atLabel="12 oct." />') }}
 </div>
 
 <div class="ds__example">
@@ -14,7 +14,7 @@
   <div class="ds__example-render ds__example-render--compact">
     <twig:ui:Seal text="Validé à l'instant" by="guillaume" fresh />
   </div>
-  {{ m.code('<twig:ui:Seal text="Validé à l\'instant" by="guillaume" fresh :path="guilloche_seal_path(\'guillaume\')" />') }}
+  {{ m.code('<twig:ui:Seal text="Validé à l\'instant" by="guillaume" fresh />') }}
 </div>
 
 <div class="ds__example">
@@ -26,5 +26,5 @@
       <div class="ui-list-group__item"><span>Population de l'étude</span><twig:ui:Seal text="En attente" by="camille" state="pending" /></div>
     </div>
   </div>
-  {{ m.code('<twig:ui:Seal text="En attente" by="guillaume" state="pending" :path="guilloche_seal_path(\'guillaume\')" />') }}
+  {{ m.code('<twig:ui:Seal text="En attente" by="guillaume" state="pending" />') }}
 </div>
