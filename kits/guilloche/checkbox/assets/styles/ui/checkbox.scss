@@ -1,0 +1,55 @@
+.ui-check {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-3);
+    min-height: 2.5rem;
+    font-size: var(--ui-text-md);
+    cursor: pointer;
+    position: relative;
+}
+
+.ui-check.is-disabled {
+    cursor: not-allowed;
+    color: var(--ui-muted-foreground);
+}
+
+.ui-check__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.ui-check__box {
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+    border: 1px solid var(--ui-border);
+    border-radius: 0.3125rem;
+    background: var(--ui-input);
+    color: transparent;
+    transition: background-color var(--ui-duration-fast) var(--ui-ease), border-color var(--ui-duration-fast) var(--ui-ease);
+}
+
+.ui-check__input:checked + .ui-check__box {
+    border-color: var(--ui-primary);
+    background: var(--ui-primary);
+    color: var(--ui-primary-foreground);
+}
+
+.ui-check__input:focus-visible + .ui-check__box {
+    outline: none;
+    box-shadow: var(--ui-focus-ring);
+}
+
+.ui-check__input:disabled + .ui-check__box {
+    border-style: dashed;
+    background: var(--ui-muted);
+}

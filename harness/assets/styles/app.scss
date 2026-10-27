@@ -1,3 +1,21 @@
-// Ui:Button — point d'entree Sass du harnais, kit Guilloche.
-// Importe les primitives du composant bouton de la recette temoin.
-@import './ui/button.scss';
+// Fichier genere par bin/sync-harness : ne pas editer a la main.
+// Ordre : tokens, base, puis un fichier par composant.
+@use './ui/tokens';
+@use './ui/reset';
+@use './ui/typography';
+@use './ui/button';
+@use './ui/icon';
+@use './ui/badge';
+@use './ui/card';
+@use './ui/separator';
+@use './ui/skeleton';
+@use './ui/kbd';
+@use './ui/alert';
+@use './ui/avatar';
+@use './ui/progress';
+@use './ui/field';
+@use './ui/input';
+@use './ui/textarea';
+@use './ui/select';
+@use './ui/checkbox';
+@use './ui/switch';

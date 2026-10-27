@@ -1,0 +1,11 @@
+{# Ui:Switch — interrupteur binaire. Input natif de type checkbox avec
+   role="switch" : l'etat est annonce correctement par les lecteurs d'ecran. #}
+{% props id, name = null, label, checked = false, disabled = false, describedBy = null %}
+<label {{ attributes.defaults({ class: 'ui-switch' ~ (disabled ? ' is-disabled' : '') }) }} for="{{ id }}">
+  <input class="ui-switch__input" type="checkbox" role="switch" id="{{ id }}" name="{{ name ?? id }}"
+    {%- if checked %} checked{% endif %}
+    {%- if disabled %} disabled{% endif %}
+    {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif %} />
+  <span class="ui-switch__track" aria-hidden="true"></span>
+  <span class="ui-switch__label">{{ label }}</span>
+</label>

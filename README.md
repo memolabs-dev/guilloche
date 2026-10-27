@@ -29,6 +29,12 @@ Guilloche se positionne donc comme un **design system natif Symfony pour les app
 - Base CSS : tokens maison, aucun Bootstrap.
 - Dépendances inter-kits de recettes : **non supportées** par le Toolkit (voir `kits/guilloche/button/README.md`).
 
+## Catalogue
+
+Le kit livre la fondation (`theme`) et 16 composants : `button`, `icon`, `badge`, `card`, `separator`, `skeleton`, `kbd`, `alert`, `avatar`, `progress`, `field`, `input`, `textarea`, `select`, `checkbox`, `switch`.
+
+Le catalogue detaille, les principes et les vagues suivantes sont dans [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
+
 ## Installation de la recette bouton
 
 ```shell

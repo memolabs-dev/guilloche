@@ -1,0 +1,27 @@
+.ui-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-3);
+}
+
+.ui-progress__track {
+    flex: 1;
+    height: 0.5rem;
+    border-radius: var(--ui-radius-pill);
+    background: var(--ui-muted);
+    overflow: hidden;
+}
+
+.ui-progress__bar {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--ui-primary);
+    transition: width var(--ui-duration) var(--ui-ease);
+}
+
+.ui-progress__value {
+    font-size: var(--ui-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--ui-muted-foreground);
+}

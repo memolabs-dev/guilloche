@@ -1,0 +1,51 @@
+// Reset minimal du kit : il ne remplace pas celui de l'application, il pose
+// seulement ce dont les composants ont besoin pour etre previsibles.
+.ui-scope,
+.ui-scope *,
+.ui-scope *::before,
+.ui-scope *::after {
+    box-sizing: border-box;
+}
+
+.ui-scope {
+    background: var(--ui-background);
+    color: var(--ui-foreground);
+    font-family: var(--ui-font-sans);
+    font-size: var(--ui-text-md);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.ui-scope :where(button, input, select, textarea) {
+    font: inherit;
+    color: inherit;
+}
+
+.ui-scope :where(h1, h2, h3, h4, p, dl, dd, ol, ul, figure, pre) {
+    margin: 0;
+}
+
+.ui-scope :where(ol, ul) {
+    padding: 0;
+    list-style: none;
+}
+
+.ui-scope :where(a) {
+    color: inherit;
+}
+
+.ui-scope :where(:focus-visible) {
+    outline: none;
+    box-shadow: var(--ui-focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-scope *,
+    .ui-scope *::before,
+    .ui-scope *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,24 @@
+// Entree SCSS du kit Guilloche.
+// Ordre : tokens, base, puis un fichier par composant.
+// Compiler avec ./bin/build-css pour produire dist/guilloche.css.
+@use 'theme/assets/styles/ui/tokens';
+@use 'theme/assets/styles/ui/reset';
+@use 'theme/assets/styles/ui/typography';
+
+@use 'button/assets/styles/ui/button';
+@use 'icon/assets/styles/ui/icon';
+@use 'badge/assets/styles/ui/badge';
+@use 'card/assets/styles/ui/card';
+@use 'separator/assets/styles/ui/separator';
+@use 'skeleton/assets/styles/ui/skeleton';
+@use 'kbd/assets/styles/ui/kbd';
+@use 'alert/assets/styles/ui/alert';
+@use 'avatar/assets/styles/ui/avatar';
+@use 'progress/assets/styles/ui/progress';
+
+@use 'field/assets/styles/ui/field';
+@use 'input/assets/styles/ui/input';
+@use 'textarea/assets/styles/ui/textarea';
+@use 'select/assets/styles/ui/select';
+@use 'checkbox/assets/styles/ui/checkbox';
+@use 'switch/assets/styles/ui/switch';

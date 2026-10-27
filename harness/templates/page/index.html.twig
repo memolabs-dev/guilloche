@@ -1,16 +1,103 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recette temoin : Button{% endblock %}
+{% block title %}Harnais de contrat du kit Guilloche{% endblock %}
 
 {% block body %}
-  <main class="page">
-    <h1>Guilloche - recette temoin</h1>
-    <p>Rendu de la recette <code>button</code> du kit Guilloche.</p>
-    <twig:ui:Button intent="primary" size="lg">
-      Valider la mission
-    </twig:ui:Button>
-    <twig:ui:Button appearance="ghost">
-      Bouton secondaire
-    </twig:ui:Button>
+  <main class="page ui-scope">
+    <h1>Guilloche - harnais de contrat</h1>
+    <p>Chaque recette du kit est rendue ici avec des donnees neutres. <code>bin/sync-harness</code> copie templates, controleurs et styles depuis <code>kits/guilloche</code>.</p>
+
+    <section data-recipe="button">
+      <h2>Button</h2>
+      <twig:ui:Button intent="primary" size="lg">Action principale</twig:ui:Button>
+      <twig:ui:Button appearance="ghost">Action secondaire</twig:ui:Button>
+      <twig:ui:Button loading>Enregistrement</twig:ui:Button>
+    </section>
+
+    <section data-recipe="icon">
+      <h2>Icon</h2>
+      <twig:ui:Icon name="search" />
+      <twig:ui:Icon name="alert" :size="16" />
+    </section>
+
+    <section data-recipe="badge">
+      <h2>Badge</h2>
+      <twig:ui:Badge tone="success">Valide</twig:ui:Badge>
+      <twig:ui:Badge tone="danger" variant="solid">En retard</twig:ui:Badge>
+      <twig:ui:Badge tone="info" variant="outline">Information</twig:ui:Badge>
+    </section>
+
+    <section data-recipe="card">
+      <h2>Card</h2>
+      <twig:ui:Card title="Titre de carte" description="Description courte" footer="Pied de carte">
+        <p>Corps de la carte.</p>
+      </twig:ui:Card>
+    </section>
+
+    <section data-recipe="separator">
+      <h2>Separator</h2>
+      <twig:ui:Separator label="Ou" />
+    </section>
+
+    <section data-recipe="skeleton">
+      <h2>Skeleton</h2>
+      <twig:ui:Skeleton :rows="2" />
+    </section>
+
+    <section data-recipe="kbd">
+      <h2>Kbd</h2>
+      <twig:ui:Kbd>Ctrl</twig:ui:Kbd> + <twig:ui:Kbd>K</twig:ui:Kbd>
+    </section>
+
+    <section data-recipe="alert">
+      <h2>Alert</h2>
+      <twig:ui:Alert type="success" title="Enregistre" message="La modification a ete prise en compte." />
+      <twig:ui:Alert type="error" title="Echec" message="La modification n'a pas pu etre enregistree." />
+    </section>
+
+    <section data-recipe="avatar">
+      <h2>Avatar</h2>
+      <twig:ui:Avatar initials="CM" label="Camille Martin" />
+      <twig:ui:Avatar initials="AR" label="Atelier Rivage" size="lg" />
+    </section>
+
+    <section data-recipe="progress">
+      <h2>Progress</h2>
+      <twig:ui:Progress :value="60" label="Avancement" showValue />
+    </section>
+
+    <section data-recipe="field">
+      <h2>Field, Input</h2>
+      <twig:ui:Field id="demo-input" label="Rechercher" help="Nom ou categorie" required>
+        <twig:ui:Input id="demo-input" describedBy="demo-input-help" required />
+      </twig:ui:Field>
+    </section>
+
+    <section data-recipe="textarea">
+      <h2>Textarea</h2>
+      <twig:ui:Field id="demo-textarea" label="Note">
+        <twig:ui:Textarea id="demo-textarea" :rows="3" />
+      </twig:ui:Field>
+    </section>
+
+    <section data-recipe="select">
+      <h2>Select</h2>
+      <twig:ui:Field id="demo-select" label="Etat">
+        <twig:ui:Select id="demo-select" value="open" :options="[
+          { value: 'open', label: 'Ouverte' },
+          { value: 'done', label: 'Terminee' }
+        ]" />
+      </twig:ui:Field>
+    </section>
+
+    <section data-recipe="checkbox">
+      <h2>Checkbox</h2>
+      <twig:ui:Checkbox id="demo-check" label="Recevoir les notifications" checked />
+    </section>
+
+    <section data-recipe="switch">
+      <h2>Switch</h2>
+      <twig:ui:Switch id="demo-switch" label="Theme sombre" />
+    </section>
   </main>
 {% endblock %}

@@ -1,0 +1,35 @@
+.ui-separator {
+    border: 0;
+    background: var(--ui-border);
+}
+
+.ui-separator--horizontal {
+    width: 100%;
+    height: 1px;
+    margin: var(--ui-space-4) 0;
+}
+
+.ui-separator--vertical {
+    width: 1px;
+    align-self: stretch;
+    min-height: 1.5rem;
+    margin: 0 var(--ui-space-3);
+}
+
+.ui-separator--labelled {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-3);
+    height: auto;
+    background: none;
+    font-size: var(--ui-text-xs);
+    color: var(--ui-muted-foreground);
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--ui-border);
+    }
+}
