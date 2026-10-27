@@ -16,8 +16,10 @@ body {
 
 .page > h1 {
     margin: 0;
-    font-size: var(--ui-text-xl);
+    font-family: var(--ui-font-display);
+    font-size: var(--ui-text-3xl);
     font-weight: 600;
+    line-height: 1.1;
     letter-spacing: -0.01em;
 }
 
@@ -42,11 +44,11 @@ body {
 
 .page > section > h2 {
     margin: 0;
-    font-size: var(--ui-text-sm);
+    font-family: var(--ui-font-display);
+    font-size: var(--ui-text-2xl);
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ui-muted-foreground);
+    line-height: 1.2;
+    color: var(--ui-foreground);
 }
 
 .page > section > p {
