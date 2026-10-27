@@ -158,3 +158,92 @@ Et puisque les trois références utilisent **Geist** (Bootstrap 6 : `font-famil
 6. Accents partout.
 
 Preuve attendue à chaque étape : captures 1440 px et 390 px, en clair et en sombre, **à côté de la même page sur ui.shadcn.com** (Button, Badge, Calendar, Date Picker). Si on ne peut pas dire laquelle des deux est la nôtre sans lire le nom, c'est bon.
+
+---
+
+## Passe 3 (27 octobre 2026, 21 h 50) : la signature
+
+**Ne commencer qu'une fois la passe 2 terminée**, polices et thème sombre compris. Une signature posée sur une base qui charge mal ne se voit pas.
+
+### L'idée
+
+Un guillochage est le réseau de lignes gravées d'un billet ou d'un cadran : il prouve qu'un objet est authentique. Guilloche est un kit pour applications métier où la confiance compte (données cliniques, finance, IA qui propose et humain qui décide). La signature traduit ça, sans décor :
+
+- **La base reste invisible**, au niveau de shadcn. Retirer la signature doit laisser un kit complet et neutre.
+- **La signature n'apparaît qu'aux moments qui comptent** : l'identité d'un objet, une validation, un écran vide, ce qui attend une décision.
+
+### Règles dures
+
+1. **Une touche de signature par écran, au maximum.** Un tableau de 50 lignes n'affiche pas 50 rosettes en couleur : en liste, la rosette est monochrome et petite (20 px), ou absente.
+2. **Jamais sur un contrôle.** Bouton, champ, select, anneau de focus, case : rien. La signature habite les objets et les états, pas l'interaction.
+3. **Toujours optionnelle.** Chaque élément ci-dessous est une recette ou une prop séparée. Une app qui n'en veut pas ne l'installe pas.
+4. **Jamais porteuse de sens seule.** La rosette et le sceau ont toujours un texte accessible (`aria-label` ou texte visible) fourni par l'app, conformément à la règle « aucun libellé en dur ».
+5. **`prefers-reduced-motion`** : tout tracé s'affiche directement dans son état final.
+
+### 1. Rosette : l'empreinte d'un objet
+
+Recette `rosette` (`ui:Rosette`). Un SVG de rosette guillochée (épitrochoïdes entrelacées), **déterministe** : la même graine donne toujours le même dessin, sur le serveur, sans JavaScript.
+
+Point de départ : `src/Twig/Components/Ui/Guilloche.php` et `templates/components/Ui/Guilloche.html.twig` du dépôt `guilloche-workspace` (`proj path owner-workspace-demo`), plus `assets/styles/components/_guilloche.scss`. À reprendre, pas à recopier tel quel :
+
+- **Graine en chaîne, pas en entier.** Aujourd'hui `seed` est un `int` et la forme ne varie que sur 7 nombres de boucles × 4 profondeurs, soit 28 dessins : deux missions se ressemblent vite. Accepter une chaîne (UUID, référence `F-2026-010`), la hacher (par exemple `crc32` ou les premiers octets d'un `sha1`), et en dériver plusieurs paramètres indépendants : nombre de lobes, profondeur, rotation, décalage de la contre-courbe, nombre de copies tissées. Viser des centaines de dessins distincts à 32 px.
+- **Une seule couleur**, `currentColor` : la rosette prend la couleur du texte autour. Trait fin (0,75 à 1 px à 32 px, `vector-effect: non-scaling-stroke`).
+- **Tailles** : 16, 20, 24, 32, 40, 64 px. À 16 et 20 px, simplifier le dessin (moins de copies tissées) pour qu'il reste net.
+- **Contrainte du Toolkit à vérifier avant d'écrire** : lire la doc de `symfony/ux-toolkit` pour savoir si une recette peut livrer une classe PHP. Si non, porter le calcul dans une extension Twig livrée autrement, ou précalculer les tracés côté Twig, ou dans un contrôleur Stimulus avec un repli serveur. Consigner le choix et sa source dans le README de la recette.
+- `self::$instances` sert d'identifiant d'instance : sous FrankenPHP en mode worker, ce compteur statique survit d'une requête à l'autre. Préférer un identifiant dérivé de la graine et de la taille, ou un compteur par rendu.
+
+Usages livrés comme exemples dans la doc :
+
+- **Avatar par défaut d'un objet** (`ui:Avatar` sans image et sans initiales pertinentes : un dossier, une mission, une étude). Les personnes gardent leurs initiales.
+- **Progression** : prop `progress` (0 à 100). Le trait principal se dessine jusqu'à la valeur ; la contre-courbe reste à 20 % d'opacité. Remplace un anneau de progression, pas une barre.
+- **Chargement** : variante `loading`, le trait se trace en boucle (1,1 s, `ease-in-out`), pour les attentes de plus d'une seconde. Le `spinner` classique reste pour les attentes courtes.
+- **État vide** : `ui:EmptyState` accepte une rosette de 64 px en tête, à la place d'une icône générique.
+
+### 2. Sceau : « vérifié par un humain »
+
+Recette `seal` (`ui:Seal`). C'est le composant que personne d'autre ne fournit et dont toute app d'IA métier a besoin : distinguer ce qu'une IA a **proposé** de ce qu'une personne a **validé**.
+
+- Visuel : une petite rosette dans un cercle à double filet, 16 ou 20 px, en ligne avec le texte, suivie d'une mention fournie par l'app (« Validé par vous », « Signé par C. Martin, 12 oct. »).
+- Props : `by` (qui), `at` (quand, rendu en `<time datetime>`), `label` (texte accessible complet), `state` : `validated` (encre pleine) ou `pending` (filet pointillé, texte `muted`, « En attente de votre validation »).
+- La rosette du sceau est dérivée de `by` : la signature d'une même personne a toujours le même dessin.
+- Animation unique : à l'apparition d'un sceau qui vient d'être posé (prop `fresh`), le trait se dessine en 520 ms, une fois. Jamais au rechargement de la page.
+- Exemple de doc à fournir : une liste de propositions (« Proposé par l'assistant · source p. 12 ») où certaines lignes portent le sceau. Prendre comme modèle la page « Revue de la conception » de CDKF (« Validée par vous »).
+
+### 3. Cuivre : ce qui attend votre décision
+
+Un seul accent chaud dans tout le kit : le cuivre. Dans le thème neutre, ajouter :
+
+- `--ui-attention` : cuivre lisible en texte. Point de départ `#AD4C16` (accent du portfolio et de memo-ui) ; ajuster pour obtenir au moins 4,5:1 sur `background` et `surface`, en clair comme en sombre.
+- `--ui-attention-soft` : fond très pâle, `--ui-attention-line` : filet.
+
+Usage **exclusif** : ce qui attend une action de la personne qui regarde (« À votre tour », un sceau `pending`, la ligne d'un tableau à traiter, le compteur d'une rubrique à traiter). Pas pour les boutons, les liens, le focus, les graphiques ni les avertissements génériques (ceux-là restent `warning`). Le cuivre doit rester assez rare pour qu'on le remarque dès qu'il apparaît. Documenter cette règle dans la fiche `theme`, avec un exemple « à faire / à ne pas faire ».
+
+### 4. Numéros de série
+
+Classe utilitaire et prop `serial` sur `ui:Table` (colonne) et `ui:DescriptionList` (valeur) : identifiants et références en police mono, `font-variant-numeric: tabular-nums slashed-zero`, 12 à 13 px, couleur `muted-foreground`, préfixe optionnel fourni par l'app (« N° »). Les montants restent dans la police du texte, en `tabular-nums`, alignés à droite.
+
+### 5. Contre-jour (thème sombre seulement)
+
+En thème sombre, et seulement là, un filigrane : la rosette de la page (graine = identifiant de la page ou de l'objet) derrière l'en-tête de page (`ui:PageHeader`) et derrière `ui:EmptyState`, à 3 à 5 % d'opacité, 240 à 400 px, décalée vers le bord droit, coupée par le conteneur. Comme un billet tenu devant une lampe : on ne le voit qu'en le cherchant.
+
+- Opt-in par prop (`watermark`), désactivé par défaut.
+- Jamais derrière du texte courant, un formulaire ou un tableau.
+- Vérifier que le contraste du texte posé dessus ne baisse pas (le contrôle de contraste existant doit le couvrir).
+
+### Ce qu'il ne faut PAS faire
+
+- Pas de motif guilloché en fond de page, de carte ou de bouton. Pas de bordure guillochée. Pas de dégradé.
+- Pas de Bodoni ni de serif pour « faire billet ». La typographie reste celle de la passe 2.
+- Pas de rosette décorative sans rôle (identité, progression, chargement, vide, sceau, filigrane).
+- Pas de cuivre ailleurs que sur « attend votre décision ».
+
+### Preuves attendues
+
+1. Page de doc pour `rosette` et `seal`, avec les exemples ci-dessus, en clair et en sombre.
+2. Planche de 48 rosettes à 32 px générées depuis 48 références différentes : aucune paire ne doit se confondre à l'œil.
+3. Capture d'un écran complet type (liste + fiche) qui respecte « une touche par écran ».
+4. Contraste du cuivre ≥ 4,5:1 dans les deux thèmes, ajouté au test de contraste.
+5. `prefers-reduced-motion` vérifié dans le test e2e : aucun tracé animé.
+6. Le test côte à côte de la passe 2 tient toujours : signature retirée, la page reste au niveau de shadcn.
+
+Livrer en trois PR : (a) `rosette` (avatar, progression, chargement, vide), (b) `seal` + token cuivre, (c) numéros de série + contre-jour.

@@ -3,11 +3,11 @@
   <div class="ds__example-head"><h3 class="ds__example-title">Liste native</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render ds__example-render--column">
     <twig:ui:Field id="x-select" label="Etat de la mission">
-      <twig:ui:Select id="x-select" value="open" :options="[{ value: 'open', label: 'Ouverte' }, { value: 'done', label: 'Terminee' }, { value: 'archived', label: 'Archivee' }]" />
+      <twig:ui:Select id="x-select" value="open" :options="[{ value: 'open', label: 'Ouverte' }, { value: 'done', label: 'Terminée' }, { value: 'archived', label: 'Archivee' }]" />
     </twig:ui:Field>
   </div>
   {{ m.code('<twig:ui:Select id="etat" value="open" :options="[
   { value: \'open\', label: \'Ouverte\' },
-  { value: \'done\', label: \'Terminee\' }
+  { value: \'done\', label: \'Terminée\' }
 ]" />') }}
 </div>
