@@ -1,16 +1,33 @@
 // Documentation : onglets Apercu / Code, bascule de theme, copie, sommaire.
 const root = document.documentElement;
 
-const stored = localStorage.getItem('guilloche-doc-theme');
-if (stored) {
-    root.dataset.uiTheme = stored;
-}
+const THEME_KEY = 'guilloche-doc-theme';
+const media = matchMedia('(prefers-color-scheme: dark)');
+
+const applyTheme = (choice) => {
+    if (choice === 'system') {
+        delete root.dataset.uiTheme;
+    } else {
+        root.dataset.uiTheme = choice;
+    }
+    document.querySelectorAll('[data-doc-theme]').forEach((button) => {
+        button.dataset.themeState = choice;
+        button.textContent = choice === 'system' ? 'Système' : choice === 'dark' ? 'Sombre' : 'Clair';
+    });
+};
+
+let choice = localStorage.getItem(THEME_KEY) ?? 'system';
+applyTheme(choice);
+
+media.addEventListener('change', () => {
+    if (choice === 'system') applyTheme('system');
+});
 
 document.querySelectorAll('[data-doc-theme]').forEach((button) => {
     button.addEventListener('click', () => {
-        const next = root.dataset.uiTheme === 'dark' ? 'light' : 'dark';
-        root.dataset.uiTheme = next;
-        localStorage.setItem('guilloche-doc-theme', next);
+        choice = choice === 'system' ? 'light' : choice === 'light' ? 'dark' : 'system';
+        localStorage.setItem(THEME_KEY, choice);
+        applyTheme(choice);
     });
 });
 

@@ -6,9 +6,9 @@
     color-scheme: light;
 
     // Typographie : une seule famille pour l'UI, le mono pour le code.
-    --ui-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --ui-font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --ui-font-display: var(--ui-font-sans);
-    --ui-font-mono: 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
+    --ui-font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
     // Surfaces : canvas, surface, muted. Trois couches suffisent a la hierarchie.
     --ui-background: oklch(0.985 0 0);
@@ -37,8 +37,8 @@
     --ui-ring: oklch(0.55 0.02 260);
 
     // Statuts : texte colore sur fond tres pale, jamais en aplat.
-    --ui-danger: oklch(0.5 0.18 27);
-    --ui-danger-soft: oklch(0.965 0.02 27);
+    --ui-danger: oklch(0.55 0.24 27);
+    --ui-danger-soft: oklch(0.975 0.015 27);
     --ui-danger-foreground: oklch(0.985 0 0);
     --ui-success: oklch(0.48 0.12 155);
     --ui-success-soft: oklch(0.965 0.022 155);
@@ -52,9 +52,9 @@
 
     // Formes
     --ui-radius-sm: 4px;
-    --ui-radius-md: 6px;
-    --ui-radius-lg: 10px;
-    --ui-radius-xl: 12px;
+    --ui-radius-md: 8px;
+    --ui-radius-lg: 12px;
+    --ui-radius-xl: 14px;
     --ui-radius-pill: 999px;
 
     // Grille de 4
@@ -212,4 +212,45 @@
     --ui-info: #a6c2ea;
     --ui-info-soft: #16233a;
     --ui-info-foreground: #0a1524;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-ui-theme='light']) {
+        color-scheme: dark;
+
+        --ui-background: oklch(0.17 0.004 260);
+        --ui-surface: oklch(0.21 0.005 260);
+        --ui-card: var(--ui-surface);
+        --ui-card-foreground: oklch(0.96 0.002 260);
+        --ui-muted: oklch(0.25 0.005 260);
+        --ui-input: oklch(0.24 0.005 260);
+        --ui-border: oklch(0.3 0.005 260);
+        --ui-border-strong: oklch(0.56 0.006 260);
+        --ui-foreground: oklch(0.96 0.002 260);
+        --ui-muted-foreground: oklch(0.72 0.005 260);
+        --ui-subtle-foreground: oklch(0.6 0.005 260);
+        --ui-primary: oklch(0.93 0.002 260);
+        --ui-primary-hover: oklch(0.86 0.002 260);
+        --ui-primary-foreground: oklch(0.2 0.005 260);
+        --ui-secondary: oklch(0.26 0.005 260);
+        --ui-secondary-foreground: oklch(0.96 0.002 260);
+        --ui-accent: oklch(0.28 0.006 260);
+        --ui-ring: oklch(0.68 0.02 260);
+        --ui-danger: oklch(0.72 0.16 25);
+        --ui-danger-soft: oklch(0.27 0.05 25);
+        --ui-danger-foreground: oklch(0.98 0 0);
+        --ui-success: oklch(0.74 0.12 155);
+        --ui-success-soft: oklch(0.26 0.04 155);
+        --ui-success-foreground: oklch(0.18 0.02 155);
+        --ui-warning: oklch(0.8 0.12 78);
+        --ui-warning-soft: oklch(0.28 0.04 78);
+        --ui-warning-foreground: oklch(0.2 0.02 78);
+        --ui-info: oklch(0.74 0.1 255);
+        --ui-info-soft: oklch(0.26 0.04 255);
+        --ui-info-foreground: oklch(0.18 0.02 255);
+        --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
+        --ui-shadow-md: 0 4px 12px oklch(0 0 0 / 0.4), 0 1px 2px oklch(0 0 0 / 0.2);
+        --ui-shadow-lg: 0 16px 40px oklch(0 0 0 / 0.5), 0 2px 8px oklch(0 0 0 / 0.3);
+        --ui-focus-ring: 0 0 0 2px var(--ui-background), 0 0 0 4px var(--ui-ring);
+    }
 }
