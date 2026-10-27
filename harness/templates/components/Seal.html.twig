@@ -1,0 +1,27 @@
+{# Ui:Seal — « verifie par un humain ». Separe ce qu'une IA a propose de ce
+   qu'une personne a valide.
+   text : mention fournie par l'app (« Valide par vous ») ;
+   by : qui signe, la rosette en derive ; at : date ISO, rendue en time ;
+   atLabel : texte lisible de la date ; label : nom accessible complet ;
+   state : validated (encre pleine) ou pending (filet pointille) ;
+   fresh : le trait se dessine une fois, a la pose. #}
+{% props text, by, at = null, atLabel = null, label = null, state = 'validated', fresh = false, size = 20 %}
+<span {{ attributes.defaults({
+  class: 'ui-seal ui-seal--' ~ state,
+  role: 'img',
+  'aria-label': label ?? (text ~ (atLabel ? ', ' ~ atLabel : ''))
+}) }}>
+  <span class="ui-seal__mark" data-controller="ui--seal"
+    data-ui--seal-seed-value="{{ by }}"
+    data-ui--seal-fresh-value="{{ fresh ? 'true' : 'false' }}"
+    data-ui--seal-at-value="{{ at ?? '' }}">
+    <svg viewBox="0 0 100 100" width="{{ size }}" height="{{ size }}" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" focusable="false" aria-hidden="true">
+      <circle cx="50" cy="50" r="47" vector-effect="non-scaling-stroke" />
+      <circle cx="50" cy="50" r="41" vector-effect="non-scaling-stroke" opacity="0.5" />
+      <g transform="translate(50 50) scale(0.58) translate(-50 -50)">
+        <path class="ui-seal__trace" vector-effect="non-scaling-stroke" d="M50 6a44 44 0 1 1-.1 0z" />
+      </g>
+    </svg>
+  </span>
+  <span class="ui-seal__text"><span>{{ text }}</span>{% if at %}<time datetime="{{ at }}">{{ atLabel ?? at }}</time>{% endif %}</span>
+</span>
