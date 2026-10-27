@@ -10,7 +10,9 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 - Une recette ne depend jamais d'une autre recette du kit : une icone necessaire est un SVG inline.
 - Les composants supposent l'enveloppe `.ui-scope` (fond, texte, reset, focus).
 
-## Livre en 1.2.0
+## Livre en 1.3.0
+
+### Fondation et primitives
 
 | Recette | Role | Props principales |
 |---|---|---|
@@ -25,41 +27,47 @@ Etat des recettes livrees et des vagues suivantes. Une recette est autonome : el
 | `alert` | Message d'etat | `type`, `title`, `message` |
 | `avatar` | Image ou initiales | `initials`, `src`, `label`, `size` |
 | `progress` | Avancement borne | `value`, `max`, `label`, `showValue` |
+| `empty-state` | Etat vide avec action | `title`, `message` |
+
+### Formulaires
+
+| Recette | Role | Props principales |
+|---|---|---|
 | `field` | Enveloppe label, aide, erreur | `id`, `label`, `help`, `error`, `required` |
 | `input` | Champ natif | `id`, `type`, `name`, `value`, `invalid`, `describedBy` |
 | `textarea` | Zone multiligne | `id`, `name`, `rows`, `value`, `invalid` |
 | `select` | Liste native | `id`, `options`, `value`, `placeholder`, `invalid` |
 | `checkbox` | Case native habillee | `id`, `label`, `checked`, `disabled` |
 | `switch` | Interrupteur binaire | `id`, `label`, `checked`, `disabled` |
+| `radio-group` | Choix unique | `id`, `name`, `label`, `options`, `value` |
+| `slider` | Valeur sur un intervalle | `id`, `min`, `max`, `step`, `value`, `label` |
+
+### Navigation et surfaces
+
+| Recette | Role | Props principales |
+|---|---|---|
 | `breadcrumb` | Fil d'Ariane | `items`, `label` |
 | `pagination` | Navigation entre pages | `items`, `previous`, `next`, `label` |
+| `tabs` | Onglets de navigation par URL | `items`, `label` |
 | `toggle` | Bouton a deux etats (`aria-pressed`) | `pressed`, `label` |
 | `accordion` | Section repliable native (`details`) | `summary`, `open` |
-| `tabs` | Onglets de navigation par URL | `items`, `label` |
+| `dropdown-menu` | Menu natif (`details`) | `label`, `items` |
 | `dialog` | Boite modale native | `id`, `title`, `trigger`, `description` |
 | `sheet` | Panneau lateral modal | `id`, `title`, `trigger`, `description`, `side` |
+| `popover` | Panneau flottant natif | `label` |
 | `tooltip` | Aide courte survol et focus | `text`, `id` |
 
-Les recettes `toggle`, `dialog` et `sheet` livrent un controleur Stimulus (`ui--toggle`, `ui--dialog`, `ui--sheet`) copie dans `%CONTROLLERS_DIR%`. Sans JavaScript, l'etat rendu par le serveur reste correct ; seules l'ouverture des dialogues et la bascule du toggle en dependent.
+### Donnees
 
-## Vague 3 : donnees
+| Recette | Role | Props principales |
+|---|---|---|
+| `table` | Tableau avec en-tetes et etats | `caption` |
+| `description-list` | Paires libelle et valeur | `items` |
+| `stat` | Indicateur chiffre | `label`, `value`, `hint`, `trend` |
+| `timeline` | Suite d'evenements dates | `items` |
+| `toast` | Notification transitoire | `id`, `title`, `message`, `type`, `autohide` |
 
-| Recette | Role |
-|---|---|
-| `table` | Tableau de donnees avec en-tetes et etats |
-| `list` | Liste structuree |
-| `description-list` | Paires libelle / valeur |
-| `stat` | Indicateur chiffre |
-| `timeline` | Suite d'evenements dates |
-| `empty-state` | Etat vide avec action |
-| `toast` | Notification transitoire |
-| `radio-group` | Choix unique |
-| `slider` | Valeur sur un intervalle |
-| `date-picker` | Selection de date |
-| `file-upload` | Depot de fichier |
-| `dropdown-menu` | Menu d'actions |
-| `popover` | Contenu flottant ancre |
-| `toggle-group` | Groupe de bascules |
+Les recettes `toggle`, `dialog`, `sheet` et `toast` livrent un controleur Stimulus (`ui--toggle`, `ui--dialog`, `ui--sheet`, `ui--toast`) copie dans `%CONTROLLERS_DIR%`. Sans JavaScript, l'etat rendu par le serveur reste correct ; seules l'ouverture des dialogues, la bascule du toggle et la fermeture du toast en dependent.
 
 ## Vague 4 : patterns metier
 
@@ -72,6 +80,12 @@ Les recettes `toggle`, `dialog` et `sheet` livrent un controleur Stimulus (`ui--
 | `confirm-dialog` | Confirmation d'une action destructive |
 | `detail-layout` | Liste et detail cote a cote |
 | `sidebar` | Navigation laterale |
+| `date-picker` | Selection de date |
+| `file-upload` | Depot de fichier |
+| `combobox` | Champ avec recherche dans une liste |
+| `command` | Palette de commandes |
+| `carousel` | Galerie defilante |
+| `chart` | Graphique simple en SVG |
 
 ## Vague 5 : distribution et qualite
 

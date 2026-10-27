@@ -1,0 +1,15 @@
+{# Ui:RadioGroup — choix unique. options : liste de { value, label }.
+   fieldset et legend portent le nom accessible du groupe ; l'input natif
+   conserve la semantique et le clavier. #}
+{% props id, name, label = null, options = [], value = null, disabled = false %}
+<fieldset {{ attributes.defaults({ class: 'ui-radio-group' }) }} {{ disabled ? 'disabled' }}>
+  {% if label %}<legend class="ui-radio-group__legend">{{ label }}</legend>{% endif %}
+  {% for option in options %}
+    <label class="ui-radio" for="{{ id }}-{{ option.value }}">
+      <input class="ui-radio__input" type="radio" id="{{ id }}-{{ option.value }}" name="{{ name }}" value="{{ option.value }}"
+        {{- option.value == value ? ' checked' }} />
+      <span class="ui-radio__dot" aria-hidden="true"></span>
+      <span class="ui-radio__label">{{ option.label }}</span>
+    </label>
+  {% endfor %}
+</fieldset>

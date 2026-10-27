@@ -1,0 +1,11 @@
+{# Ui:DescriptionList — paires libelle et valeur. items : liste de
+   { term, description }. #}
+{% props items = [] %}
+<dl {{ attributes.defaults({ class: 'ui-description-list' }) }}>
+  {% for item in items %}
+    <div class="ui-description-list__row">
+      <dt class="ui-description-list__term">{{ item.term }}</dt>
+      <dd class="ui-description-list__value">{{ item.description }}</dd>
+    </div>
+  {% endfor %}
+</dl>

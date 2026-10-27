@@ -1,0 +1,20 @@
+{# Ui:Toast — notification transitoire. type : info|success|warning|error.
+   Le controleur ui--toast retire le toast a la fermeture et, si autohide est
+   positif, apres ce delai en millisecondes. Sans JavaScript, il reste visible. #}
+{% props id, title, message = null, type = 'info', autohide = 0 %}
+<div {{ attributes.defaults({
+  class: 'ui-toast ui-toast--' ~ type,
+  id: id,
+  role: 'status',
+  'aria-live': 'polite',
+  'data-controller': 'ui--toast',
+  'data-ui--toast-autohide-value': autohide
+}) }}>
+  <div class="ui-toast__content">
+    <p class="ui-toast__title">{{ title }}</p>
+    {% if message %}<p class="ui-toast__message">{{ message }}</p>{% endif %}
+  </div>
+  <button class="ui-toast__close" type="button" data-action="ui--toast#dismiss" aria-label="Close">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="m6.5 6.5 11 11M6.5 17.5l11-11"/></svg>
+  </button>
+</div>

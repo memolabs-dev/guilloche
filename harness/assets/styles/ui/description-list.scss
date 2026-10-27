@@ -1,0 +1,32 @@
+.ui-description-list {
+    display: grid;
+    gap: var(--ui-space-2);
+    font-size: var(--ui-text-sm);
+}
+
+.ui-description-list__row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 30%) 1fr;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-2) 0;
+    border-bottom: 1px solid var(--ui-border);
+
+    &:last-child {
+        border-bottom: 0;
+    }
+}
+
+.ui-description-list__term {
+    color: var(--ui-muted-foreground);
+}
+
+.ui-description-list__value {
+    color: var(--ui-foreground);
+}
+
+@media (max-width: 30rem) {
+    .ui-description-list__row {
+        grid-template-columns: 1fr;
+        gap: var(--ui-space-1);
+    }
+}

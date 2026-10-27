@@ -44,5 +44,16 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('dialog.ui-dialog#demo-dialog');
         $this->assertSelectorExists('dialog.ui-sheet.ui-sheet--right#demo-sheet');
         $this->assertSelectorExists('.ui-tooltip__bubble[role="tooltip"]');
+
+        $this->assertSelectorExists('table.ui-table > caption.ui-table__caption');
+        $this->assertSelectorExists('.ui-description-list__row dt');
+        $this->assertSelectorExists('.ui-stat__value');
+        $this->assertSelectorExists('.ui-empty-state__title');
+        $this->assertSelectorExists('fieldset.ui-radio-group > legend');
+        $this->assertSelectorExists('input.ui-slider__input[type="range"]');
+        $this->assertSelectorExists('ol.ui-timeline > li.ui-timeline__item');
+        $this->assertSelectorExists('.ui-toast[role="status"]');
+        $this->assertSelectorExists('details.ui-dropdown > summary.ui-dropdown__trigger');
+        $this->assertSelectorExists('details.ui-popover > .ui-popover__panel');
     }
 }

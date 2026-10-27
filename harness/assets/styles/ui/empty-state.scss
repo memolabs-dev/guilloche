@@ -1,0 +1,21 @@
+.ui-empty-state {
+    display: grid;
+    justify-items: center;
+    gap: var(--ui-space-2);
+    padding: var(--ui-space-6) var(--ui-space-4);
+    border: 1px dashed var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    text-align: center;
+}
+
+.ui-empty-state__title {
+    font-weight: 600;
+    font-size: var(--ui-text-md);
+}
+
+.ui-empty-state__message {
+    max-width: 32rem;
+    font-size: var(--ui-text-sm);
+    color: var(--ui-muted-foreground);
+    line-height: 1.6;
+}

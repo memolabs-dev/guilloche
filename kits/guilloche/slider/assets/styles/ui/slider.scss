@@ -1,0 +1,22 @@
+.ui-slider {
+    display: grid;
+    gap: var(--ui-space-2);
+    font-size: var(--ui-text-sm);
+}
+
+.ui-slider__label {
+    font-weight: 600;
+}
+
+.ui-slider__input {
+    width: 100%;
+    min-height: 2rem;
+    accent-color: var(--ui-primary);
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: var(--ui-focus-ring);
+        border-radius: var(--ui-radius-pill);
+    }
+}
