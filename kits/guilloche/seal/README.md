@@ -14,10 +14,32 @@ Sépare ce qu'une IA a proposé de ce qu'une personne a validé.
 | `state` | `validated` | `validated` ou `pending` |
 | `fresh` | `false` | L'animation se produit une fois par session pour ce signataire et cet événement (`at`) |
 | `size` | `20` | Taille du sceau en pixels, typiquement 16 ou 20 |
+| `path` | `null` | Chemin SVG du signataire calculé côté PHP, présent dès le HTML initial (JS facultatif) |
 
 ## Choix technique
 
-Le Toolkit ne permet pas de livrer une classe PHP (schéma `schema-kit-recipe-v1.json`, `copy-files` limité à `%COMPONENTS_DIR%` et `%CONTROLLERS_DIR%`). La rosette du sceau est donc calculée par `ui--seal`, avec un tracé de repli rendu par le serveur. L'algorithme est celui de `ui--rosette`, dupliqué pour que la recette reste autonome.
+Le Toolkit ne permet pas de livrer une classe PHP (schéma `schema-kit-recipe-v1.json`, `copy-files` limité à `%COMPONENTS_DIR%` et `%CONTROLLERS_DIR%`). La rosette du sceau est calculée par `ui--seal` par défaut. Pour un tracé personnalisé **dès le HTML initial, sans JavaScript**, le package Composer expose `Guilloche\Signature\RosetteGeometry::sealPath($by)`. Passer le résultat dans la prop `path` ; Stimulus le conserve sans le recalculer. L'algorithme est celui de `ui--rosette`, dupliqué pour que la recette reste autonome.
+
+## Utilisation SSR
+
+Dans le contrôleur Symfony (après installation du paquet Composer) :
+
+```php
+use Guilloche\Signature\RosetteGeometry;
+
+return $this->render('dossier.html.twig', [
+    'signataire' => $user->getId(),
+    'sealPath' => RosetteGeometry::sealPath($user->getId()),
+]);
+```
+
+Dans Twig :
+
+```twig
+<twig:ui:Seal text="Validé par vous" :by="signataire" :path="sealPath" />
+```
+
+Le harnais de documentation fournit aussi la fonction Twig d'exemple `guilloche_seal_path(by)`. Cette extension n'est pas installée automatiquement par le Symfony UX Toolkit : une application peut calculer le chemin dans son contrôleur et passer la prop directement.
 
 ## Accessibilité
 
