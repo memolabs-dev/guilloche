@@ -1,11 +1,18 @@
-{# Ui:Button — kit Guilloche.
-   intent: primary|secondary|danger ; appearance: solid|soft|outline|ghost ; size: sm|md|lg.
-   Texte passé par le slot (aucun libellé en dur, le kit n'en contient pas).
-   Avec href : un lien de navigation. Sans href : un bouton d'action (jamais disabled sur un lien). #}
-{% props intent = 'primary', appearance = 'solid', size = 'md', type = 'button', href = null, disabled = false, loading = false %}
+{# Ui:Button — action ou navigation.
+   variant : primary|secondary|outline|ghost|link|danger. Les props historiques
+   intent et appearance restent acceptees et sont traduites vers un variant.
+   Texte par le slot. Avec href : un lien, sinon un bouton. #}
+{% props variant = null, intent = 'primary', appearance = 'solid', size = 'md', type = 'button', href = null, disabled = false, loading = false %}
+{% set resolved = variant ?? (
+  appearance == 'ghost' ? 'ghost' : (
+  appearance == 'outline' ? 'outline' : (
+  intent == 'danger' ? 'danger' : (
+  intent == 'secondary' ? 'secondary' : (
+  intent in ['outline', 'ghost', 'link'] ? intent : 'primary'))))
+) %}
 {% set tag = href ? 'a' : 'button' %}
 {% set defaults = {
-  class: 'ui-button ui-button--' ~ intent ~ ' ui-button--' ~ appearance ~ ' ui-button--' ~ size ~ (loading ? ' is-loading' : '')
+  class: 'ui-button ui-button--' ~ resolved ~ ' ui-button--' ~ size ~ (loading ? ' is-loading' : '')
 }|merge(href ? { href: href } : { type: type, disabled: disabled or loading })|merge(loading and not href ? { 'aria-busy': 'true' } : {}) %}
 <{{ tag }} {{ attributes.defaults(defaults) }}>
   {%- if loading -%}
