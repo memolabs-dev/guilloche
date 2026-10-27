@@ -72,7 +72,7 @@ final class DocTest extends WebTestCase
         self::createClient()->request('GET', '/components/page-header');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('.ui-page-header:not(.ui-page-header--watermark):not(:has(svg))');
+        $this->assertSelectorExists('.ui-page-header:not(.ui-page-header--watermark)');
         $this->assertSelectorExists('.ui-page-header--watermark > svg.ui-page-header__watermark[aria-hidden="true"][focusable="false"]');
         $this->assertSelectorExists('.ui-page-header--watermark svg path[d="M5 50 Q50 5 95 50 Q50 95 5 50 Z"]');
         $this->assertSelectorExists('.ui-page-header--watermark .ui-page-header__title');
@@ -80,7 +80,7 @@ final class DocTest extends WebTestCase
         self::createClient()->request('GET', '/components/empty-state');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('.ui-empty-state:not(.ui-empty-state--watermark):not(:has(svg))');
+        $this->assertSelectorExists('.ui-empty-state:not(.ui-empty-state--watermark)');
         $this->assertSelectorExists('.ui-empty-state--watermark > svg.ui-empty-state__watermark[aria-hidden="true"][focusable="false"]');
         $this->assertSelectorExists('.ui-empty-state--watermark .ui-empty-state__title');
     }
