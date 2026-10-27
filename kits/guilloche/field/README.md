@@ -1,12 +1,12 @@
 # Field — kit Guilloche
 
-Enveloppe de champ : label, aide, erreur. Le controle natif passe dans le slot.
+Enveloppe de champ : label, aide, erreur. Le contrôle natif passe dans le slot.
 
 ## Props
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
-| `id` | requis | Identifiant du controle, relie le label |
+| `id` | requis | Identifiant du contrôle, relie le label |
 | `label` | `null` | Libelle |
 | `help` | `null` | Aide, rendue avec l'id `<id>-help` |
 | `error` | `null` | Erreur, rendue avec l'id `<id>-error` |
@@ -20,4 +20,4 @@ Enveloppe de champ : label, aide, erreur. Le controle natif passe dans le slot.
 </twig:ui:Field>
 ```
 
-Le controle doit pointer ses descriptions avec `aria-describedby="<id>-help <id>-error"` et `aria-invalid="true"` en cas d'erreur.
+Le contrôle doit pointer ses descriptions avec `aria-describedby="<id>-help <id>-error"` et `aria-invalid="true"` en cas d'erreur.

@@ -1,6 +1,6 @@
 # HoverCard — kit Guilloche
 
-Carte d'apercu au survol et au focus.
+Carte d'aperçu au survol et au focus.
 
 ## Props
 

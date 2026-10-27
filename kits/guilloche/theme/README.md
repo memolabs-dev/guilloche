@@ -26,16 +26,16 @@ Les composants supposent une enveloppe `.ui-scope` sur le conteneur racine de l'
 </div>
 ```
 
-Cette enveloppe porte le fond, la couleur de texte, la police, le reset minimal et le focus visible. Elle evite de modifier le `body` de l'application.
+Cette enveloppe porte le fond, la couleur de texte, la police, le reset minimal et le focus visible. Elle evite de modifiér le `body` de l'application.
 
 ## Themes
 
-Le theme clair est le defaut. Le sombre s'applique de deux facons :
+Le theme clair est le défaut. Le sombre s'applique de deux facons :
 
 - `data-ui-theme="dark"` sur `<html>` ou sur l'enveloppe, pour un choix explicite de l'utilisateur ;
 - `prefers-color-scheme: dark`, quand l'application ne force pas de theme.
 
-`data-ui-theme="light"` sur `<html>` desactive la detection systeme.
+`data-ui-theme="light"` sur `<html>` désactivé la detection système.
 
 ## Tokens
 
@@ -53,6 +53,6 @@ Le theme clair est le defaut. Le sombre s'applique de deux facons :
 
 ## Accessibilite
 
-- Le focus visible est defini une seule fois dans l'enveloppe, jamais desactive par un composant.
+- Le focus visible est defini une seule fois dans l'enveloppe, jamais désactivé par un composant.
 - `prefers-reduced-motion` coupe les animations et transitions.
 - Les couleurs ne sont jamais le seul porteur d'information : chaque composant associe un texte ou une icone.

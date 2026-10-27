@@ -11,7 +11,7 @@ Menu au clic droit.
 
 La zone de declenchement vient du slot.
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/context-menu_controller.js`, identifiant `ui--context-menu`. Positionne le menu au clic droit, ferme au clic ailleurs et avec Echap.
 

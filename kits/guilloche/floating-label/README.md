@@ -1,13 +1,13 @@
 # FloatingLabel — kit Guilloche
 
-Champ avec libelle flottant, sans JavaScript.
+Champ avec libellé flottant, sans JavaScript.
 
 ## Props
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `id` | requis | Identifiant, relie le label |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `label` | requis | Libelle |
 | `type` | `text` | Type HTML |
 | `value` | `null` | Valeur initiale |
@@ -18,8 +18,8 @@ Champ avec libelle flottant, sans JavaScript.
 
 ## Fonctionnement
 
-Le champ porte `placeholder=" "` : c'est cet espace qui permet a `:placeholder-shown` de savoir si le champ est vide. Le libelle remonte au focus et des qu'une valeur existe, sinon il reste centre.
+Le champ porte `placeholder=" "` : c'est cet espace qui permet a `:placeholder-shown` de savoir si le champ est vide. Le libellé remonte au focus et des qu'une valeur existe, sinon il reste centre.
 
 ## Accessibilite
 
-Le `label` reste relie par `for`. Le libelle flottant est un effet visuel, pas un substitut : le nom accessible vient toujours du `label`.
+Le `label` reste relie par `for`. Le libellé flottant est un effet visuel, pas un substitut : le nom accessible vient toujours du `label`.

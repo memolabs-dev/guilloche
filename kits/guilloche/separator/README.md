@@ -1,6 +1,6 @@
 # Separator — kit Guilloche
 
-Trait de separation horizontal ou vertical, avec libelle optionnel.
+Trait de separation horizontal ou vertical, avec libellé optionnel.
 
 ## Props
 

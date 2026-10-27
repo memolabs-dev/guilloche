@@ -29,3 +29,32 @@
     font-size: var(--ui-text-xs);
     color: var(--ui-muted-foreground);
 }
+
+.ui-date-picker__field {
+    position: relative;
+    display: block;
+}
+
+.ui-date-picker__icon {
+    position: absolute;
+    top: 50%;
+    right: var(--ui-space-3);
+    transform: translateY(-50%);
+    color: var(--ui-muted-foreground);
+    pointer-events: none;
+}
+
+.ui-date-picker__input {
+    appearance: none;
+    width: 100%;
+    padding-right: var(--ui-space-7);
+
+    &::-webkit-calendar-picker-indicator {
+        opacity: 0;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+}

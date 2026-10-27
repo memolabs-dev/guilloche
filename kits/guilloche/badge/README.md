@@ -1,6 +1,6 @@
 # Badge — kit Guilloche
 
-Etiquette courte pour un état, un compteur ou une catégorie.
+Étiquette courte pour un état, un compteur ou une catégorie.
 
 ## Props
 

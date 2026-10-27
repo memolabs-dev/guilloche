@@ -7,14 +7,14 @@ Liste deroulante native.
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `id` | requis | Identifiant, relie le label |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `options` | `[]` | Liste de `{ value, label }` ou de chaines |
 | `value` | `null` | Valeur selectionnee |
 | `placeholder` | `null` | Option vide proposee en tete |
 | `describedBy` | `null` | `aria-describedby` |
 | `invalid` | `false` | Pose `aria-invalid="true"` |
 | `disabled` | `false` | Desactive la liste |
-| `required` | `false` | Selection obligatoire |
+| `required` | `false` | Sélection obligatoire |
 
 ## Exemple
 

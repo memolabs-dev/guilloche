@@ -12,6 +12,6 @@ Galerie defilante, avec `scroll-snap` natif.
 
 Le contenu vient du slot ; chaque enfant direct occupe une page.
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/carousel_controller.js`, identifiant `ui--carousel`. Les boutons font defiler d'une page. Le viewport est focusable et defilable au clavier sans JavaScript.

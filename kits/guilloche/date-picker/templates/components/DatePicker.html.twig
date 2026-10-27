@@ -3,8 +3,11 @@
 {% props id, name = null, label, value = null, min = null, max = null, help = null %}
 <label {{ attributes.defaults({ class: 'ui-date-picker' }) }} for="{{ id }}">
   <span class="ui-date-picker__label">{{ label }}</span>
+  <span class="ui-date-picker__field">
   <input class="ui-date-picker__input" type="date" id="{{ id }}" name="{{ name ?? id }}"
     value="{{ value ?? false }}" min="{{ min ?? false }}" max="{{ max ?? false }}"
     {%- if help %} aria-describedby="{{ id }}-help"{% endif %} />
+  <svg class="ui-date-picker__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>
+  </span>
   {% if help %}<span class="ui-date-picker__help" id="{{ id }}-help">{{ help }}</span>{% endif %}
 </label>

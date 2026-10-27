@@ -12,14 +12,14 @@ Boite modale native (`<dialog>`).
 | `description` | `null` | Texte secondaire sous le titre |
 | `closeLabel` | `Fermer` | Nom accessible du bouton de fermeture |
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/dialog_controller.js`, identifiant `ui--dialog`. Il appelle `showModal()` et `close()`. Echap, le focus piege et le retour du focus sont natifs au navigateur.
 
 ## Accessibilite
 
 - Le dialogue natif capture le focus et le rend a l'element declencheur a la fermeture.
-- Le bouton de fermeture porte `aria-label` avec la prop `closeLabel` (defaut « Fermer »), surchargeable par l'application.
+- Le bouton de fermeture porte `aria-label` avec la prop `closeLabel` (défaut « Fermer »), surchargeable par l'application.
 - Le titre est un `h2` ; adapter le niveau si la page en contient deja.
 
 ## Exemple

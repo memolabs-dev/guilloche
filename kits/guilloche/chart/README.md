@@ -14,4 +14,4 @@ Graphique SVG simple, rendu par le serveur, sans JavaScript.
 
 ## Accessibilite
 
-Le `svg` porte `role="img"` et un `aria-label`. Les libelles sont `aria-hidden` car redondants avec le nom accessible. Pour des donnees a lire precisement, fournir aussi un tableau equivalent.
+Le `svg` porte `rôle="img"` et un `aria-label`. Les libellés sont `aria-hidden` car redondants avec le nom accessible. Pour des données a lire precisement, fournir aussi un tableau equivalent.

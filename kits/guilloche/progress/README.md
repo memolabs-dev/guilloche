@@ -13,4 +13,4 @@ Barre d'avancement bornee.
 
 ## Accessibilite
 
-`role="progressbar"` avec `aria-valuemin`, `aria-valuemax`, `aria-valuenow` et `aria-label`. Le pourcentage affiche est `aria-hidden` pour eviter une double annonce.
+`rôle="progressbar"` avec `aria-valuemin`, `aria-valuemax`, `aria-valuenow` et `aria-label`. Le pourcentage affiche est `aria-hidden` pour eviter une double annonce.

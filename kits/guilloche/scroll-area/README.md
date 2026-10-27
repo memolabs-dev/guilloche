@@ -11,4 +11,4 @@ Zone defilante bornee, pour les listes longues dans une carte.
 
 ## Accessibilite
 
-La zone est `tabindex="0"` et `role="region"` : le clavier peut la parcourir. Elle ne remplace pas une pagination quand le contenu est long a charger.
+La zone est `tabindex="0"` et `rôle="region"` : le clavier peut la parcourir. Elle ne remplace pas une pagination quand le contenu est long a charger.

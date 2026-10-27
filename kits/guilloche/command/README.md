@@ -11,10 +11,10 @@ Palette de commandes dans un dialogue natif.
 | `placeholder` | `null` | Texte d'aide du champ |
 | `items` | `[]` | Entrees `{ label, href }` |
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/command_controller.js`, identifiant `ui--command`. Filtre, fleches, Entree, puis navigation vers le `href` de l'entree.
 
 ## Accessibilite
 
-Le dialogue natif capture le focus et rend le focus a l'ouverture. La liste porte `role="listbox"` et chaque entree `role="option"`.
+Le dialogue natif capture le focus et rend le focus a l'ouverture. La liste porte `rôle="listbox"` et chaque entree `rôle="option"`.

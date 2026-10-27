@@ -11,4 +11,4 @@ Barre de menus horizontale, avec sous-menus natifs.
 
 ## Accessibilite
 
-`role="menubar"`, `role="menu"` et `role="menuitem"`. Les sous-menus reposent sur `details`, donc le clavier et Echap fonctionnent sans JavaScript.
+`rôle="menubar"`, `rôle="menu"` et `rôle="menuitem"`. Les sous-menus reposent sur `details`, donc le clavier et Echap fonctionnent sans JavaScript.
