@@ -59,10 +59,10 @@ test('reduced motion and session replay cannot retrigger a fresh seal', () => {
     seal.seedValue = 'test';
     seal.atValue = '2026-10-27';
     seal.freshValue = true;
-    const originalWindow = global.window;
+    const originalWindow = scope.window;
     let reduced = true;
     const stored = new Map();
-    global.window = {
+    scope.window = {
         matchMedia: () => ({ matches: reduced }),
         sessionStorage: {
             getItem: (key) => stored.get(key),
@@ -79,6 +79,6 @@ test('reduced motion and session replay cannot retrigger a fresh seal', () => {
         seal.animateFresh();
         assert.equal(names.has('is-fresh'), false);
     } finally {
-        global.window = originalWindow;
+        scope.window = originalWindow;
     }
 });
