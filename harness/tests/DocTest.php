@@ -38,6 +38,24 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-rosette[aria-hidden="true"] svg[aria-hidden="true"]');
     }
 
+    public function testSerialTableStylesTheFirstColumnOnly(): void
+    {
+        self::createClient()->request('GET', '/components/table');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ui-table.ui-table--serial-first tbody tr:first-child td:first-child');
+        $this->assertSelectorExists('.ui-table.ui-table--serial-first tbody tr:first-child td.ui-table__num');
+    }
+
+    public function testDescriptionListSerialValueKeepsPlainDateText(): void
+    {
+        self::createClient()->request('GET', '/components/description-list');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('.ui-description-list__value .ui-serial', 'N° F-2026-010');
+        $this->assertSelectorNotExists('.ui-description-list__row:last-child code');
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');
