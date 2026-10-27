@@ -100,12 +100,15 @@ final class DocTest extends WebTestCase
 
     public function testPhpRenderedRosettesArePreservedAndProgressIsPresentInHtml(): void
     {
-        self::createClient()->request('GET', '/components/rosette');
+        $crawler = self::createClient()->request('GET', '/components/rosette');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorCount(58, '.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main');
-        $this->assertSelectorExists('.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main[pathLength="100"][style*="stroke-dashoffset: 75"]');
-        $this->assertSelectorExists('.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main[pathLength="100"][style*="stroke-dashoffset: 40"]');
+        $progressStyles = $crawler->filter('.ui-rosette__main[style]')->each(
+            static fn ($node): string => (string) $node->attr('style'),
+        );
+        self::assertContains('stroke-dasharray: 100; stroke-dashoffset: 75', $progressStyles);
+        self::assertContains('stroke-dasharray: 100; stroke-dashoffset: 40', $progressStyles);
         $this->assertSelectorNotExists('.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main[d="M50 6a44 44 0 1 1-.1 0z"]');
     }
 
