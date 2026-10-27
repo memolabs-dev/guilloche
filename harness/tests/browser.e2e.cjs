@@ -118,3 +118,27 @@ test('reduced motion keeps long loading rosette still', { timeout: 45_000 }, asy
         await browser.close();
     }
 });
+
+
+test('ConfirmDialog trigger remains centered and fully visible at both viewports', { timeout: 45_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const width of [390, 1440]) {
+            const page = await browser.newPage({ viewport: { width, height: 900 } });
+            await page.goto(BASE + '/components/dialog', { waitUntil: 'networkidle' });
+            const scene = page.locator('.ds__example-render').nth(1);
+            const trigger = scene.locator('.ui-confirm-dialog__trigger');
+            const [sceneBox, buttonBox] = await Promise.all([scene.boundingBox(), trigger.boundingBox()]);
+            assert.ok(sceneBox && buttonBox, 'The confirmation trigger must render');
+            assert.ok(buttonBox.x >= sceneBox.x && buttonBox.x + buttonBox.width <= sceneBox.x + sceneBox.width,
+                'The destructive button must stay inside its example scene');
+            const sceneCenter = sceneBox.x + sceneBox.width / 2;
+            const buttonCenter = buttonBox.x + buttonBox.width / 2;
+            assert.ok(Math.abs(sceneCenter - buttonCenter) <= 15,
+                'The confirmation trigger must be centered at ' + width + 'px');
+            await page.close();
+        }
+    } finally {
+        await browser.close();
+    }
+});
