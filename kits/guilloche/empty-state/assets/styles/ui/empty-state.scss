@@ -19,3 +19,41 @@
     color: var(--ui-muted-foreground);
     line-height: 1.6;
 }
+
+// Filigrane décoratif opt-in ; jamais dans un formulaire ou un tableau.
+.ui-empty-state--watermark {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.ui-empty-state--watermark > :not(.ui-empty-state__watermark) {
+    position: relative;
+    z-index: 1;
+}
+
+.ui-empty-state__watermark {
+    display: none;
+    position: absolute;
+    width: clamp(15rem, 28vw, 25rem);
+    height: auto;
+    top: -7rem;
+    right: -5rem;
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+}
+
+[data-ui-theme='dark'] .ui-empty-state__watermark {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-ui-theme]):not([data-ui-brand='guilloche']) .ui-empty-state__watermark {
+        display: block;
+    }
+}
+
+[data-ui-theme='light'] .ui-empty-state__watermark {
+    display: none;
+}
