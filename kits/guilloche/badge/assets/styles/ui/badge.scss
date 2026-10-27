@@ -11,12 +11,12 @@
     white-space: nowrap;
 }
 
-.ui-badge--neutral { --ui-badge-color: var(--ui-muted-foreground); }
-.ui-badge--primary { --ui-badge-color: var(--ui-primary); }
-.ui-badge--success { --ui-badge-color: var(--ui-success); }
-.ui-badge--warning { --ui-badge-color: var(--ui-warning); }
-.ui-badge--danger { --ui-badge-color: var(--ui-danger); }
-.ui-badge--info { --ui-badge-color: var(--ui-info); }
+.ui-badge--neutral { --ui-badge-color: var(--ui-muted-foreground); --ui-badge-on: var(--ui-background); }
+.ui-badge--primary { --ui-badge-color: var(--ui-primary); --ui-badge-on: var(--ui-primary-foreground); }
+.ui-badge--success { --ui-badge-color: var(--ui-success); --ui-badge-on: var(--ui-success-foreground); }
+.ui-badge--warning { --ui-badge-color: var(--ui-warning); --ui-badge-on: var(--ui-warning-foreground); }
+.ui-badge--danger { --ui-badge-color: var(--ui-danger); --ui-badge-on: var(--ui-danger-foreground); }
+.ui-badge--info { --ui-badge-color: var(--ui-info); --ui-badge-on: var(--ui-info-foreground); }
 
 .ui-badge--soft {
     background: color-mix(in srgb, var(--ui-badge-color) 12%, transparent);
@@ -25,7 +25,7 @@
 
 .ui-badge--solid {
     background: var(--ui-badge-color);
-    color: #ffffff;
+    color: var(--ui-badge-on, var(--ui-background));
 }
 
 .ui-badge--outline {

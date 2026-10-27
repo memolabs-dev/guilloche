@@ -459,5 +459,45 @@
       <h2>InputOtp</h2>
       <twig:ui:InputOtp id="demo-otp" label="Code de verification" :length="6" />
     </section>
+
+    <section data-recipe="container">
+      <h2>Container</h2>
+      <twig:ui:Container size="md">
+        <p>Contenu centre dans 56rem.</p>
+      </twig:ui:Container>
+    </section>
+
+    <section data-recipe="grid">
+      <h2>Grid</h2>
+      <twig:ui:Grid :columns="3" :gap="3">
+        <div class="ui-card"><div class="ui-card__body">Colonne 1</div></div>
+        <div class="ui-card"><div class="ui-card__body">Colonne 2</div></div>
+        <div class="ui-card"><div class="ui-card__body">Colonne 3</div></div>
+      </twig:ui:Grid>
+    </section>
+
+    <section data-recipe="stack">
+      <h2>Stack</h2>
+      <twig:ui:Stack direction="horizontal" :gap="2" align="center">
+        <twig:ui:Icon name="calendar" />
+        <span>30 octobre 2026</span>
+      </twig:ui:Stack>
+    </section>
+
+    <section data-recipe="floating-label">
+      <h2>FloatingLabel</h2>
+      <twig:ui:FloatingLabel id="demo-floating" label="Adresse e-mail" type="email" />
+      <twig:ui:FloatingLabel id="demo-floating-value" label="Raison sociale" value="Atelier Rivage" />
+    </section>
+
+    <section data-recipe="scrollspy">
+      <h2>Scrollspy</h2>
+      <twig:ui:Scrollspy label="Sommaire" :items="[
+        { id: 'section-a', label: 'Premiere section' },
+        { id: 'section-b', label: 'Seconde section' }
+      ]" />
+      <div id="section-a"><h3>Premiere section</h3><p>Contenu A.</p></div>
+      <div id="section-b"><h3>Seconde section</h3><p>Contenu B.</p></div>
+    </section>
   </main>
 {% endblock %}

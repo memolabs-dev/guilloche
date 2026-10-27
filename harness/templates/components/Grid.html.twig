@@ -1,0 +1,10 @@
+{# Ui:Grid — grille de contenu. columns fixe le nombre de colonnes, min active
+   une grille auto-ajustee avec une largeur minimale par colonne. gap prend un
+   numero de token d'espacement (1 a 6). #}
+{% props columns = 12, min = null, gap = 4 %}
+<div {{ attributes.defaults({
+  class: 'ui-grid',
+  style: '--ui-grid-columns: ' ~ columns ~ '; --ui-grid-gap: var(--ui-space-' ~ gap ~ ')' ~ (min ? '; --ui-grid-min: ' ~ min : '')
+}) }} {{ min ? 'data-auto="true"' }}>
+  {% block content %}{% endblock %}
+</div>

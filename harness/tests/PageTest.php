@@ -93,5 +93,11 @@ final class PageTest extends WebTestCase
 
         $this->assertSelectorExists('.ui-calendar__grid .ui-calendar__day.is-selected[aria-current="date"]');
         $this->assertSelectorExists('.ui-input-otp__input[maxlength="1"]');
+
+        $this->assertSelectorExists('.ui-container--md');
+        $this->assertSelectorExists('.ui-grid[style*="--ui-grid-columns: 3"]');
+        $this->assertSelectorExists('.ui-stack--horizontal.ui-stack--align-center');
+        $this->assertSelectorExists('.ui-floating-label__input[placeholder=" "]');
+        $this->assertSelectorExists('nav.ui-scrollspy a[data-section="section-a"]');
     }
 }

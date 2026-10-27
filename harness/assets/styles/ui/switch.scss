@@ -42,7 +42,7 @@
         width: 1.125rem;
         height: 1.125rem;
         border-radius: 50%;
-        background: #ffffff;
+        background: var(--ui-background);
         box-shadow: var(--ui-shadow-sm);
         transition: transform var(--ui-duration) var(--ui-ease);
     }

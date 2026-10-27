@@ -1,0 +1,59 @@
+// Mise en page du harnais uniquement. Le kit ne fournit pas de styles de page :
+// cette feuille rend le catalogue lisible et espace, rien de plus.
+body {
+    margin: 0;
+    background: var(--ui-background);
+    color: var(--ui-foreground);
+}
+
+.page {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: var(--ui-space-6) var(--ui-space-4) var(--ui-space-6);
+    display: grid;
+    gap: var(--ui-space-5);
+}
+
+.page > h1 {
+    margin: 0;
+    font-size: var(--ui-text-xl);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.page > p {
+    max-width: 46rem;
+    margin: 0;
+    color: var(--ui-muted-foreground);
+    font-size: var(--ui-text-sm);
+    line-height: 1.6;
+}
+
+.page > section {
+    display: grid;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-5);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    background: var(--ui-card);
+    justify-items: start;
+    align-items: start;
+}
+
+.page > section > h2 {
+    margin: 0;
+    font-size: var(--ui-text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ui-muted-foreground);
+}
+
+.page > section > p {
+    margin: 0;
+    font-size: var(--ui-text-sm);
+}
+
+.page > section > .ui-card {
+    width: min(28rem, 100%);
+}

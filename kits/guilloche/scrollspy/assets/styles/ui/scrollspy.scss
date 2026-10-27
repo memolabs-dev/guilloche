@@ -1,0 +1,25 @@
+.ui-scrollspy__list {
+    display: grid;
+    gap: var(--ui-space-1);
+    border-inline-start: 1px solid var(--ui-border);
+}
+
+.ui-scrollspy__link {
+    display: block;
+    padding: var(--ui-space-1) var(--ui-space-3);
+    border-inline-start: 2px solid transparent;
+    margin-inline-start: -1px;
+    color: var(--ui-muted-foreground);
+    font-size: var(--ui-text-sm);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--ui-foreground);
+    }
+
+    &[aria-current='true'] {
+        border-inline-start-color: var(--ui-primary);
+        color: var(--ui-foreground);
+        font-weight: 600;
+    }
+}

@@ -60,14 +60,14 @@
 [data-ui-theme='dark'] {
     color-scheme: dark;
 
-    --ui-background: #0b0f0d;
-    --ui-foreground: #e5e7eb;
-    --ui-muted: #161b18;
-    --ui-muted-foreground: #9ca3af;
-    --ui-card: #111713;
-    --ui-card-foreground: #e5e7eb;
-    --ui-border: #26302a;
-    --ui-input: #111713;
+    --ui-background: #070a08;
+    --ui-foreground: #eef2ef;
+    --ui-muted: #1b241e;
+    --ui-muted-foreground: #a3ada6;
+    --ui-card: #131a15;
+    --ui-card-foreground: #eef2ef;
+    --ui-border: #2f3a33;
+    --ui-input: #0e1310;
     --ui-ring: #c9dccb;
 
     --ui-primary: #c9dccb;
@@ -88,14 +88,14 @@
     :root:not([data-ui-theme='light']) {
         color-scheme: dark;
 
-        --ui-background: #0b0f0d;
-        --ui-foreground: #e5e7eb;
-        --ui-muted: #161b18;
-        --ui-muted-foreground: #9ca3af;
-        --ui-card: #111713;
-        --ui-card-foreground: #e5e7eb;
-        --ui-border: #26302a;
-        --ui-input: #111713;
+        --ui-background: #070a08;
+        --ui-foreground: #eef2ef;
+        --ui-muted: #1b241e;
+        --ui-muted-foreground: #a3ada6;
+        --ui-card: #131a15;
+        --ui-card-foreground: #eef2ef;
+        --ui-border: #2f3a33;
+        --ui-input: #0e1310;
         --ui-ring: #c9dccb;
 
         --ui-primary: #c9dccb;

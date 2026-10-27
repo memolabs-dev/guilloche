@@ -1,0 +1,12 @@
+{# Ui:Stack — pile d'elements avec un espacement constant. direction :
+   vertical|horizontal. gap prend un numero de token d'espacement (1 a 6).
+   align et justify correspondent a align-items et justify-content. #}
+{% props direction = 'vertical', gap = 3, align = null, justify = null %}
+<div {{ attributes.defaults({
+  class: 'ui-stack ui-stack--' ~ direction
+    ~ (align ? ' ui-stack--align-' ~ align : '')
+    ~ (justify ? ' ui-stack--justify-' ~ justify : ''),
+  style: '--ui-stack-gap: var(--ui-space-' ~ gap ~ ')'
+}) }}>
+  {% block content %}{% endblock %}
+</div>

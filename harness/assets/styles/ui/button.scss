@@ -26,7 +26,7 @@
 
 .ui-button--primary {
     --ui-btn-bg: var(--ui-primary, #16301f);
-    --ui-btn-fg: #ffffff;
+    --ui-btn-fg: var(--ui-primary-foreground, #ffffff);
     --ui-btn-border: var(--ui-primary, #16301f);
     background-color: var(--ui-btn-bg);
     color: var(--ui-btn-fg);
@@ -62,7 +62,7 @@
 
 .ui-button--danger {
     --ui-btn-bg: var(--ui-danger, #dc2626);
-    --ui-btn-fg: #ffffff;
+    --ui-btn-fg: var(--ui-danger-foreground, #ffffff);
     --ui-btn-border: var(--ui-danger, #dc2626);
     background-color: var(--ui-btn-bg);
     color: var(--ui-btn-fg);
@@ -86,6 +86,12 @@
 .ui-button.is-loading {
     position: relative;
     overflow: hidden;
+    opacity: 0.9;
+}
+
+.ui-button.is-loading:disabled {
+    opacity: 0.9;
+    cursor: progress;
 }
 
 .ui-button__spinner {

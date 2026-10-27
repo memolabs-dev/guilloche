@@ -9,6 +9,14 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 |---|---|---|---|
 | `theme` | 1.1.0 | aucune | Fondation du kit : tokens, reset et typographie. Tous les composants lisent les variables CSS `--ui-*` definies ici, sans valeur en dur |
 
+## Mise en page
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `container` | 2.0.0 | `size` | Largeur de lecture et padding lateral |
+| `grid` | 2.0.0 | `columns`, `min`, `gap` | Grille de contenu, fixe ou auto-ajustee |
+| `stack` | 2.0.0 | `direction`, `gap`, `align`, `justify` | Pile d'elements avec un espacement constant |
+
 ## Primitives
 
 | Recette | Version | Props | Description |
@@ -37,6 +45,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `checkbox` | 1.1.0 | `id`, `name`, `label`, `checked`, `disabled`, `describedBy` | Case a cocher native, habillee sans perdre la semantique |
 | `date-picker` | 1.5.0 | `id`, `name`, `label`, `value`, `min`, `max`, `help` | Selection de date, avec le calendrier natif du navigateur |
 | `field` | 1.1.0 | `id`, `label`, `help`, `error`, `required` | Enveloppe de champ : label, aide, erreur. Le controle natif passe dans le slot |
+| `floating-label` | 2.0.0 | `id`, `name`, `label`, `type`, `value`, `required`, `describedBy`, `invalid`, `disabled` | Champ avec libelle flottant, sans JavaScript |
 | `input` | 1.1.0 | `id`, `type`, `name`, `placeholder`, `value`, `describedBy`, `invalid`, `disabled`, `required` | Champ de saisie natif |
 | `input-group` | 1.7.0 | `id`, `name`, `type`, `prefix`, `suffix`, `placeholder`, `value`, `describedBy`, `invalid`, `disabled`, `required` | Champ avec prefixe ou suffixe, sans perdre l'input natif |
 | `input-otp` | 1.9.0 | `id`, `name`, `length`, `label` | Code a usage unique, une case par caractere |
@@ -65,6 +74,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `popover` | 1.3.0 | `label` | Panneau flottant ancre. Repose sur `details` et `summary` : ouverture au clavier et fermeture natives, sans JavaScript |
 | `resizable` | 1.8.0 | `label` | Panneau redimensionnable avec une poignee |
 | `scroll-area` | 1.8.0 | `maxHeight`, `label` | Zone defilante bornee, pour les listes longues dans une carte |
+| `scrollspy` | 2.0.0 | `items`, `label` | Sommaire qui suit la section visible |
 | `sheet` | 1.2.0 | `id`, `title`, `trigger`, `description`, `side` | Panneau lateral modal, ancre a droite ou a gauche |
 | `tabs` | 1.2.0 | `items`, `label` | Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne |
 | `toggle` | 1.2.0 | `pressed`, `label` | Bouton a deux etats, rendu avec `aria-pressed` |

@@ -1,0 +1,9 @@
+{
+    "$schema": "../../../schema-kit-recipe-v1.json",
+    "type": "component",
+    "name": "Grid",
+    "version-added": "2.0.0",
+    "family": "layout",
+    "copy-files": { "templates/components/": "%COMPONENTS_DIR%/" },
+    "dependencies": { "composer": ["symfony/ux-twig-component:^3.6"] }
+}
