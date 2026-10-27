@@ -4,19 +4,21 @@ import { Controller } from '@hotwired/stimulus';
 // graine texte. Une epitrochoide normalisee, plusieurs copies tissees.
 // Le trace de repli reste visible sans JavaScript.
 export default class extends Controller {
-    static values = { seed: String, size: Number, progress: Number };
+    static values = { seed: String, size: Number, progress: Number, ssr: Boolean };
 
     connect() {
         const main = this.element.querySelector('.ui-rosette__main');
         const counter = this.element.querySelector('.ui-rosette__counter');
         if (!main || !counter) return;
 
-        const parameters = this.parameters(this.seedValue || 'guilloche');
-        main.setAttribute('d', this.trace(parameters));
-        counter.setAttribute('d', this.trace({ ...parameters, petals: parameters.petals + 2, phase: parameters.phase + Math.PI / parameters.copies }));
+        if (!this.ssrValue) {
+            const parameters = this.parameters(this.seedValue || 'guilloche');
+            main.setAttribute('d', this.trace(parameters));
+            counter.setAttribute('d', this.trace({ ...parameters, petals: parameters.petals + 2, phase: parameters.phase + Math.PI / parameters.copies }));
+        }
 
         const progress = Number.isFinite(this.progressValue) ? Math.min(100, Math.max(0, this.progressValue)) : 100;
-        if (progress < 100) {
+        if (!this.ssrValue && progress < 100) {
             const length = main.getTotalLength();
             main.style.strokeDasharray = String(length);
             main.style.strokeDashoffset = String(length * (1 - progress / 100));
