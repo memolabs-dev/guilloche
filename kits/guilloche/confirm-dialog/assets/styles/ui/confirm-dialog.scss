@@ -1,5 +1,7 @@
+// Keep the trigger as a contained flex item in example scenes.
 .ui-confirm-dialog-root {
-    display: contents;
+    display: inline-flex;
+    align-items: center;
 }
 
 .ui-confirm-dialog__trigger {
