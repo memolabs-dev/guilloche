@@ -63,7 +63,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `breadcrumb` | 1.2.0 | `items`, `label` | Fil d'Ariane |
 | `collapsible` | 1.7.0 | `summary`, `open` | Section repliable neutre, sans bordure ni titre de section |
 | `context-menu` | 1.8.0 | `items`, `label` | Menu au clic droit |
-| `dialog` | 1.2.0 | `id`, `title`, `trigger`, `description` | Boite modale native (`<dialog>`) |
+| `dialog` | 1.2.0 | `id`, `title`, `trigger`, `description`, `closeLabel` | Boite modale native (`<dialog>`) |
 | `direction` | 1.8.0 | `dir` | Conteneur avec sens d'ecriture explicite |
 | `dropdown-menu` | 1.3.0 | `label`, `items` | Menu d'actions ou de liens. Repose sur `details` et `summary` : ouverture, clavier et fermeture fonctionnent sans JavaScript |
 | `hover-card` | 1.8.0 | `label`, `id` | Carte d'apercu au survol et au focus |
@@ -75,7 +75,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `resizable` | 1.8.0 | `label` | Panneau redimensionnable avec une poignee |
 | `scroll-area` | 1.8.0 | `maxHeight`, `label` | Zone defilante bornee, pour les listes longues dans une carte |
 | `scrollspy` | 2.0.0 | `items`, `label` | Sommaire qui suit la section visible |
-| `sheet` | 1.2.0 | `id`, `title`, `trigger`, `description`, `side` | Panneau lateral modal, ancre a droite ou a gauche |
+| `sheet` | 1.2.0 | `id`, `title`, `trigger`, `description`, `side`, `closeLabel` | Panneau lateral modal, ancre a droite ou a gauche |
 | `tabs` | 1.2.0 | `items`, `label` | Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne |
 | `toggle` | 1.2.0 | `pressed`, `label` | Bouton a deux etats, rendu avec `aria-pressed` |
 | `toggle-group` | 1.7.0 | `label` | Groupe de bascules dans un rail commun. Chaque bascule conserve son `aria-pressed` |
@@ -91,7 +91,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `stat` | 1.3.0 | `label`, `value`, `hint`, `trend` | Indicateur chiffre |
 | `table` | 1.3.0 | `caption` | Cadre de tableau. L'application fournit `thead`, `tbody` et `tr` |
 | `timeline` | 1.3.0 | `items` | Suite d'evenements dates, dans une liste ordonnee |
-| `toast` | 1.3.0 | `id`, `title`, `message`, `type`, `autohide` | Notification transitoire |
+| `toast` | 1.3.0 | `id`, `title`, `message`, `type`, `autohide`, `closeLabel` | Notification transitoire |
 
 ## Patterns d'ecran
 
