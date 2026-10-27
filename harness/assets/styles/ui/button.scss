@@ -77,6 +77,13 @@
     &:hover { background: color-mix(in srgb, var(--ui-danger) 88%, black); }
 }
 
+.ui-button--danger-soft {
+    background: var(--ui-danger-soft);
+    color: var(--ui-danger);
+
+    &:hover { background: color-mix(in srgb, var(--ui-danger-soft) 85%, var(--ui-danger) 15%); }
+}
+
 .ui-button:focus-visible {
     outline: none;
     box-shadow: var(--ui-focus-ring);
