@@ -1,25 +1,35 @@
-// Typographie du kit, alignee sur la production : Bodoni Moda Variable pour
-// les titres, Inter pour le texte, Fira Code pour les chiffres et le code.
+// Typographie du kit. Une seule famille pour l'UI (Inter par defaut), une
+// echelle de titres fixe, graisse 600. La serif d'affichage n'existe que dans
+// le theme de marque.
 .ui-scope :where(h1, .ui-heading-1) {
     font-family: var(--ui-font-display);
-    font-size: var(--ui-text-3xl);
+    font-size: var(--ui-text-4xl);
     font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
 }
 
 .ui-scope :where(h2, .ui-heading-2) {
     font-family: var(--ui-font-display);
-    font-size: var(--ui-text-2xl);
+    font-size: var(--ui-text-3xl);
     font-weight: 600;
     line-height: 1.2;
+    letter-spacing: -0.015em;
 }
 
 .ui-scope :where(h3, .ui-heading-3) {
     font-family: var(--ui-font-display);
-    font-size: var(--ui-text-xl);
+    font-size: var(--ui-text-2xl);
     font-weight: 600;
     line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.ui-scope :where(h4, .ui-heading-4) {
+    font-family: var(--ui-font-display);
+    font-size: var(--ui-text-xl);
+    font-weight: 600;
+    line-height: 1.35;
 }
 
 .ui-scope :where(p, .ui-text) {
