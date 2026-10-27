@@ -54,3 +54,16 @@ s'écrivent dans l'application, avec les deux recettes installées.
 <twig:ui:Rosette seed="AR-2026-042" :size="64" label="Mission AR-2026-042" />
 <twig:ui:EmptyState title="Aucune mission" message="Créez une mission pour commencer." />
 ```
+
+## Mode Symfony automatique — seed seule
+
+Le paquet Composer inclut `Guilloche\Signature\AutoGeometrySubscriber`. Une fois ce service enregistré **une fois dans l’application**, toute recette `<twig:ui:Rosette seed="AR-042" />` reçoit automatiquement des chemins SVG SSR, sans passer `paths` à chaque composant. Le hook Symfony UX TwigComponent `PreRenderEvent` injecte les tracés avant le rendu : aucune dépendance à JavaScript, aucun compteur global ni changement au manifeste Toolkit.
+
+```yaml
+# config/services.yaml
+services:
+    Guilloche\Signature\AutoGeometrySubscriber:
+        tags: ['kernel.event_subscriber']
+```
+
+Installer auparavant le paquet : `composer require memolabs-dev/guilloche` (ou dépôt VCS). Sans cet enregistrement, la recette reste autonome avec son repli JavaScript. Si `paths` est fourni explicitement, il gagne toujours.
