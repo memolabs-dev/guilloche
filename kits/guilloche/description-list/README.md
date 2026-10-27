@@ -6,7 +6,8 @@ Paires libellé et valeur.
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
-| `items` | `[]` | Paires `{ term, description }` |
+| `items` | `[]` | Paires `{ term, description, serial?, prefix? }` |
+| `serial` | `false` | Traite les valeurs comme des identifiants en police mono ; un item peut remplacer ce choix par `serial: true/false` |
 
 ## Exemple
 
