@@ -7,6 +7,7 @@ Cadre de tableau. L'application fournit `thead`, `tbody` et `tr`.
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `caption` | `null` | Titre accessible du tableau |
+| `serial` | `false` | Applique la typographie de numéro de série à la première colonne de données uniquement |
 
 ## Classes
 
