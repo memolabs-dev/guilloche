@@ -40,5 +40,10 @@
             "cd harness && composer install --no-interaction --no-progress --no-scripts && vendor/bin/phpunit -c phpunit.dist.xml"
         ],
         "docs": "./bin/docs"
+    },
+    "autoload": {
+        "psr-4": {
+            "Guilloche\\": "src/"
+        }
     }
 }
