@@ -1,0 +1,13 @@
+{# Ui:Scrollspy — sommaire qui suit la section visible. items : liste de
+   { id, label }. Le controleur ui--scrollspy observe les sections par leur id
+   et pose aria-current sur le lien correspondant. #}
+{% props items = [], label = 'Sections' %}
+<nav {{ attributes.defaults({ class: 'ui-scrollspy', 'aria-label': label }) }} data-controller="ui--scrollspy">
+  <ul class="ui-scrollspy__list">
+    {% for item in items %}
+      <li>
+        <a class="ui-scrollspy__link" href="#{{ item.id }}" data-ui--scrollspy-target="link" data-section="{{ item.id }}">{{ item.label }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

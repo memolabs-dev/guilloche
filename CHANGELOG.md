@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.10.0] - 2026-10-27
+
+### Ajoute
+- Documentation du kit dans le harnais : catalogue par famille et fiche par composant.
+- Fiche : apercu rendu, code extrait du README, tableau des props avec defaut et role, accessibilite.
+- Soixante-dix specimens ecrits, un par composant.
+- Layout de documentation : rail par famille, fil d Ariane, cartes d apercu.
+
+### Corrige
+- Cartes du catalogue : structure HTML valide (article, pas de lien imbrique).
+
 ## [1.9.0] - 2026-10-27
 
 ### Ajoute

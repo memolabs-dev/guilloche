@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr" data-ui-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{% block title %}Guilloche, design system{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('styles/app.scss') }}" />
+  </head>
+  <body class="ui-scope">
+    <div class="ds">
+      {% include 'doc/_rail.html.twig' %}
+      <main class="ds__main">{% block body %}{% endblock %}</main>
+    </div>
+  </body>
+</html>

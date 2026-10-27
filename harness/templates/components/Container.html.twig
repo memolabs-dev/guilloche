@@ -1,0 +1,6 @@
+{# Ui:Container — largeur de lecture. size : sm|md|lg|full. Le padding lateral
+   est porte par le conteneur, jamais par la page. #}
+{% props size = 'lg' %}
+<div {{ attributes.defaults({ class: 'ui-container ui-container--' ~ size }) }}>
+  {% block content %}{% endblock %}
+</div>

@@ -1,0 +1,14 @@
+{# Ui:FloatingLabel — champ avec libelle flottant. Le libelle se pose sur le
+   champ quand il est vide, et remonte au focus ou des qu'une valeur existe. Le
+   placeholder est un espace insecable : c'est ce qui permet au CSS de savoir
+   si le champ est rempli, sans JavaScript. #}
+{% props id, name = null, label, type = 'text', value = null, required = false, describedBy = null, invalid = false, disabled = false %}
+<div {{ attributes.defaults({ class: 'ui-floating-label' ~ (invalid ? ' is-invalid' : '') }) }}>
+  <input class="ui-floating-label__input" type="{{ type }}" id="{{ id }}" name="{{ name ?? id }}"
+    value="{{ value ?? false }}" placeholder=" " autocomplete="off"
+    {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif %}
+    {{- invalid ? ' aria-invalid="true"' }}
+    {{- required ? ' required' }}
+    {{- disabled ? ' disabled' }} />
+  <label class="ui-floating-label__label" for="{{ id }}">{{ label }}</label>
+</div>

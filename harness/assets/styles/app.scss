@@ -1,5 +1,6 @@
 // Fichier genere par bin/sync-harness : ne pas editer a la main.
 // Ordre : tokens, base, puis un fichier par composant.
+@use './ui/fonts';
 @use './ui/tokens';
 @use './ui/reset';
 @use './ui/typography';
@@ -69,3 +70,9 @@
 @use './ui/resizable';
 @use './ui/calendar';
 @use './ui/input-otp';
+@use './ui/container';
+@use './ui/grid';
+@use './ui/stack';
+@use './ui/floating-label';
+@use './ui/scrollspy';
+@use './page';

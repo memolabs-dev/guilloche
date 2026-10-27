@@ -1,0 +1,50 @@
+// Polices de la marque Guilloche, vendorees dans le theme.
+// Memes fichiers et memes familles que la production : Inter pour le texte,
+// Bodoni Moda Variable pour les titres, Fira Code pour les chiffres et le code.
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../../fonts/inter/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../../fonts/inter/inter-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../../fonts/inter/inter-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../../fonts/inter/inter-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Bodoni Moda Variable';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('../../fonts/bodoni-moda/bodoni-moda-latin-opsz-normal.woff2') format('woff2-variations');
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../../fonts/fira-code/fira-code-latin-400-normal.woff2') format('woff2');
+}

@@ -24,3 +24,6 @@ node_modules/
 .idea/
 .vscode/
 *.phpunit_result.cache
+
+# Captures et artefacts d'agents
+.openchamber/

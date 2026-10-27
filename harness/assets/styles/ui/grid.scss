@@ -1,0 +1,21 @@
+.ui-grid {
+    display: grid;
+    gap: var(--ui-grid-gap, var(--ui-space-4));
+    grid-template-columns: repeat(var(--ui-grid-columns, 12), minmax(0, 1fr));
+}
+
+.ui-grid[data-auto='true'] {
+    grid-template-columns: repeat(auto-fit, minmax(var(--ui-grid-min, 14rem), 1fr));
+}
+
+@media (max-width: 48rem) {
+    .ui-grid:not([data-auto='true']) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 30rem) {
+    .ui-grid:not([data-auto='true']) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

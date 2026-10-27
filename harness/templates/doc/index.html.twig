@@ -1,0 +1,41 @@
+{% extends 'doc/base.html.twig' %}
+
+{% block title %}Catalogue · Guilloche{% endblock %}
+
+{% block body %}
+  <header class="ds__header">
+    <p class="ds__eyebrow">Design system natif Symfony</p>
+    <h1 class="ds__title">Guilloche</h1>
+    <p class="ds__lead">Composants Twig, tokens CSS et controleurs Stimulus, distribues par le Symfony UX Toolkit. {{ total }} recettes, chacune avec son apercu, son code et ses props.</p>
+    <p class="ds__meta"><span class="ui-badge ui-badge--success ui-badge--soft">1.9.0</span> <span class="ui-badge ui-badge--neutral ui-badge--soft">MIT</span></p>
+  </header>
+
+  {% for family, items in families %}
+    <section class="ds__section" id="{{ family }}">
+      <h2 class="ds__section-title">{{ {
+        fondation: 'Fondations',
+        primitives: 'Primitives',
+        formulaires: 'Formulaires',
+        navigation: 'Navigation et surfaces',
+        donnees: 'Donnees',
+        patterns: 'Patterns d ecran',
+        avances: 'Composants avances',
+        layout: 'Mise en page'
+      }[family] ?? family }}</h2>
+      <div class="ds__cards">
+        {% for item in items %}
+          <article class="ds__card">
+            <div class="ds__card-head">
+              <h3 class="ds__card-title"><a href="{{ path('app_recipe', { recipe: item.name }) }}">{{ item.title }}</a></h3>
+              <span class="ds__card-version">{{ item.version }}</span>
+            </div>
+            <div class="ds__card-preview">
+              {% include 'doc/specimens/' ~ item.name ~ '.html.twig' ignore missing %}
+            </div>
+            <p class="ds__card-description">{{ item.description }}</p>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+{% endblock %}
