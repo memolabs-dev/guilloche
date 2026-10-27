@@ -1,0 +1,15 @@
+{
+    "$schema": "../../../schema-kit-recipe-v1.json",
+    "type": "component",
+    "name": "HoverCard",
+    "version-added": "1.8.0",
+    "family": "navigation",
+    "copy-files": {
+        "templates/components/": "%COMPONENTS_DIR%/",
+        "assets/controllers/": "%CONTROLLERS_DIR%/"
+    },
+    "dependencies": {
+        "composer": ["symfony/ux-twig-component:^3.6"],
+        "importmap": ["@hotwired/stimulus"]
+    }
+}

@@ -1,0 +1,12 @@
+{# Ui:ContextMenu — menu au clic droit. Le contenu du slot est la zone qui
+   declenche le menu ; items : liste de { label, href }. Le controleur
+   ui--context-menu positionne et ferme le menu. #}
+{% props items = [], label = 'Menu contextuel' %}
+<div {{ attributes.defaults({ class: 'ui-context-menu' }) }} data-controller="ui--context-menu" data-action="contextmenu->ui--context-menu#open">
+  {% block content %}{% endblock %}
+  <ul class="ui-context-menu__list" role="menu" aria-label="{{ label }}" hidden data-ui--context-menu-target="list">
+    {% for item in items %}
+      <li role="none"><a class="ui-context-menu__item" role="menuitem" href="{{ item.href ?? '#' }}">{{ item.label }}</a></li>
+    {% endfor %}
+  </ul>
+</div>

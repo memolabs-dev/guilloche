@@ -1,0 +1,31 @@
+.ui-context-menu {
+    position: relative;
+}
+
+.ui-context-menu__list {
+    position: absolute;
+    z-index: 30;
+    min-width: 12rem;
+    padding: var(--ui-space-1);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-card);
+    box-shadow: var(--ui-shadow-md);
+}
+
+.ui-context-menu__item {
+    display: flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0 var(--ui-space-3);
+    border-radius: var(--ui-radius-sm);
+    color: var(--ui-foreground);
+    font-size: var(--ui-text-sm);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        outline: none;
+        background: var(--ui-muted);
+    }
+}

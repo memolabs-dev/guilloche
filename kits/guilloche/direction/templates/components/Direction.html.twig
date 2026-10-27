@@ -1,0 +1,6 @@
+{# Ui:Direction — conteneur qui force un sens d'ecriture. dir : rtl ou ltr.
+   Utile pour tester une interface en arabe ou en hebreu sans changer la page. #}
+{% props dir = 'rtl' %}
+<div {{ attributes.defaults({ class: 'ui-direction', dir: dir }) }}>
+  {% block content %}{% endblock %}
+</div>

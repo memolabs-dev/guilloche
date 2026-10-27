@@ -1,0 +1,12 @@
+{# Ui:ScrollArea — zone defilante bornee. maxHeight est une valeur CSS. La zone
+   est focusable et nommee pour que le clavier puisse la parcourir. #}
+{% props maxHeight = '16rem', label = null %}
+<div {{ attributes.defaults({
+  class: 'ui-scroll-area',
+  style: '--ui-scroll-max: ' ~ maxHeight,
+  tabindex: '0',
+  role: 'region',
+  'aria-label': label ?? false
+}) }}>
+  {% block content %}{% endblock %}
+</div>
