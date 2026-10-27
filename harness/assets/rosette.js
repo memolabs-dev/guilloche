@@ -29,7 +29,7 @@ const trace = ({ petals, copies, phase, skew }) => {
             const radius = 45 * Math.cos(petals * t);
             const x = radius * Math.cos(t + rotation) * skew;
             const y = radius * Math.sin(t + rotation);
-            points.push(`${step === 0 && copy === 0 ? 'M' : 'L'}${(50 + x).toFixed(2)} ${(50 + y).toFixed(2)}`);
+            points.push(`${step === 0 ? 'M' : 'L'}${(50 + x).toFixed(2)} ${(50 + y).toFixed(2)}`);
         }
     }
     return points.join(' ');
@@ -42,7 +42,8 @@ document.querySelectorAll('[data-ui--rosette-seed-value]').forEach((element) => 
     const p = parameters(element.getAttribute('data-ui--rosette-seed-value') || 'guilloche');
     main.setAttribute('d', trace(p));
     counter.setAttribute('d', trace({ ...p, petals: p.petals + 2, phase: p.phase + Math.PI / p.copies }));
-    const progress = Number(element.getAttribute('data-ui--rosette-progress-value') || 100);
+    const rawProgress = Number(element.getAttribute('data-ui--rosette-progress-value') ?? 100);
+    const progress = Number.isFinite(rawProgress) ? Math.min(100, Math.max(0, rawProgress)) : 100;
     if (progress < 100) {
         const length = main.getTotalLength();
         main.style.strokeDasharray = String(length);

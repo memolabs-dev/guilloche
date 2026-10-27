@@ -33,6 +33,8 @@ jobs:
         run: ./bin/lint-recipes
       - name: Contraste des tokens
         run: ./bin/contrast
+      - name: Geometrie et progression des rosettes
+        run: node --test harness/tests/rosette.test.cjs
       - name: CSS du kit
         run: ./bin/build-css
       - name: dist/guilloche.css a jour

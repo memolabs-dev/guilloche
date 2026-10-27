@@ -29,6 +29,15 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-table tbody tr');
     }
 
+    public function testRosetteHasAccessibleNameOnWrapperNotInnerSvg(): void
+    {
+        self::createClient()->request('GET', '/components/rosette');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ui-rosette[role="img"][aria-label="Terminé"] svg[aria-hidden="true"]');
+        $this->assertSelectorExists('.ui-rosette[aria-hidden="true"] svg[aria-hidden="true"]');
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');
