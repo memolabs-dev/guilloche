@@ -90,6 +90,7 @@ final class RecipeCatalog
             'props' => $props,
             'propsTable' => $this->propsTable($readme),
             'code' => $this->firstTwigBlock($readme),
+            'scss' => $this->scss($dir),
         ];
     }
 
@@ -114,6 +115,13 @@ final class RecipeCatalog
         }
 
         return $rows;
+    }
+
+    private function scss(string $dir): string
+    {
+        $files = glob($dir . '/assets/styles/ui/*.scss') ?: [];
+
+        return $files ? (string) file_get_contents($files[0]) : '';
     }
 
     private function firstSentence(string $readme): string
