@@ -863,3 +863,17 @@ body {
         grid-template-columns: repeat(6, 32px);
     }
 }
+
+// Small signatures should not float in a 240px-high showcase scene.
+// Large/interactive components retain the regular spacious 240px preview.
+.ds__example-render--compact {
+    min-height: 136px;
+    padding: var(--ui-space-5) var(--ui-space-6);
+}
+
+@media (max-width: 45rem) {
+    .ds__example-render--compact {
+        min-height: 112px;
+        padding: var(--ui-space-4);
+    }
+}
