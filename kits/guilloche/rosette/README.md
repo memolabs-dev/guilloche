@@ -11,6 +11,7 @@ Empreinte guillochée d'un objet : une même graine donne toujours le même dess
 | `progress` | `null` | 0 à 100 : le trait principal s'arrête à la valeur |
 | `loading` | `false` | Le trait se trace en boucle (1,1 s) |
 | `label` | `null` | Nom accessible ; sans label, la rosette est décorative |
+| `paths` | `null` | `{ main, counter }` : chemins SVG calculés par PHP et rendus dans le HTML ; JS est alors facultatif |
 
 ## Choix technique et source
 
