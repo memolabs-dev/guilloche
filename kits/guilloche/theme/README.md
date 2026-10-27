@@ -50,6 +50,9 @@ Le theme clair est le défaut. Le sombre s'applique de deux facons :
 | Espacements | `--ui-space-1` a `--ui-space-6` |
 | Textes | `--ui-text-xs` a `--ui-text-xl` |
 | Mouvement | `--ui-duration-fast`, `--ui-duration`, `--ui-ease` |
+| Décision humaine | `--ui-attention`, `--ui-attention-soft`, `--ui-attention-line` |
+
+Les tokens cuivrés `attention` signalent **uniquement** une décision attendue de la personne (ex. un sceau `Seal` en état `pending`). Ils ne servent jamais aux boutons, liens, champs, graphiques ni alertes génériques. Les quatre thèmes sont vérifiés par `bin/contrast` pour un ratio minimal de 4,5:1 sur les surfaces pertinentes.
 
 ## Accessibilite
 
