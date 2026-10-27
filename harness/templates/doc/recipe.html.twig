@@ -3,7 +3,7 @@
 {% block title %}{{ item.title }} · Guilloche{% endblock %}
 
 {% block body %}
-  <nav class="ds__crumbs" aria-label="Fil d Ariane">
+  <nav class="ds__crumbs" aria-label="Fil d'Ariane">
     <a href="{{ path('app_home') }}">Catalogue</a>
     <span aria-hidden="true">/</span>
     <span aria-current="page">{{ item.title }}</span>
@@ -28,7 +28,7 @@
             {% include 'doc/specimens/' ~ item.name ~ '.html.twig' %}
           {% else %}
             <div class="ds__example">
-              <div class="ds__example-head"><h3 class="ds__example-title">Apercu</h3></div>
+              <div class="ds__example-head"><h3 class="ds__example-title">Aperçu</h3></div>
               <div class="ds__example-render">
                 {% include 'doc/previews/' ~ item.name ~ '.html.twig' ignore missing %}
               </div>
@@ -45,7 +45,7 @@
     {% if item.propsTable %}
       <div class="ds__table-wrap">
         <table class="ui-table">
-          <thead><tr><th scope="col">Prop</th><th scope="col">Defaut</th><th scope="col">Role</th></tr></thead>
+          <thead><tr><th scope="col">Prop</th><th scope="col">Défaut</th><th scope="col">Rôle</th></tr></thead>
           <tbody>
             {% for row in item.propsTable %}
               <tr><td><code>{{ row.name }}</code></td><td><code>{{ row.default }}</code></td><td>{{ row.role }}</td></tr>
@@ -70,8 +70,8 @@
   </section>
 
   <section class="ds__section" id="accessibilite">
-    <h2 class="ds__section-title">Accessibilite</h2>
-    <p class="ds__lead">Le detail est dans le README de la recette : roles, clavier, noms accessibles et etats. Le test de contrat verifie que chaque champ a un libelle, que les roles sont renseignes et que les SVG sont nommes ou masques.</p>
+    <h2 class="ds__section-title">Accessibilité</h2>
+    <p class="ds__lead">Le détail est dans le README de la recette : rôles, clavier, noms accessibles et états. Le test de contrat verifie que chaque champ a un libellé, que les rôles sont renseignés et que les SVG sont nommés ou masqués.</p>
   </section>
 
       <nav class="ds__pager" aria-label="Pagination de la documentation">
@@ -84,7 +84,7 @@
       <p>Sur cette page</p>
       <a href="#exemples">Exemples</a>
       <a href="#props">Props</a>
-      <a href="#accessibilite">Accessibilite</a>
+      <a href="#accessibilite">Accessibilité</a>
     </aside>
   </div>
 {% endblock %}

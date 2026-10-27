@@ -2,11 +2,11 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Carte complete</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render">
-    <twig:ui:Card title="Facture F-2026-010" description="Accompagnement d octobre" footer="Echeance 30 novembre">
+    <twig:ui:Card title="Facture F-2026-010" description="Accompagnement d'octobre" footer="Échéance 30 novembre">
       <p>Montant : 480,00 €</p>
     </twig:ui:Card>
   </div>
-  {{ m.code('<twig:ui:Card title="Facture F-2026-010" description="Accompagnement d octobre" footer="Echeance 30 novembre">
+  {{ m.code('<twig:ui:Card title="Facture F-2026-010" description="Accompagnement d\'octobre" footer="Échéance 30 novembre">
   <p>Montant : 480,00 €</p>
 </twig:ui:Card>') }}
 </div>
@@ -14,14 +14,14 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Carte avec action</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render">
-    <twig:ui:Card title="Remuneration du dirigeant" description="Prochaine etape : valider la synthese">
+    <twig:ui:Card title="Rémunération du dirigeant" description="Prochaine etape : valider la synthese">
       <twig:ui:Stack :gap="3">
         <twig:ui:Progress :value="75" label="Avancement" showValue />
         <twig:ui:Button size="sm">Ouvrir la mission</twig:ui:Button>
       </twig:ui:Stack>
     </twig:ui:Card>
   </div>
-  {{ m.code('<twig:ui:Card title="Remuneration du dirigeant" description="Prochaine etape">
+  {{ m.code('<twig:ui:Card title="Rémunération du dirigeant" description="Prochaine etape">
   <twig:ui:Progress :value="75" label="Avancement" showValue />
 </twig:ui:Card>') }}
 </div>

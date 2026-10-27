@@ -10,6 +10,7 @@ Boite modale native (`<dialog>`).
 | `title` | requis | Titre |
 | `trigger` | `null` | Libelle du bouton d'ouverture rendu avec le dialogue |
 | `description` | `null` | Texte secondaire sous le titre |
+| `closeLabel` | `Fermer` | Nom accessible du bouton de fermeture |
 
 ## Controleur
 
@@ -18,7 +19,7 @@ Boite modale native (`<dialog>`).
 ## Accessibilite
 
 - Le dialogue natif capture le focus et le rend a l'element declencheur a la fermeture.
-- Le bouton de fermeture porte `aria-label="Close"` ; le libelle doit etre traduit par l'application si besoin.
+- Le bouton de fermeture porte `aria-label` avec la prop `closeLabel` (defaut « Fermer »), surchargeable par l'application.
 - Le titre est un `h2` ; adapter le niveau si la page en contient deja.
 
 ## Exemple
