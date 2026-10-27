@@ -3,7 +3,7 @@
     overflow-x: auto;
     border: 1px solid var(--ui-border);
     border-radius: var(--ui-radius-lg);
-    background: var(--ui-card);
+    background: var(--ui-surface);
 }
 
 .ui-table {
@@ -20,19 +20,22 @@
 }
 
 .ui-table :where(thead th) {
-    padding: var(--ui-space-2) var(--ui-space-4);
+    height: 36px;
+    padding: 0 var(--ui-space-4);
     text-align: left;
-    font-weight: 600;
+    font-size: var(--ui-text-xs);
+    font-weight: 500;
     color: var(--ui-muted-foreground);
-    background: color-mix(in srgb, var(--ui-muted) 55%, transparent);
+    background: var(--ui-muted);
     border-bottom: 1px solid var(--ui-border);
     white-space: nowrap;
 }
 
 .ui-table :where(tbody td) {
-    padding: var(--ui-space-3) var(--ui-space-4);
+    height: 40px;
+    padding: 0 var(--ui-space-4);
     border-bottom: 1px solid var(--ui-border);
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .ui-table :where(tbody tr:last-child td) {
@@ -40,7 +43,7 @@
 }
 
 .ui-table :where(tbody tr:hover) {
-    background: color-mix(in srgb, var(--ui-muted) 45%, transparent);
+    background: var(--ui-accent);
 }
 
 .ui-table__num {
