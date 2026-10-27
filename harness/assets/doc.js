@@ -65,6 +65,16 @@ document.querySelectorAll('[data-copy]').forEach((button) => {
     });
 });
 
+const navButton = document.querySelector('[data-doc-nav]');
+const navPanel = document.querySelector('[data-doc-nav-panel]');
+if (navButton && navPanel) {
+    navButton.addEventListener('click', () => {
+        const open = navButton.getAttribute('aria-expanded') !== 'true';
+        navButton.setAttribute('aria-expanded', String(open));
+        navPanel.classList.toggle('is-open', open);
+    });
+}
+
 const links = [...document.querySelectorAll('.ds__toc a')];
 if (links.length) {
     const observer = new IntersectionObserver((entries) => {
