@@ -47,7 +47,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 
 | Recette | Version | Props | Description |
 |---|---|---|---|
-| `calendar` | 1.9.0 | `label`, `month`, `days`, `previousLabel`, `nextLabel`, `previous`, `next`, `weekdays`, `'M'`, `'M'`, `'J'`, `'V'`, `'S'`, `'D']` | Grille de jours. Les jours sont calcules par le serveur et passes au composant |
+| `calendar` | 1.9.0 | `label`, `month`, `days`, `previousLabel`, `nextLabel`, `previous`, `next`, `weekdays` | Grille de jours. Les jours sont calcules par le serveur et passes au composant |
 | `checkbox` | 1.1.0 | `id`, `name`, `label`, `checked`, `disabled`, `describedBy` | Case a cocher native, habillee sans perdre la sémantique |
 | `date-picker` | 1.5.0 | `id`, `name`, `label`, `value`, `min`, `max`, `help` | Sélection de date, avec le calendrier natif du navigateur |
 | `field` | 1.1.0 | `id`, `label`, `help`, `error`, `required` | Enveloppe de champ : label, aide, erreur. Le contrôle natif passe dans le slot |
