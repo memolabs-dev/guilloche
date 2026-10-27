@@ -1,0 +1,48 @@
+.ui-file-upload {
+    display: grid;
+    gap: var(--ui-space-2);
+}
+
+.ui-file-upload__drop {
+    display: grid;
+    gap: var(--ui-space-1);
+    padding: var(--ui-space-4);
+    border: 1px dashed var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    background: var(--ui-card);
+    text-align: center;
+    cursor: pointer;
+
+    &:focus-within,
+    &:hover {
+        border-color: var(--ui-ring);
+    }
+}
+
+.ui-file-upload__label {
+    font-weight: 600;
+    font-size: var(--ui-text-sm);
+}
+
+.ui-file-upload__hint {
+    font-size: var(--ui-text-xs);
+    color: var(--ui-muted-foreground);
+}
+
+.ui-file-upload__input {
+    margin-top: var(--ui-space-2);
+    font-size: var(--ui-text-sm);
+}
+
+.ui-file-upload__list {
+    display: grid;
+    gap: var(--ui-space-1);
+    font-size: var(--ui-text-sm);
+}
+
+.ui-file-upload__item {
+    padding: var(--ui-space-1) var(--ui-space-2);
+    border-radius: var(--ui-radius-sm);
+    background: var(--ui-muted);
+    color: var(--ui-muted-foreground);
+}

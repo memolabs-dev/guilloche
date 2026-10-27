@@ -18,7 +18,7 @@ find "$KIT" -path "*/templates/components/*.html.twig" -exec cp {} "$TEMPLATES/"
 find "$KIT" -path "*/assets/controllers/*.js" -exec cp {} "$CONTROLLERS/" \;
 find "$KIT" -path "*/assets/styles/ui/*.scss" -exec cp {} "$STYLES/" \;
 
-ORDER="tokens reset typography button icon badge card separator skeleton kbd alert avatar progress field input textarea select checkbox switch breadcrumb pagination toggle accordion tabs dialog sheet tooltip table description-list stat empty-state radio-group slider timeline toast dropdown-menu popover page-header filter-bar form-section detail-layout sidebar confirm-dialog data-region"
+ORDER="tokens reset typography button icon badge card separator skeleton kbd alert avatar progress field input textarea select checkbox switch breadcrumb pagination toggle accordion tabs dialog sheet tooltip table description-list stat empty-state radio-group slider timeline toast dropdown-menu popover page-header filter-bar form-section detail-layout sidebar confirm-dialog data-region date-picker file-upload combobox command carousel chart"
 {
     echo "// Fichier genere par bin/sync-harness : ne pas editer a la main."
     echo "// Ordre : tokens, base, puis un fichier par composant."

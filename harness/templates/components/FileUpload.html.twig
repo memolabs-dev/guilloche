@@ -1,0 +1,15 @@
+{# Ui:FileUpload — depot de fichier. L'input natif reste la source ; le
+   controleur ui--file-upload affiche la liste des fichiers choisis. Sans
+   JavaScript, l'input fonctionne et le navigateur affiche ses propres noms. #}
+{% props id, name = 'files', label, hint = null, accept = null, multiple = false %}
+<div {{ attributes.defaults({ class: 'ui-file-upload' }) }} data-controller="ui--file-upload">
+  <label class="ui-file-upload__drop" for="{{ id }}">
+    <span class="ui-file-upload__label">{{ label }}</span>
+    {% if hint %}<span class="ui-file-upload__hint">{{ hint }}</span>{% endif %}
+    <input class="ui-file-upload__input" type="file" id="{{ id }}" name="{{ name }}"
+      accept="{{ accept ?? false }}" {{ multiple ? 'multiple' }}
+      data-ui--file-upload-target="input"
+      data-action="change->ui--file-upload#list" />
+  </label>
+  <ul class="ui-file-upload__list" data-ui--file-upload-target="list" aria-live="polite"></ul>
+</div>

@@ -1,0 +1,17 @@
+{# Ui:Carousel — galerie defilante. Le viewport utilise scroll-snap : le
+   defilement horizontal et le clavier fonctionnent sans JavaScript. Le
+   controleur ui--carousel ajoute les boutons precedent et suivant. #}
+{% props label, previousLabel, nextLabel %}
+<div {{ attributes.defaults({ class: 'ui-carousel', 'aria-roledescription': 'carousel', 'aria-label': label }) }} data-controller="ui--carousel">
+  <div class="ui-carousel__viewport" data-ui--carousel-target="viewport" tabindex="0">
+    {% block content %}{% endblock %}
+  </div>
+  <div class="ui-carousel__controls">
+    <button class="ui-carousel__button" type="button" data-action="ui--carousel#previous" aria-label="{{ previousLabel }}">
+      <span aria-hidden="true">&larr;</span>
+    </button>
+    <button class="ui-carousel__button" type="button" data-action="ui--carousel#next" aria-label="{{ nextLabel }}">
+      <span aria-hidden="true">&rarr;</span>
+    </button>
+  </div>
+</div>

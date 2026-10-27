@@ -1,0 +1,19 @@
+{# Ui:Combobox — champ avec recherche dans une liste. Le champ visible filtre,
+   un champ cache porte la valeur envoyee. Le controleur ui--combobox gere le
+   clavier (fleches, Entree, Echap) et l'etat aria-expanded. #}
+{% props id, name = null, label, options = [], placeholder = null %}
+<div {{ attributes.defaults({ class: 'ui-combobox' }) }} data-controller="ui--combobox">
+  <label class="ui-combobox__label" for="{{ id }}">{{ label }}</label>
+  <input type="hidden" name="{{ name ?? id }}" value="" data-ui--combobox-target="value" />
+  <input class="ui-combobox__input" type="text" id="{{ id }}" placeholder="{{ placeholder ?? false }}"
+    role="combobox" autocomplete="off" aria-expanded="false" aria-controls="{{ id }}-listbox"
+    data-ui--combobox-target="input"
+    data-action="input->ui--combobox#filter keydown->ui--combobox#navigate" />
+  <ul class="ui-combobox__list" id="{{ id }}-listbox" role="listbox" hidden data-ui--combobox-target="list">
+    {% for option in options %}
+      <li class="ui-combobox__option" role="option" id="{{ id }}-option-{{ loop.index }}"
+        data-value="{{ option.value ?? option }}" data-label="{{ option.label ?? option }}"
+        data-action="click->ui--combobox#select">{{ option.label ?? option }}</li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,0 +1,32 @@
+{# Ui:Chart — graphique SVG simple, rendu par le serveur. type : bar|line.
+   values : liste de nombres ; labels : liste de libelles de meme longueur.
+   label est le nom accessible du graphique. Aucun JavaScript. #}
+{% props type = 'bar', values = [], labels = [], height = 160, label %}
+{% set count = values|length %}
+{% set maxValue = max(values|merge([1])) %}
+{% set width = 320 %}
+{% set gap = count > 1 ? 8 : 0 %}
+{% set slotWidth = count > 0 ? (width - gap * (count - 1)) / count : width %}
+<div {{ attributes.defaults({ class: 'ui-chart' }) }}>
+  <svg class="ui-chart__svg" viewBox="0 0 {{ width }} {{ height }}" preserveAspectRatio="none" role="img" aria-label="{{ label }}">
+    {% if type == 'bar' %}
+      {% for value in values %}
+        {% set barHeight = maxValue > 0 ? (value / maxValue * (height - 8)) : 0 %}
+        <rect class="ui-chart__bar" x="{{ loop.index0 * (slotWidth + gap) }}" y="{{ height - barHeight }}" width="{{ slotWidth }}" height="{{ barHeight }}" rx="3" />
+      {% endfor %}
+    {% else %}
+      {% set points = [] %}
+      {% for value in values %}
+        {% set x = count > 1 ? (loop.index0 * (width / (count - 1))) : width / 2 %}
+        {% set y = height - (maxValue > 0 ? (value / maxValue * (height - 8)) : 0) %}
+        {% set points = points|merge([x ~ ',' ~ y]) %}
+      {% endfor %}
+      <polyline class="ui-chart__line" points="{{ points|join(' ') }}" />
+    {% endif %}
+  </svg>
+  {% if labels %}
+    <ol class="ui-chart__labels" aria-hidden="true">
+      {% for item in labels %}<li>{{ item }}</li>{% endfor %}
+    </ol>
+  {% endif %}
+</div>

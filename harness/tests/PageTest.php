@@ -64,5 +64,12 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('aside.ui-sidebar .ui-sidebar__link.is-current[aria-current="page"]');
         $this->assertSelectorExists('dialog.ui-confirm-dialog#demo-confirm');
         $this->assertSelectorExists('.ui-data-region[data-state="loading"] .ui-data-region__loading');
+
+        $this->assertSelectorExists('input.ui-date-picker__input[type="date"]');
+        $this->assertSelectorExists('input.ui-file-upload__input[type="file"]');
+        $this->assertSelectorExists('.ui-combobox__input[role="combobox"]');
+        $this->assertSelectorExists('dialog.ui-command__dialog');
+        $this->assertSelectorExists('.ui-carousel__viewport');
+        $this->assertSelectorExists('svg.ui-chart__svg[role="img"]');
     }
 }
