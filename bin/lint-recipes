@@ -1,0 +1,163 @@
+#!/usr/bin/env php
+<?php
+//
+// lint-recipes — validation des recettes du kit Guilloche.
+//
+// Vérifie :
+//  - le schéma des manifest de kit et de recette (JSON valide, champs requis),
+//  - les destinations copy-files n'utilisent que %COMPONENTS_DIR% / %CONTROLLERS_DIR%,
+//  - les sources copy-files ne s'échappent pas de leur répertoire,
+//  - absence de référence à l'espace de noms App\ dans les templates (le kit est autonome),
+//  - fusion de classes (merge) sur l'attribut class quand un template définit une classe.
+//
+// Aucun dépendance Composer requise : PHP pur.
+declare(strict_types=1);
+
+const KIT_ROOT = __DIR__ . '/..';
+const KITS_DIR = KIT_ROOT . '/kits/guilloche';
+const KNOWN_PLACEHOLDERS = ['%COMPONENTS_DIR%', '%CONTROLLERS_DIR%'];
+
+$errors = [];
+$checked = 0;
+
+function error(string $message): void
+{
+    global $errors;
+    $errors[] = $message;
+    echo 'ERREUR : ' . $message . PHP_EOL;
+}
+
+function ok(string $message): void
+{
+    echo 'OK    : ' . $message . PHP_EOL;
+}
+
+function decodeJson(string $path, string $label): ?array
+{
+    $json = file_get_contents($path);
+    if ($json === false) {
+        error(sprintf('Lecture impossible : %s', $path));
+        return null;
+    }
+    $data = json_decode($json, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error(sprintf('%s : JSON invalide (%s)', $label, json_last_error_msg()));
+        return null;
+    }
+    if (!is_array($data)) {
+        error(sprintf('%s : le document JSON doit etre un objet', $label));
+        return null;
+    }
+    return $data;
+}
+
+function checkRequired(string $label, array $data, string $field): void
+{
+    if (!array_key_exists($field, $data) || '' === (string) $data[$field]) {
+        error(sprintf('%s : champ requis "%s" manquant ou vide', $label, $field));
+    }
+}
+
+function checkPlaceholders(string $label, string $destination): void
+{
+    preg_match_all('/%[A-Z_]+%/', $destination, $matches);
+    foreach (array_unique($matches[0] ?? []) as $placeholder) {
+        if (!in_array($placeholder, KNOWN_PLACEHOLDERS, true)) {
+            error(sprintf('%s : placeholder inconnu "%s" dans "%s" (seuls %s sont autorises)',
+                $label, $placeholder, $destination, implode(', ', KNOWN_PLACEHOLDERS)));
+        }
+    }
+}
+
+function checkSourceDoesNotEscape(string $label, string $path): void
+{
+    $normalized = str_replace('\\', '/', $path);
+    if (str_starts_with($normalized, '../') || str_contains($normalized, '/../') || str_starts_with($normalized, '/')) {
+        error(sprintf('%s : le chemin "%s" echappe de son repertoire', $label, $path));
+    }
+}
+
+function templateHasClassMerge(string $twig): bool
+{
+    return str_contains($twig, 'merge') && str_contains($twig, 'class');
+}
+
+// ---- manifest de kit ------------------------------------------------------
+foreach (glob(KITS_DIR . '/manifest.json') as $kitManifest) {
+    $label = 'kit ' . basename(dirname($kitManifest));
+    $data = decodeJson($kitManifest, $label);
+    if ($data === null) {
+        continue;
+    }
+    $checked++;
+    foreach (['name', 'description', 'license', 'homepage'] as $field) {
+        checkRequired($label, $data, $field);
+    }
+    ok("$label : manifest de kit verifie");
+}
+
+// ---- recettes -------------------------------------------------------------
+foreach (glob(KITS_DIR . '/*/manifest.json', GLOB_BRACE) as $recipeManifest) {
+    $dir = dirname($recipeManifest);
+    $recipeName = basename($dir);
+    $kitName = basename(dirname($dir));
+    $label = "recette $recipeName (kit $kitName)";
+    $data = decodeJson($recipeManifest, $label);
+    if ($data === null) {
+        continue;
+    }
+    $checked++;
+    $errorsBefore = count($errors);
+
+    checkRequired($label, $data, 'name');
+    checkRequired($label, $data, 'type');
+
+    $type = $data['type'] ?? null;
+    if (!in_array($type, ['component', 'block'], true)) {
+        error(sprintf('%s : type non supporte "%s" (component|block)', $label, $type));
+    }
+
+    $copyFiles = $data['copy-files'] ?? [];
+    if (!is_array($copyFiles)) {
+        error(sprintf('%s : copy-files doit etre un objet', $label));
+    } else {
+        foreach ($copyFiles as $source => $destination) {
+            checkSourceDoesNotEscape($label, $source);
+            checkSourceDoesNotEscape($label, $destination);
+            checkPlaceholders($label, $destination);
+        }
+    }
+
+    // Templates copies : pas de reference a l'espace de noms App\
+    foreach (glob($dir . '/templates/**/*.html.twig') as $template) {
+        $contents = file_get_contents($template);
+        if ($contents === false) {
+            error(sprintf('%s : lecture impossible du template %s', $label, $template));
+            continue;
+        }
+        $rel = str_replace(KIT_ROOT . '/', '', $template);
+        if (str_contains($contents, 'App\\')) {
+            error(sprintf('%s : le template %s reference l espace de noms App\\ (le kit doit etre autonome)',
+                $label, $rel));
+            continue;
+        }
+        if (templateHasClassMerge($contents)) {
+            ok(sprintf('%s : %s (fusion de classes presente)', $label, $rel));
+        } else {
+            ok(sprintf('%s : %s (aucune fusion de classes detectee, a verifier)', $label, $rel));
+        }
+    }
+
+    if (count($errors) === $errorsBefore) {
+        ok("$label : recette valide");
+    }
+}
+
+echo PHP_EOL;
+echo sprintf("%d element(s) verifie(s).%s", $checked, PHP_EOL);
+if ($errors) {
+    echo sprintf("%d erreur(s) detectee(s).%s", count($errors), PHP_EOL);
+    exit(1);
+}
+echo 'Toutes les recettes sont valides.' . PHP_EOL;
+exit(0);

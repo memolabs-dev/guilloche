@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# Émet dist/guilloche.css depuis les partials SCSS du kit Guilloche.
+# Usage : ./bin/build-css
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SRC="$ROOT/kits/guilloche/button/assets/styles/ui/button.scss"
+OUT_DIR="$ROOT/dist"
+OUT="$OUT_DIR/guilloche.css"
+
+if ! command -v sass >/dev/null 2>&1; then
+    echo "Erreur : le binaire 'sass' (Dart Sass) est introuvable." >&2
+    echo "Installez-le : npm install -g sass" >&2
+    exit 1
+fi
+
+if [[ ! -f "$SRC" ]]; then
+    echo "Erreur : source introuvable : $SRC" >&2
+    exit 1
+fi
+
+mkdir -p "$OUT_DIR"
+sass --no-source-map --style=compressed "$SRC" "$OUT"
+
+echo "Construit $OUT depuis $SRC"

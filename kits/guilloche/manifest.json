@@ -1,0 +1,13 @@
+{
+    "$schema": "../../schema-kit-v1.json",
+    "name": "Guilloche",
+    "description": "Design system natif Symfony pour les applications métier : primitives, comportements et patterns d'écran, sans framework CSS. Distribué comme kit du Symfony UX Toolkit.",
+    "license": "MIT",
+    "homepage": "https://github.com/memolabs-dev/guilloche",
+    "color": "#16301f",
+    "dependencies": {
+        "composer": ["symfony/ux-twig-component:^3.6"],
+        "npm": [],
+        "importmap": []
+    }
+}
