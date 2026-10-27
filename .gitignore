@@ -1,0 +1,26 @@
+# Symfony
+.env.local
+.env.*.local
+config/secrets/
+public/bundles/
+var/
+vendor/
+
+# PHP
+composer.phar
+
+# AssetMapper build artifacts (regeneres avec `asset-map:compile`)
+harness/public/assets/
+harness/public/bundles/
+
+# Node / Sass caches
+node_modules/
+.sass-cache/
+
+# PHPUnit
+.phpunit.cache/
+
+# IDE
+.idea/
+.vscode/
+*.phpunit_result.cache
