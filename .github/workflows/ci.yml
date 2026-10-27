@@ -35,6 +35,8 @@ jobs:
         run: ./bin/build-css
       - name: dist/guilloche.css a jour
         run: git diff --exit-code dist/guilloche.css
+      - name: Catalogue genere a jour
+        run: ./bin/docs && git diff --exit-code docs/COMPONENTS.generated.md
       - name: Dependances du harnais
         run: composer install --no-interaction --no-progress --no-scripts
         working-directory: harness

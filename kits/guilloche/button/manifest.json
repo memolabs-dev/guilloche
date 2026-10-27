@@ -8,6 +8,9 @@
         "assets/controllers/": "%CONTROLLERS_DIR%/"
     },
     "dependencies": {
-        "composer": ["symfony/ux-twig-component:^3.6"]
-    }
+        "composer": [
+            "symfony/ux-twig-component:^3.6"
+        ]
+    },
+    "family": "primitives"
 }

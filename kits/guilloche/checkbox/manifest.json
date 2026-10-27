@@ -3,6 +3,13 @@
     "type": "component",
     "name": "Checkbox",
     "version-added": "1.1.0",
-    "copy-files": { "templates/components/": "%COMPONENTS_DIR%/" },
-    "dependencies": { "composer": ["symfony/ux-twig-component:^3.6"] }
+    "copy-files": {
+        "templates/components/": "%COMPONENTS_DIR%/"
+    },
+    "dependencies": {
+        "composer": [
+            "symfony/ux-twig-component:^3.6"
+        ]
+    },
+    "family": "formulaires"
 }

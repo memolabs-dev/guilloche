@@ -6,8 +6,11 @@
     "homepage": "https://github.com/memolabs-dev/guilloche",
     "color": "#16301f",
     "dependencies": {
-        "composer": ["symfony/ux-twig-component:^3.6"],
+        "composer": [
+            "symfony/ux-twig-component:^3.6"
+        ],
         "npm": [],
         "importmap": []
-    }
+    },
+    "version": "1.6.0"
 }

@@ -1,0 +1,31 @@
+{
+    "name": "memolabs-dev/guilloche",
+    "description": "Design system natif Symfony : composants Twig, tokens CSS et controleurs Stimulus, distribues par le Symfony UX Toolkit.",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/memolabs-dev/guilloche",
+    "authors": [
+        {
+            "name": "Guillaume Flambard"
+        }
+    ],
+    "require": {
+        "php": ">=8.4",
+        "symfony/ux-twig-component": "^3.6"
+    },
+    "extra": {
+        "guilloche": {
+            "kits": "kits/",
+            "css": "dist/guilloche.css",
+            "harness": "harness/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "./bin/lint-recipes",
+            "./bin/build-css",
+            "cd harness && composer install --no-interaction --no-progress --no-scripts && vendor/bin/phpunit -c phpunit.dist.xml"
+        ],
+        "docs": "./bin/docs"
+    }
+}

@@ -7,7 +7,7 @@
     {%- if disabled %} disabled{% endif %}
     {%- if describedBy %} aria-describedby="{{ describedBy }}"{% endif %} />
   <span class="ui-check__box" aria-hidden="true">
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
   </span>
   <span class="ui-check__label">{{ label }}</span>
 </label>

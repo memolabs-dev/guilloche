@@ -4,5 +4,6 @@
     "name": "Theme",
     "version-added": "1.1.0",
     "copy-files": {},
-    "dependencies": {}
+    "dependencies": {},
+    "family": "fondation"
 }
