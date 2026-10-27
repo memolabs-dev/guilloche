@@ -1,43 +1,63 @@
 // Tokens du kit Guilloche.
-// Memes valeurs de role que la production guilloche-workspace : papier de
-// securite, encre intaille, encres de controle cuivre, bleu et vert.
-// Le nom public reste --ui-* ; la valeur vient de la marque.
+// Le theme par defaut est neutre : gris a tres faible chroma, une seule couleur
+// d'action, profondeur par couches de surfaces. L'identite Guilloche (vert,
+// cuivre, Bodoni) vit dans [data-ui-brand='guilloche'], jamais imposee.
 :root {
     color-scheme: light;
 
+    // Typographie : une seule famille pour l'UI, le mono pour le code.
     --ui-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --ui-font-display: 'Bodoni Moda Variable', 'Bodoni 72', Didot, 'Times New Roman', serif;
+    --ui-font-display: var(--ui-font-sans);
     --ui-font-mono: 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
 
-    --ui-background: #edf1ea;
-    --ui-foreground: #14261b;
-    --ui-muted: #e3e9e0;
-    --ui-muted-foreground: #56665a;
-    --ui-card: #fbfcf9;
-    --ui-card-foreground: #14261b;
-    --ui-border: #d3dbcf;
-    --ui-input: #ffffff;
-    --ui-ring: #1f5a33;
+    // Surfaces : canvas, surface, muted. Trois couches suffisent a la hierarchie.
+    --ui-background: oklch(0.985 0 0);
+    --ui-surface: oklch(1 0 0);
+    --ui-card: var(--ui-surface);
+    --ui-card-foreground: oklch(0.205 0.006 260);
+    --ui-muted: oklch(0.965 0.002 260);
+    --ui-input: var(--ui-surface);
 
-    --ui-primary: #376b44;
-    --ui-primary-foreground: #ffffff;
-    --ui-secondary: #dce9dc;
-    --ui-secondary-foreground: #285a35;
-    --ui-danger: #a02f29;
-    --ui-danger-foreground: #ffffff;
-    --ui-success: #2a6237;
-    --ui-success-foreground: #ffffff;
-    --ui-warning: #8c4810;
-    --ui-warning-foreground: #ffffff;
-    --ui-info: #29497a;
-    --ui-info-foreground: #ffffff;
+    // Traits
+    --ui-border: oklch(0.915 0.003 260);
+    --ui-border-strong: oklch(0.86 0.004 260);
 
-    --ui-radius-sm: 6px;
-    --ui-radius-md: 8px;
-    --ui-radius-lg: 12px;
-    --ui-radius-xl: 16px;
+    // Texte : trois niveaux
+    --ui-foreground: oklch(0.205 0.006 260);
+    --ui-muted-foreground: oklch(0.551 0.006 260);
+    --ui-subtle-foreground: oklch(0.68 0.005 260);
+
+    // Action : une seule couleur, presque noire comme shadcn neutral.
+    --ui-primary: oklch(0.235 0.006 260);
+    --ui-primary-hover: oklch(0.31 0.007 260);
+    --ui-primary-foreground: oklch(0.985 0 0);
+    --ui-secondary: oklch(0.965 0.002 260);
+    --ui-secondary-foreground: oklch(0.235 0.006 260);
+    --ui-accent: oklch(0.955 0.002 260);
+    --ui-ring: oklch(0.55 0.02 260);
+
+    // Statuts : texte colore sur fond tres pale, jamais en aplat.
+    --ui-danger: oklch(0.5 0.18 27);
+    --ui-danger-soft: oklch(0.965 0.02 27);
+    --ui-danger-foreground: oklch(0.985 0 0);
+    --ui-success: oklch(0.48 0.12 155);
+    --ui-success-soft: oklch(0.965 0.022 155);
+    --ui-success-foreground: oklch(0.985 0 0);
+    --ui-warning: oklch(0.55 0.13 70);
+    --ui-warning-soft: oklch(0.965 0.03 80);
+    --ui-warning-foreground: oklch(0.235 0.02 80);
+    --ui-info: oklch(0.5 0.11 255);
+    --ui-info-soft: oklch(0.965 0.02 255);
+    --ui-info-foreground: oklch(0.985 0 0);
+
+    // Formes
+    --ui-radius-sm: 4px;
+    --ui-radius-md: 6px;
+    --ui-radius-lg: 10px;
+    --ui-radius-xl: 12px;
     --ui-radius-pill: 999px;
 
+    // Grille de 4
     --ui-space-1: 4px;
     --ui-space-2: 8px;
     --ui-space-3: 12px;
@@ -49,86 +69,147 @@
     --ui-space-9: 56px;
     --ui-space-10: 72px;
 
+    // Echelle de texte
     --ui-text-xs: 0.75rem;
     --ui-text-sm: 0.8125rem;
     --ui-text-md: 0.875rem;
     --ui-text-lg: 1rem;
     --ui-text-xl: 1.125rem;
-    --ui-text-2xl: 1.375rem;
-    --ui-text-3xl: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+    --ui-text-2xl: 1.25rem;
+    --ui-text-3xl: 1.5rem;
+    --ui-text-4xl: 1.875rem;
 
-    --ui-shadow-sm: 0 1px 2px rgb(20 38 27 / 0.06), 0 1px 1px rgb(20 38 27 / 0.04);
-    --ui-shadow-md: 0 12px 32px -14px rgb(20 38 27 / 0.24), 0 2px 6px rgb(20 38 27 / 0.06);
-    --ui-shadow-lg: 0 32px 80px -24px rgb(8 22 13 / 0.45), 0 8px 24px -12px rgb(8 22 13 / 0.2);
-    --ui-focus-ring: 0 0 0 3px color-mix(in srgb, var(--ui-ring) 28%, transparent);
+    --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
+    --ui-shadow-md: 0 4px 12px oklch(0 0 0 / 0.08), 0 1px 2px oklch(0 0 0 / 0.04);
+    --ui-shadow-lg: 0 16px 40px oklch(0 0 0 / 0.12), 0 2px 8px oklch(0 0 0 / 0.06);
+    --ui-focus-ring: 0 0 0 2px var(--ui-background), 0 0 0 4px var(--ui-ring);
 
     --ui-duration-fast: 120ms;
-    --ui-duration: 180ms;
-    --ui-duration-enter: 280ms;
+    --ui-duration: 150ms;
     --ui-ease: cubic-bezier(0.2, 0, 0, 1);
-    --ui-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-ui-theme='dark'] {
     color-scheme: dark;
 
+    --ui-background: oklch(0.17 0.004 260);
+    --ui-surface: oklch(0.21 0.005 260);
+    --ui-card: var(--ui-surface);
+    --ui-card-foreground: oklch(0.96 0.002 260);
+    --ui-muted: oklch(0.25 0.005 260);
+    --ui-input: oklch(0.24 0.005 260);
+
+    --ui-border: oklch(0.3 0.005 260);
+    --ui-border-strong: oklch(0.38 0.006 260);
+
+    --ui-foreground: oklch(0.96 0.002 260);
+    --ui-muted-foreground: oklch(0.72 0.005 260);
+    --ui-subtle-foreground: oklch(0.6 0.005 260);
+
+    --ui-primary: oklch(0.93 0.002 260);
+    --ui-primary-hover: oklch(0.86 0.002 260);
+    --ui-primary-foreground: oklch(0.2 0.005 260);
+    --ui-secondary: oklch(0.26 0.005 260);
+    --ui-secondary-foreground: oklch(0.96 0.002 260);
+    --ui-accent: oklch(0.28 0.006 260);
+    --ui-ring: oklch(0.68 0.02 260);
+
+    --ui-danger: oklch(0.72 0.16 25);
+    --ui-danger-soft: oklch(0.27 0.05 25);
+    --ui-danger-foreground: oklch(0.98 0 0);
+    --ui-success: oklch(0.74 0.12 155);
+    --ui-success-soft: oklch(0.26 0.04 155);
+    --ui-success-foreground: oklch(0.18 0.02 155);
+    --ui-warning: oklch(0.8 0.12 78);
+    --ui-warning-soft: oklch(0.28 0.04 78);
+    --ui-warning-foreground: oklch(0.2 0.02 78);
+    --ui-info: oklch(0.74 0.1 255);
+    --ui-info-soft: oklch(0.26 0.04 255);
+    --ui-info-foreground: oklch(0.18 0.02 255);
+
+    --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
+    --ui-shadow-md: 0 4px 12px oklch(0 0 0 / 0.4), 0 1px 2px oklch(0 0 0 / 0.2);
+    --ui-shadow-lg: 0 16px 40px oklch(0 0 0 / 0.5), 0 2px 8px oklch(0 0 0 / 0.3);
+    --ui-focus-ring: 0 0 0 2px var(--ui-background), 0 0 0 4px var(--ui-ring);
+}
+
+// Theme de marque Guilloche : l'identite de la demo, optionnelle.
+[data-ui-brand='guilloche'] {
+    color-scheme: light;
+
+    --ui-font-display: 'Bodoni Moda Variable', 'Bodoni 72', Didot, 'Times New Roman', serif;
+
+    --ui-background: #edf1ea;
+    --ui-surface: #fbfcf9;
+    --ui-card: #fbfcf9;
+    --ui-card-foreground: #14261b;
+    --ui-muted: #e3e9e0;
+    --ui-input: #ffffff;
+
+    --ui-border: #d3dbcf;
+    --ui-border-strong: #b0bdae;
+
+    --ui-foreground: #14261b;
+    --ui-muted-foreground: #56665a;
+    --ui-subtle-foreground: #7b8b7f;
+
+    --ui-primary: #376b44;
+    --ui-primary-hover: #2d5a38;
+    --ui-primary-foreground: #ffffff;
+    --ui-secondary: #dce9dc;
+    --ui-secondary-foreground: #285a35;
+    --ui-accent: #e3e9e0;
+    --ui-ring: #1f5a33;
+
+    --ui-danger: #a02f29;
+    --ui-danger-soft: #f6e0dc;
+    --ui-danger-foreground: #ffffff;
+    --ui-success: #2a6237;
+    --ui-success-soft: #dbeadb;
+    --ui-success-foreground: #ffffff;
+    --ui-warning: #8c4810;
+    --ui-warning-soft: #f4e5d4;
+    --ui-warning-foreground: #ffffff;
+    --ui-info: #29497a;
+    --ui-info-soft: #e0e8f3;
+    --ui-info-foreground: #ffffff;
+}
+
+[data-ui-brand='guilloche'][data-ui-theme='dark'] {
+    color-scheme: dark;
+
     --ui-background: #0c1610;
-    --ui-foreground: #e6eee7;
-    --ui-muted: #09120d;
-    --ui-muted-foreground: #98aa9b;
+    --ui-surface: #111d16;
     --ui-card: #111d16;
     --ui-card-foreground: #e6eee7;
-    --ui-border: #223429;
+    --ui-muted: #09120d;
     --ui-input: #111d16;
-    --ui-ring: #9fd8b0;
+
+    --ui-border: #223429;
+    --ui-border-strong: #34493b;
+
+    --ui-foreground: #e6eee7;
+    --ui-muted-foreground: #98aa9b;
+    --ui-subtle-foreground: #7f9384;
 
     --ui-primary: #8fcfa2;
+    --ui-primary-hover: #a8ddb8;
     --ui-primary-foreground: #0a1a10;
     --ui-secondary: #183022;
     --ui-secondary-foreground: #a4dbb4;
+    --ui-accent: #183022;
+    --ui-ring: #9fd8b0;
+
     --ui-danger: #f1a49a;
+    --ui-danger-soft: #2a1210;
     --ui-danger-foreground: #2a0f0c;
     --ui-success: #9ad5a8;
+    --ui-success-soft: #142c1d;
     --ui-success-foreground: #0a1a10;
     --ui-warning: #eaa96a;
+    --ui-warning-soft: #2b1d0f;
     --ui-warning-foreground: #2a1608;
     --ui-info: #a6c2ea;
+    --ui-info-soft: #16233a;
     --ui-info-foreground: #0a1524;
-
-    --ui-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
-    --ui-shadow-md: 0 12px 32px -14px rgb(0 0 0 / 0.6), 0 2px 6px rgb(0 0 0 / 0.3);
-    --ui-shadow-lg: 0 32px 80px -24px rgb(0 0 0 / 0.7), 0 8px 24px -12px rgb(0 0 0 / 0.4);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-ui-theme='light']) {
-        color-scheme: dark;
-
-        --ui-background: #0c1610;
-        --ui-foreground: #e6eee7;
-        --ui-muted: #09120d;
-        --ui-muted-foreground: #98aa9b;
-        --ui-card: #111d16;
-        --ui-card-foreground: #e6eee7;
-        --ui-border: #223429;
-        --ui-input: #111d16;
-        --ui-ring: #9fd8b0;
-
-        --ui-primary: #8fcfa2;
-        --ui-primary-foreground: #0a1a10;
-        --ui-secondary: #183022;
-        --ui-secondary-foreground: #a4dbb4;
-        --ui-danger: #f1a49a;
-        --ui-danger-foreground: #2a0f0c;
-        --ui-success: #9ad5a8;
-        --ui-success-foreground: #0a1a10;
-        --ui-warning: #eaa96a;
-        --ui-warning-foreground: #2a1608;
-        --ui-info: #a6c2ea;
-        --ui-info-foreground: #0a1524;
-
-        --ui-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
-        --ui-shadow-md: 0 12px 32px -14px rgb(0 0 0 / 0.6), 0 2px 6px rgb(0 0 0 / 0.3);
-        --ui-shadow-lg: 0 32px 80px -24px rgb(0 0 0 / 0.7), 0 8px 24px -12px rgb(0 0 0 / 0.4);
-    }
 }
