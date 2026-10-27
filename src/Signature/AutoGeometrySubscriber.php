@@ -25,6 +25,9 @@ class AutoGeometrySubscriber implements EventSubscriberInterface
     {
         $name = $event->getMetadata()?->getName();
         $data = $event->getData();
+        if (str_contains(strtolower((string) $name), 'rosette')) {
+            throw new \RuntimeException('DEBUG PreMount '.json_encode(['name' => $name, 'template' => $event->getMetadata()?->getTemplate(), 'keys' => array_keys($data)]));
+        }
 
         if ($name === 'ui:Rosette' || $name === 'Rosette') {
             if (($data['paths'] ?? null) !== null || !isset($data['seed'])) {
