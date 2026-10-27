@@ -28,6 +28,12 @@ final class RosetteGeometry
         ];
     }
 
+    /** Signature du valideur, identique au contour principal de sa rosette. */
+    public static function sealPath(string $signer): string
+    {
+        return self::trace(self::parameters($signer !== '' ? $signer : 'guilloche'));
+    }
+
     /** @return array{petals: int, copies: int, phase: float, skew: float} */
     private static function parameters(string $seed): array
     {

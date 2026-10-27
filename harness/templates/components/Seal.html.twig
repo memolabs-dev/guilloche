@@ -5,7 +5,7 @@
    atLabel : texte lisible de la date ; label : nom accessible complet ;
    state : validated (encre pleine) ou pending (filet pointille) ;
    fresh : le trait se dessine une fois, a la pose. #}
-{% props text, by, at = null, atLabel = null, label = null, state = 'validated', fresh = false, size = 20 %}
+{% props text, by, at = null, atLabel = null, label = null, state = 'validated', fresh = false, size = 20, path = null %}
 <span {{ attributes.defaults({
   class: 'ui-seal ui-seal--' ~ state,
   role: 'img',
@@ -13,13 +13,14 @@
 }) }}>
   <span class="ui-seal__mark" data-controller="ui--seal"
     data-ui--seal-seed-value="{{ by }}"
+    data-ui--seal-ssr-value="{{ path is not null ? 'true' : 'false' }}"
     data-ui--seal-fresh-value="{{ fresh ? 'true' : 'false' }}"
     data-ui--seal-at-value="{{ at ?? '' }}">
     <svg viewBox="0 0 100 100" width="{{ size }}" height="{{ size }}" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" focusable="false" aria-hidden="true">
       <circle cx="50" cy="50" r="47" vector-effect="non-scaling-stroke" />
       <circle cx="50" cy="50" r="41" vector-effect="non-scaling-stroke" opacity="0.5" />
       <g transform="translate(50 50) scale(0.58) translate(-50 -50)">
-        <path class="ui-seal__trace" vector-effect="non-scaling-stroke" d="M50 6a44 44 0 1 1-.1 0z" />
+        <path class="ui-seal__trace" vector-effect="non-scaling-stroke" d="{{ path is not null ? path : 'M50 6a44 44 0 1 1-.1 0z' }}" />
       </g>
     </svg>
   </span>

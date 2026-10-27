@@ -21,15 +21,15 @@ vm.runInNewContext(
 );
 const controller = new context.RosetteController();
 
-function render(seed, progress = '100') {
+function render(seed, progress = '100', ssr = false) {
     const main = {
-        attributes: {},
+        attributes: ssr ? { d: 'M10.00 10.00 L90.00 90.00' } : {},
         style: {},
         setAttribute(name, value) { this.attributes[name] = value; },
         getTotalLength() { return 100; },
     };
     const counter = {
-        attributes: {},
+        attributes: ssr ? { d: 'M20.00 20.00 L80.00 80.00' } : {},
         setAttribute(name, value) { this.attributes[name] = value; },
     };
     const element = {
@@ -37,7 +37,7 @@ function render(seed, progress = '100') {
             return selector === '.ui-rosette__main' ? main : counter;
         },
         getAttribute(name) {
-            return name.includes('seed-value') ? seed : progress;
+            return name.includes('seed-value') ? seed : name.includes('ssr-value') ? String(ssr) : progress;
         },
     };
 
@@ -85,4 +85,11 @@ test('harness and installed-kit Twig recipes remain byte-for-byte aligned', () =
     const kitTemplate = path.resolve(__dirname, '../../kits/guilloche/rosette/templates/components/Rosette.html.twig');
     const harnessTemplate = path.resolve(__dirname, '../templates/components/Rosette.html.twig');
     assert.equal(readFileSync(harnessTemplate, 'utf8'), readFileSync(kitTemplate, 'utf8'));
+});
+
+test('server-precomputed rosette is not replaced or animated by the documentation JS', () => {
+    const { main, counter } = render('AR-2026-042', '25', true);
+    assert.equal(main.attributes.d, 'M10.00 10.00 L90.00 90.00');
+    assert.equal(counter.attributes.d, 'M20.00 20.00 L80.00 80.00');
+    assert.equal(main.style.strokeDashoffset, undefined);
 });

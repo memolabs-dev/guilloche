@@ -17,6 +17,7 @@ final class RosetteExtension extends AbstractExtension
     {
         return [
             new TwigFunction('guilloche_rosette_paths', [RosetteGeometry::class, 'paths']),
+            new TwigFunction('guilloche_seal_path', [RosetteGeometry::class, 'sealPath']),
         ];
     }
 }

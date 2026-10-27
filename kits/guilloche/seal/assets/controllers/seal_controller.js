@@ -3,12 +3,14 @@ import { Controller } from '@hotwired/stimulus';
 // ui--seal : la rosette du sceau derive de la personne qui signe. Meme
 // algorithme que ui--rosette, livre ici pour que la recette reste autonome.
 export default class extends Controller {
-    static values = { seed: String, fresh: Boolean, at: String };
+    static values = { seed: String, fresh: Boolean, at: String, ssr: Boolean };
 
     connect() {
         const trace = this.element.querySelector('.ui-seal__trace');
         if (!trace) return;
-        trace.setAttribute('d', this.highlight(this.parameters(this.seedValue || 'guilloche')));
+        if (!this.ssrValue) {
+            trace.setAttribute('d', this.highlight(this.parameters(this.seedValue || 'guilloche')));
+        }
         this.animateFresh();
     }
 
