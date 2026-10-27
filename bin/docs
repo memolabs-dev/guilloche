@@ -13,6 +13,7 @@ const OUT = ROOT . '/docs/COMPONENTS.generated.md';
 const FAMILIES = [
     'fondation' => 'Fondation',
     'layout' => 'Mise en page',
+    'signature' => 'Signature',
     'primitives' => 'Primitives',
     'formulaires' => 'Formulaires',
     'navigation' => 'Navigation et surfaces',
