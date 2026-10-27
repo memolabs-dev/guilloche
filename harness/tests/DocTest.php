@@ -97,6 +97,29 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-empty-state--watermark .ui-empty-state__title');
     }
 
+
+    public function testPhpRenderedRosettesArePreservedAndProgressIsPresentInHtml(): void
+    {
+        self::createClient()->request('GET', '/components/rosette');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorCount(58, '.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main');
+        $this->assertSelectorExists('.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main[pathLength="100"][style*="stroke-dashoffset: 75"]');
+        $this->assertSelectorExists('.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main[pathLength="100"][style*="stroke-dashoffset: 40"]');
+        $this->assertSelectorNotExists('.ui-rosette[data-ui--rosette-ssr-value="true"] .ui-rosette__main[d="M50 6a44 44 0 1 1-.1 0z"]');
+    }
+
+    public function testSealUsesSignerSpecificServerPathInInitialHtml(): void
+    {
+        self::createClient()->request('GET', '/components/seal');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ui-seal[role="img"] [data-ui--seal-ssr-value="true"] .ui-seal__trace[d^="M"]');
+        $this->assertSelectorNotExists('.ui-seal [data-ui--seal-ssr-value="true"] .ui-seal__trace[d="M50 6a44 44 0 1 1-.1 0z"]');
+        $this->assertSelectorExists('.ui-seal--pending [data-ui--seal-ssr-value="true"] svg[aria-hidden="true"]');
+        $this->assertSelectorExists('.ui-seal time[datetime="2026-10-12T10:30:00"]');
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');
