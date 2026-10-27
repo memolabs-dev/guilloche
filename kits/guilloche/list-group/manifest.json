@@ -1,0 +1,9 @@
+{
+    "$schema": "../../../schema-kit-recipe-v1.json",
+    "type": "component",
+    "name": "ListGroup",
+    "version-added": "1.7.0",
+    "family": "donnees",
+    "copy-files": { "templates/components/": "%COMPONENTS_DIR%/" },
+    "dependencies": { "composer": ["symfony/ux-twig-component:^3.6"] }
+}

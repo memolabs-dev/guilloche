@@ -320,5 +320,67 @@
       <h2>Chart</h2>
       <twig:ui:Chart label="Missions par mois" :values="[3, 5, 4, 7]" :labels="['Jan', 'Fev', 'Mar', 'Avr']" />
     </section>
+
+    <section data-recipe="button-group">
+      <h2>ButtonGroup</h2>
+      <twig:ui:ButtonGroup label="Alignement">
+        <twig:ui:Button appearance="secondary">Gauche</twig:ui:Button>
+        <twig:ui:Button appearance="secondary">Centre</twig:ui:Button>
+        <twig:ui:Button appearance="secondary">Droite</twig:ui:Button>
+      </twig:ui:ButtonGroup>
+    </section>
+
+    <section data-recipe="toggle-group">
+      <h2>ToggleGroup</h2>
+      <twig:ui:ToggleGroup label="Affichage">
+        <twig:ui:Toggle :pressed="true">Liste</twig:ui:Toggle>
+        <twig:ui:Toggle>Grille</twig:ui:Toggle>
+      </twig:ui:ToggleGroup>
+    </section>
+
+    <section data-recipe="spinner">
+      <h2>Spinner</h2>
+      <twig:ui:Spinner label="Chargement" />
+      <twig:ui:Spinner size="lg" />
+    </section>
+
+    <section data-recipe="collapsible">
+      <h2>Collapsible</h2>
+      <twig:ui:Collapsible summary="Details techniques" open>
+        <p>Contenu repliable.</p>
+      </twig:ui:Collapsible>
+    </section>
+
+    <section data-recipe="list-group">
+      <h2>ListGroup</h2>
+      <twig:ui:ListGroup :items="[
+        { label: 'Synthese', href: '#', meta: '26 oct.' },
+        { label: 'Lettre de mission', meta: '24 oct.' }
+      ]" />
+    </section>
+
+    <section data-recipe="aspect-ratio">
+      <h2>AspectRatio</h2>
+      <twig:ui:AspectRatio ratio="16/9">
+        <div class="ui-card"><div class="ui-card__body">Media 16:9</div></div>
+      </twig:ui:AspectRatio>
+    </section>
+
+    <section data-recipe="input-group">
+      <h2>InputGroup</h2>
+      <twig:ui:Field id="demo-group" label="Recherche">
+        <twig:ui:InputGroup id="demo-group" prefix="https://" suffix=".dev" placeholder="domaine" describedBy="demo-group-help" />
+      </twig:ui:Field>
+    </section>
+
+    <section data-recipe="code-block">
+      <h2>CodeBlock</h2>
+      <twig:ui:CodeBlock label="Commande" language="shell" code="php bin/console ux:install button --kit guilloche" />
+    </section>
+
+    <section data-recipe="marker">
+      <h2>Marker</h2>
+      <p>La mission <twig:ui:Marker>Remuneration du dirigeant</twig:ui:Marker> est a votre tour.</p>
+    </section>
   </main>
 {% endblock %}

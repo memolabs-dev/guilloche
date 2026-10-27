@@ -71,5 +71,15 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('dialog.ui-command__dialog');
         $this->assertSelectorExists('.ui-carousel__viewport');
         $this->assertSelectorExists('svg.ui-chart__svg[role="img"]');
+
+        $this->assertSelectorExists('.ui-button-group[role="group"]');
+        $this->assertSelectorExists('.ui-toggle-group[role="group"]');
+        $this->assertSelectorExists('.ui-spinner[role="status"][aria-label]');
+        $this->assertSelectorExists('details.ui-collapsible[open]');
+        $this->assertSelectorExists('ul.ui-list-group > li.ui-list-group__item');
+        $this->assertSelectorExists('.ui-aspect-ratio[style*="--ui-aspect"]');
+        $this->assertSelectorExists('.ui-input-group__input[aria-describedby="demo-group-help"]');
+        $this->assertSelectorExists('.ui-code-block__pre > code');
+        $this->assertSelectorExists('mark.ui-marker');
     }
 }

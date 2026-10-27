@@ -1,0 +1,12 @@
+{# Ui:CodeBlock — bloc de code avec en-tete optionnel. code est une prop : Twig
+   l'echappe, aucun HTML n'est interprete. #}
+{% props code, label = null, language = null %}
+<figure {{ attributes.defaults({ class: 'ui-code-block' }) }}>
+  {% if label or language %}
+    <figcaption class="ui-code-block__header">
+      <span>{{ label ?? language }}</span>
+      {% if language and label %}<span class="ui-code-block__language">{{ language }}</span>{% endif %}
+    </figcaption>
+  {% endif %}
+  <pre class="ui-code-block__pre"><code>{{ code }}</code></pre>
+</figure>

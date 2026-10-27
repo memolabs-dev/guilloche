@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0] - 2026-10-27
+
+### Ajoute
+- `button-group`, `toggle-group`, `spinner`, `collapsible`.
+- `list-group`, `aspect-ratio`, `input-group`, `code-block`, `marker`.
+- Harnais : 56 composants rendus, contrat et accessibilite a 126 assertions.
+
 ## [1.6.1] - 2026-10-27
 
 ### Ajoute
