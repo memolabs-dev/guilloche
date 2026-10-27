@@ -1,4 +1,4 @@
-// Documentation : bascule de theme, copie du code, sommaire actif.
+// Documentation : onglets Apercu / Code, bascule de theme, copie, sommaire.
 const root = document.documentElement;
 
 const stored = localStorage.getItem('guilloche-doc-theme');
@@ -14,13 +14,53 @@ document.querySelectorAll('[data-doc-theme]').forEach((button) => {
     });
 });
 
+document.querySelectorAll('.ds__example').forEach((example) => {
+    const render = example.querySelector('.ds__example-render');
+    const code = example.querySelector('.ds__example-code');
+    if (!render || !code) return;
+
+    const tabs = document.createElement('div');
+    tabs.className = 'ds__example-tabs';
+    tabs.setAttribute('role', 'tablist');
+
+    const previewTab = document.createElement('button');
+    previewTab.type = 'button';
+    previewTab.className = 'ds__example-tab';
+    previewTab.textContent = 'Aperçu';
+    previewTab.setAttribute('role', 'tab');
+    previewTab.setAttribute('aria-selected', 'true');
+
+    const codeTab = document.createElement('button');
+    codeTab.type = 'button';
+    codeTab.className = 'ds__example-tab';
+    codeTab.textContent = 'Code';
+    codeTab.setAttribute('role', 'tab');
+    codeTab.setAttribute('aria-selected', 'false');
+
+    tabs.append(previewTab, codeTab);
+    example.querySelector('.ds__example-head').after(tabs);
+
+    render.classList.add('ds__example-pane');
+    code.classList.add('ds__example-pane');
+    code.hidden = true;
+
+    const show = (pane) => {
+        render.hidden = pane === 'code';
+        code.hidden = pane !== 'code';
+        previewTab.setAttribute('aria-selected', String(pane === 'preview'));
+        codeTab.setAttribute('aria-selected', String(pane === 'code'));
+    };
+    previewTab.addEventListener('click', () => show('preview'));
+    codeTab.addEventListener('click', () => show('code'));
+});
+
 document.querySelectorAll('[data-copy]').forEach((button) => {
     button.addEventListener('click', async () => {
         const target = button.closest('.ds__example')?.querySelector('pre code');
         if (!target) return;
         await navigator.clipboard.writeText(target.textContent.trim());
         const label = button.textContent;
-        button.textContent = 'Copie';
+        button.textContent = 'Copié';
         setTimeout(() => { button.textContent = label; }, 1200);
     });
 });

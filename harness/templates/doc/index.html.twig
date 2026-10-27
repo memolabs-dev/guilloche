@@ -27,7 +27,6 @@
           <article class="ds__card">
             <div class="ds__card-head">
               <h3 class="ds__card-title"><a href="{{ path('app_recipe', { recipe: item.name }) }}">{{ item.title }}</a></h3>
-              <span class="ds__card-version">{{ item.version }}</span>
             </div>
             <div class="ds__card-preview">
               {% include 'doc/previews/' ~ item.name ~ '.html.twig' ignore missing %}
