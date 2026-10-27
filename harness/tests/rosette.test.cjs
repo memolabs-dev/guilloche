@@ -65,7 +65,7 @@ test('48 references have stable and distinct contours in the kit and documentati
             petals: parameters.petals + 2,
             phase: parameters.phase + Math.PI / parameters.copies,
         }));
-        assert.equal((a.main.attributes.d.match(/(?:^|\\s)M/g) ?? []).length, parameters.copies);
+        assert.equal((a.main.attributes.d.match(/(?:^|\s)M/g) ?? []).length, parameters.copies);
         if (parameters.copies > 1) woven++;
         traces.add(a.main.attributes.d);
     }
