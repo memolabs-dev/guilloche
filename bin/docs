@@ -40,6 +40,72 @@ function description(string $dir): string
     return '';
 }
 
+/**
+ * Sépare les déclarations Twig seulement sur les virgules de premier niveau.
+ * Une valeur par défaut peut elle-même contenir tableaux, hashes, appels ou
+ * textes avec virgules : ils ne créent pas de nouvelles props.
+ */
+function parsePropNames(string $declaration): array
+{
+    $parts = [];
+    $part = '';
+    $stack = [];
+    $quote = null;
+    $escaped = false;
+
+    for ($i = 0, $length = strlen($declaration); $i < $length; ++$i) {
+        $char = $declaration[$i];
+
+        if (null !== $quote) {
+            $part .= $char;
+            if ($escaped) {
+                $escaped = false;
+            } elseif ('\\' === $char) {
+                $escaped = true;
+            } elseif ($char === $quote) {
+                $quote = null;
+            }
+            continue;
+        }
+
+        if ("'" === $char || '"' === $char) {
+            $quote = $char;
+            $part .= $char;
+            continue;
+        }
+
+        if (in_array($char, ['[', '{', '('], true)) {
+            $stack[] = $char;
+            $part .= $char;
+            continue;
+        }
+
+        if (in_array($char, [']', '}', ')'], true)) {
+            array_pop($stack);
+            $part .= $char;
+            continue;
+        }
+
+        if (',' === $char && [] === $stack) {
+            $parts[] = trim($part);
+            $part = '';
+            continue;
+        }
+
+        $part .= $char;
+    }
+
+    $parts[] = trim($part);
+    $names = [];
+    foreach ($parts as $definition) {
+        if (preg_match('/^([a-zA-Z_][a-zA-Z0-9_]*)(?:\s*=|$)/', $definition, $match)) {
+            $names[] = $match[1];
+        }
+    }
+
+    return $names;
+}
+
 /** Noms des props declarees dans le template principal du composant. */
 function props(string $dir): array
 {
@@ -51,17 +117,28 @@ function props(string $dir): array
     if (!preg_match('/\{%\s*props\s+(.+?)%\}/s', $twig, $match)) {
         return [];
     }
-    $names = [];
-    foreach (explode(',', $match[1]) as $part) {
-        $part = trim($part);
-        if ('' === $part) {
-            continue;
-        }
-        $name = preg_split('/\s*=/', $part)[0];
-        $names[] = trim($name);
-    }
 
-    return $names;
+    return parsePropNames(trim($match[1]));
+}
+
+// Test rapide, sans dépendances ni écriture dans le catalogue généré.
+if (in_array('--self-test', $argv ?? [], true)) {
+    $cases = [
+        "label = 'Bonjour, humain', disabled = false" => ['label', 'disabled'],
+        "weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'], value = null" => ['weekdays', 'value'],
+        'options = { fields: [1, 2], nested: { a: 1, b: 2 } }, label = null' => ['options', 'label'],
+        'seed, size = 32, progress = null' => ['seed', 'size', 'progress'],
+        "name = 'l\\'objet, verifie', required = true" => ['name', 'required'],
+    ];
+    foreach ($cases as $declaration => $expected) {
+        $actual = parsePropNames($declaration);
+        if ($actual !== $expected) {
+            fwrite(STDERR, sprintf("Échec du parseur pour %s : attendu %s, reçu %s\n", $declaration, json_encode($expected), json_encode($actual)));
+            exit(1);
+        }
+    }
+    echo sprintf("Parseur des props Twig : %d cas validés.\n", count($cases));
+    exit(0);
 }
 
 $recipes = [];
