@@ -227,5 +227,59 @@
         <p>Contenu du panneau flottant.</p>
       </twig:ui:Popover>
     </section>
+
+    <section data-recipe="page-header">
+      <h2>PageHeader</h2>
+      <twig:ui:PageHeader title="Missions" description="Suivi des dossiers en cours">
+        <twig:ui:Button>Nouvelle mission</twig:ui:Button>
+      </twig:ui:PageHeader>
+    </section>
+
+    <section data-recipe="filter-bar">
+      <h2>FilterBar</h2>
+      <twig:ui:FilterBar action="#" submitLabel="Filtrer">
+        <twig:ui:Field id="demo-filter" label="Recherche">
+          <twig:ui:Input id="demo-filter" name="q" type="search" />
+        </twig:ui:Field>
+      </twig:ui:FilterBar>
+    </section>
+
+    <section data-recipe="form-section">
+      <h2>FormSection</h2>
+      <twig:ui:FormSection title="Identite" description="Informations de la structure">
+        <twig:ui:Field id="demo-section" label="Raison sociale">
+          <twig:ui:Input id="demo-section" />
+        </twig:ui:Field>
+      </twig:ui:FormSection>
+    </section>
+
+    <section data-recipe="detail-layout">
+      <h2>DetailLayout</h2>
+      <twig:ui:DetailLayout label="Missions">
+        {% block list %}<p>Liste des missions</p>{% endblock %}
+        {% block detail %}<p>Detail de la mission</p>{% endblock %}
+      </twig:ui:DetailLayout>
+    </section>
+
+    <section data-recipe="sidebar">
+      <h2>Sidebar</h2>
+      <twig:ui:Sidebar :items="[
+        { label: 'Vue d ensemble', href: '#', current: true },
+        { label: 'Missions', href: '#' },
+        { label: 'Documents', href: '#' }
+      ]" />
+    </section>
+
+    <section data-recipe="confirm-dialog">
+      <h2>ConfirmDialog</h2>
+      <twig:ui:ConfirmDialog id="demo-confirm" title="Supprimer la mission" message="Cette action est definitive." trigger="Supprimer" confirmLabel="Supprimer" cancelLabel="Annuler" />
+    </section>
+
+    <section data-recipe="data-region">
+      <h2>DataRegion</h2>
+      <twig:ui:DataRegion state="loading" loadingMessage="Chargement des missions...">
+        <p>Resultats precedents conserves.</p>
+      </twig:ui:DataRegion>
+    </section>
   </main>
 {% endblock %}

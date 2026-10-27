@@ -1,0 +1,20 @@
+.ui-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ui-space-4);
+}
+
+@media (min-width: 60rem) {
+    .ui-detail-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(20rem, 28rem);
+        align-items: start;
+    }
+}
+
+.ui-detail-layout__list {
+    min-width: 0;
+}
+
+.ui-detail-layout__detail {
+    min-width: 0;
+}

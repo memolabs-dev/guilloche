@@ -55,5 +55,14 @@ final class PageTest extends WebTestCase
         $this->assertSelectorExists('.ui-toast[role="status"]');
         $this->assertSelectorExists('details.ui-dropdown > summary.ui-dropdown__trigger');
         $this->assertSelectorExists('details.ui-popover > .ui-popover__panel');
+
+        $this->assertSelectorExists('header.ui-page-header .ui-page-header__title');
+        $this->assertSelectorExists('form.ui-filter-bar[role="search"]');
+        $this->assertSelectorExists('section.ui-form-section .ui-form-section__title');
+        $this->assertSelectorExists('.ui-detail-layout__list');
+        $this->assertSelectorExists('.ui-detail-layout__detail');
+        $this->assertSelectorExists('aside.ui-sidebar .ui-sidebar__link.is-current[aria-current="page"]');
+        $this->assertSelectorExists('dialog.ui-confirm-dialog#demo-confirm');
+        $this->assertSelectorExists('.ui-data-region[data-state="loading"] .ui-data-region__loading');
     }
 }

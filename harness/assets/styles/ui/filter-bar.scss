@@ -1,0 +1,40 @@
+.ui-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-3) var(--ui-space-4);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    background: var(--ui-card);
+}
+
+.ui-filter-bar__fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--ui-space-3);
+    flex: 1;
+    min-width: 0;
+}
+
+.ui-filter-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+}
+
+.ui-filter-bar__submit {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: 0 var(--ui-space-4);
+    border: 1px solid var(--ui-primary);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-primary);
+    color: var(--ui-primary-foreground);
+    font: inherit;
+    font-size: var(--ui-text-sm);
+    font-weight: 500;
+    cursor: pointer;
+}

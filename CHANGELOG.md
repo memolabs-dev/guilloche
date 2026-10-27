@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2026-10-27
+
+### Ajoute
+- Patterns d'ecran : `page-header`, `filter-bar`, `form-section`, `detail-layout`, `sidebar`, `confirm-dialog`, `data-region`.
+- Controleur `ui--confirm-dialog` : emet `ui:confirm` avant de fermer.
+- Harnais : 41 composants rendus, test de contrat a 48 assertions.
+- `docs/COMPONENTS.md` : patterns d'ecran et composants restants.
+
 ## [1.3.0] - 2026-10-27
 
 ### Ajoute

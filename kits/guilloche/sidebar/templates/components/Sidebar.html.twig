@@ -1,0 +1,17 @@
+{# Ui:Sidebar — navigation laterale. items : liste de { label, href, current }.
+   Le lien courant porte aria-current ; la navigation reste une liste de liens,
+   donc elle fonctionne sans JavaScript. #}
+{% props label = 'Navigation', items = [] %}
+<aside {{ attributes.defaults({ class: 'ui-sidebar', 'aria-label': label }) }}>
+  <nav>
+    <ul class="ui-sidebar__list">
+      {% for item in items %}
+        <li>
+          <a class="ui-sidebar__link{{ item.current|default(false) ? ' is-current' : '' }}"
+             href="{{ item.href ?? '#' }}"
+             {{ item.current|default(false) ? 'aria-current="page"' }}>{{ item.label }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</aside>

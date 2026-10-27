@@ -1,0 +1,16 @@
+{# Ui:DataRegion — region de resultats avec quatre etats : idle, loading, error,
+   empty. Les messages sont des props, le contenu vient du slot. Le serveur rend
+   l'etat courant ; une application Turbo peut le changer sans recharger. #}
+{% props state = 'idle', loadingMessage = null, errorMessage = null, emptyMessage = null %}
+<section {{ attributes.defaults({ class: 'ui-data-region', 'data-state': state }) }}>
+  {% if loadingMessage %}
+    <p class="ui-data-region__loading" role="status">{{ loadingMessage }}</p>
+  {% endif %}
+  {% if errorMessage %}
+    <p class="ui-data-region__error" role="alert">{{ errorMessage }}</p>
+  {% endif %}
+  {% if emptyMessage %}
+    <p class="ui-data-region__empty">{{ emptyMessage }}</p>
+  {% endif %}
+  <div class="ui-data-region__content">{% block content %}{% endblock %}</div>
+</section>
