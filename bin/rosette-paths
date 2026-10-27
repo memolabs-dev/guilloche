@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+require_once dirname(__DIR__) . '/src/Signature/RosetteGeometry.php';
+
+use Guilloche\Signature\RosetteGeometry;
+
+// Outil de contrôle/prototypage, sans dépendance à Composer ni à Symfony.
+$result = [];
+foreach (array_slice($argv, 1) as $seed) {
+    $result[$seed] = RosetteGeometry::paths($seed);
+}
+echo json_encode($result, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE), PHP_EOL;
