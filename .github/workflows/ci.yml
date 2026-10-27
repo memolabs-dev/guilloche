@@ -36,7 +36,7 @@ jobs:
       - name: dist/guilloche.css a jour
         run: git diff --exit-code dist/guilloche.css
       - name: Dependances du harnais
-        run: composer install --no-interaction --no-progress
+        run: composer install --no-interaction --no-progress --no-scripts
         working-directory: harness
       - name: CSS compile du harnais
         run: php bin/console sass:build
@@ -49,4 +49,4 @@ jobs:
         working-directory: harness
       - name: Journal du harnais si echec
         if: failure()
-        run: tail -50 harness/var/log/dev.log
+        run: tail -50 harness/var/log/dev.log 2>/dev/null || true
