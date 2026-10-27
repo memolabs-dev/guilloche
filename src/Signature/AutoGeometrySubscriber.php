@@ -5,45 +5,46 @@ declare(strict_types=1);
 namespace Guilloche\Signature;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\UX\TwigComponent\Event\PreMountEvent;
+use Symfony\UX\TwigComponent\Event\PreRenderEvent;
 
 /**
- * One-time Symfony integration for copied UX Toolkit recipes.
+ * Optional Symfony integration for copy-pasted UX Toolkit recipes.
  *
- * PreMountEvent is used intentionally: for anonymous Twig Components the
- * props are present in the mounting data, before Twig's {% props %} tag
- * consumes them. PreRenderEvent is too late for this binding.
+ * The PreRenderEvent exposes the *input* props that will be available in Twig,
+ * unlike PreMountEvent changes that are not forwarded as input props when
+ * mounting an anonymous component. This preserves manual overrides and avoids
+ * modifying unrelated recipes or controllers.
  */
 class AutoGeometrySubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
-        return [PreMountEvent::class => 'onPreMount'];
+        return [PreRenderEvent::class => 'onPreRender'];
     }
 
-    public function onPreMount(PreMountEvent $event): void
+    public function onPreRender(PreRenderEvent $event): void
     {
-        $name = $event->getMetadata()?->getName();
-        $data = $event->getData();
+        $name = strtolower($event->getMetadata()->getName());
+        $variables = $event->getVariables();
 
-        if ($name === 'ui:Rosette' || $name === 'Rosette') {
-            error_log('Guilloche SSR before '.json_encode(['keys' => array_keys($data), 'seed' => $data['seed'] ?? null]));
-            if (($data['paths'] ?? null) !== null || !isset($data['seed'])) {
-                return; // explicit SVG takes priority
+        if ($name === 'ui:rosette' || $name === 'rosette') {
+            if (($variables['paths'] ?? null) !== null || !isset($variables['seed'])) {
+                return; // caller's own SVG geometry is authoritative
             }
-            $data['paths'] = RosetteGeometry::paths((string) $data['seed']);
-            $event->setData($data);
-            error_log('Guilloche SSR after '.json_encode(['keys' => array_keys($event->getData()), 'pathlen' => strlen($data['paths']['main'])]));
+
+            $variables['paths'] = RosetteGeometry::paths((string) $variables['seed']);
+            $event->setVariables($variables);
 
             return;
         }
 
-        if ($name === 'ui:Seal' || $name === 'Seal') {
-            if (($data['path'] ?? null) !== null || !isset($data['by'])) {
+        if ($name === 'ui:seal' || $name === 'seal') {
+            if (($variables['path'] ?? null) !== null || !isset($variables['by'])) {
                 return;
             }
-            $data['path'] = RosetteGeometry::sealPath((string) $data['by']);
-            $event->setData($data);
+
+            $variables['path'] = RosetteGeometry::sealPath((string) $variables['by']);
+            $event->setVariables($variables);
         }
     }
 }
