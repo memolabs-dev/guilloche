@@ -82,3 +82,15 @@ test('reduced motion and session replay cannot retrigger a fresh seal', () => {
         scope.window = originalWindow;
     }
 });
+
+test('server-provided seal shape is never overwritten during controller connect', () => {
+    const seal = new Seal();
+    const { element, pathNode } = elements();
+    pathNode.d = 'M14.00 17.00 L60.00 70.00';
+    seal.element = element;
+    seal.ssrValue = true;
+    seal.seedValue = 'signer-A';
+    seal.freshValue = false;
+    seal.connect();
+    assert.equal(pathNode.d, 'M14.00 17.00 L60.00 70.00');
+});
