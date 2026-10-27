@@ -69,7 +69,8 @@ final class DocTest extends WebTestCase
 
     public function testWatermarksAreOptInAndDecorative(): void
     {
-        self::createClient()->request('GET', '/components/page-header');
+        $client = self::createClient();
+        $client->request('GET', '/components/page-header');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.ui-page-header:not(.ui-page-header--watermark)');
@@ -77,7 +78,7 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-page-header--watermark svg path[d="M5 50 Q50 5 95 50 Q50 95 5 50 Z"]');
         $this->assertSelectorExists('.ui-page-header--watermark .ui-page-header__title');
 
-        self::createClient()->request('GET', '/components/empty-state');
+        $client->request('GET', '/components/empty-state');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.ui-empty-state:not(.ui-empty-state--watermark)');
