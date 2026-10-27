@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0] - 2026-10-27
+
+### Ajoute
+- `calendar` : grille de jours calculee par le serveur, navigation de mois par liens.
+- `input-otp` : code a usage unique, controleur `ui--input-otp` (avance, retour, collage).
+- Harnais : 66 composants rendus, contrat et accessibilite a 147 assertions.
+
 ## [1.8.0] - 2026-10-27
 
 ### Ajoute

@@ -1,0 +1,32 @@
+{# Ui:Calendar — grille de jours. Les jours sont calcules par le serveur et
+   passes dans days : { label, href, selected, disabled, empty }. La navigation
+   de mois est portee par previous et next, donc elle fonctionne sans
+   JavaScript et le retour arriere du navigateur reste coherent. #}
+{% props label, month, days = [], previousLabel, nextLabel, previous = null, next = null %}
+<div {{ attributes.defaults({ class: 'ui-calendar', role: 'group', 'aria-label': label }) }}>
+  <div class="ui-calendar__header">
+    <a class="ui-calendar__nav{{ previous ? '' : ' is-disabled' }}" href="{{ previous ?? '#' }}" rel="prev" aria-label="{{ previousLabel }}">
+      <span aria-hidden="true">&larr;</span>
+    </a>
+    <span class="ui-calendar__month" aria-live="polite">{{ month }}</span>
+    <a class="ui-calendar__nav{{ next ? '' : ' is-disabled' }}" href="{{ next ?? '#' }}" rel="next" aria-label="{{ nextLabel }}">
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+  <ol class="ui-calendar__grid">
+    {% for day in days %}
+      <li class="ui-calendar__cell{{ day.empty|default(false) ? ' is-empty' }}">
+        {% if day.empty|default(false) %}
+          <span class="ui-calendar__blank" aria-hidden="true"></span>
+        {% elseif day.href is defined and day.href %}
+          <a class="ui-calendar__day{{ day.selected|default(false) ? ' is-selected' : '' }}{{ day.disabled|default(false) ? ' is-disabled' : '' }}"
+            href="{{ day.href }}"
+            {{ day.selected|default(false) ? 'aria-current="date"' }}>{{ day.label }}</a>
+        {% else %}
+          <span class="ui-calendar__day{{ day.selected|default(false) ? ' is-selected' : '' }}{{ day.disabled|default(false) ? ' is-disabled' : '' }}"
+            {{ day.selected|default(false) ? 'aria-current="date"' }}>{{ day.label }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</div>

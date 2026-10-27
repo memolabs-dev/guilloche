@@ -1,0 +1,9 @@
+{
+    "$schema": "../../../schema-kit-recipe-v1.json",
+    "type": "component",
+    "name": "Calendar",
+    "version-added": "1.9.0",
+    "family": "formulaires",
+    "copy-files": { "templates/components/": "%COMPONENTS_DIR%/" },
+    "dependencies": { "composer": ["symfony/ux-twig-component:^3.6"] }
+}
