@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.6.0] - 2026-10-27
+
+### Ajoute
+- `composer.json` a la racine : paquet `memolabs-dev/guilloche` de type library, scripts `test` et `docs`.
+- `bin/docs` : catalogue genere depuis les manifests et les templates, verifie par la CI.
+- Champ `family` dans les manifests de recette et `version` dans le manifest du kit.
+- `harness/tests/AccessibilityTest.php` : noms accessibles des champs et boutons, roles `progressbar` et `switch`, SVG nommes ou masques, `nav` et `dialog` nommes.
+- `docs/VERSIONING.md` : politique semver et deprecation.
+
+### Corrige
+- `checkbox` : SVG interne marque `aria-hidden`.
+- `sidebar` : `aria-label` porte par le `nav`.
+
 ## [1.5.0] - 2026-10-27
 
 ### Ajoute

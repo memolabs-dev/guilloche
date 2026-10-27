@@ -1,0 +1,87 @@
+# Catalogue genere
+
+Fichier genere par `bin/docs` depuis les manifests et les templates du kit.
+Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
+
+## Fondation
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `theme` | 1.1.0 | aucune | Fondation du kit : tokens, reset et typographie. Tous les composants lisent les variables CSS `--ui-*` definies ici, sans valeur en dur |
+
+## Primitives
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `alert` | 1.1.0 | `type`, `title`, `message` | Message d'etat, avec titre et texte optionnels |
+| `avatar` | 1.1.0 | `initials`, `src`, `label`, `size` | Image ou initiales pour representer une personne ou une organisation |
+| `badge` | 1.1.0 | `tone`, `variant` | Etiquette courte pour un état, un compteur ou une catégorie |
+| `button` | 1.0.0 | `intent`, `appearance`, `size`, `type`, `href`, `disabled`, `loading` | Composant bouton natif Symfony, installé par le Symfony UX Toolkit. Aucun libellé en dur : le texte est passé par le slot. Le kit ne contient aucun texte en français ni aucune référence à une entreprise ou un prototype |
+| `card` | 1.1.0 | `title`, `description`, `footer` | Surface de contenu avec en-tete et pied optionnels |
+| `empty-state` | 1.3.0 | `title`, `message` | Etat vide, avec une action de sortie dans le slot |
+| `icon` | 1.1.0 | `name`, `size` | Jeu d'icônes au trait, décoratif par défaut. Aucun libellé en dur |
+| `kbd` | 1.1.0 | aucune | Touche ou raccourci clavier |
+| `progress` | 1.1.0 | `value`, `max`, `label`, `showValue` | Barre d'avancement bornee |
+| `separator` | 1.1.0 | `orientation`, `label` | Trait de separation horizontal ou vertical, avec libelle optionnel |
+| `skeleton` | 1.1.0 | `rows` | Forme du contenu attendu pendant un chargement. Purement decorative |
+
+## Formulaires
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `checkbox` | 1.1.0 | `id`, `name`, `label`, `checked`, `disabled`, `describedBy` | Case a cocher native, habillee sans perdre la semantique |
+| `date-picker` | 1.5.0 | `id`, `name`, `label`, `value`, `min`, `max`, `help` | Selection de date, avec le calendrier natif du navigateur |
+| `field` | 1.1.0 | `id`, `label`, `help`, `error`, `required` | Enveloppe de champ : label, aide, erreur. Le controle natif passe dans le slot |
+| `input` | 1.1.0 | `id`, `type`, `name`, `placeholder`, `value`, `describedBy`, `invalid`, `disabled`, `required` | Champ de saisie natif |
+| `radio-group` | 1.3.0 | `id`, `name`, `label`, `options`, `value`, `disabled` | Choix unique parmi plusieurs options |
+| `select` | 1.1.0 | `id`, `name`, `options`, `value`, `placeholder`, `describedBy`, `invalid`, `disabled`, `required` | Liste deroulante native |
+| `slider` | 1.3.0 | `id`, `name`, `min`, `max`, `step`, `value`, `label` | Valeur sur un intervalle, avec `input type="range"` natif |
+| `switch` | 1.1.0 | `id`, `name`, `label`, `checked`, `disabled`, `describedBy` | Interrupteur binaire, pour un reglage qui s'applique immediatement |
+| `textarea` | 1.1.0 | `id`, `name`, `rows`, `placeholder`, `value`, `describedBy`, `invalid`, `disabled`, `required` | Zone de saisie multiligne. Meme contrat que `Ui:Input` |
+
+## Navigation et surfaces
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `accordion` | 1.2.0 | `summary`, `open` | Section repliable. Repose sur `details` et `summary` natifs : ouverture, clavier et annonce fonctionnent sans JavaScript |
+| `breadcrumb` | 1.2.0 | `items`, `label` | Fil d'Ariane |
+| `dialog` | 1.2.0 | `id`, `title`, `trigger`, `description` | Boite modale native (`<dialog>`) |
+| `dropdown-menu` | 1.3.0 | `label`, `items` | Menu d'actions ou de liens. Repose sur `details` et `summary` : ouverture, clavier et fermeture fonctionnent sans JavaScript |
+| `pagination` | 1.2.0 | `items`, `previous`, `next`, `label` | Navigation entre pages |
+| `popover` | 1.3.0 | `label` | Panneau flottant ancre. Repose sur `details` et `summary` : ouverture au clavier et fermeture natives, sans JavaScript |
+| `sheet` | 1.2.0 | `id`, `title`, `trigger`, `description`, `side` | Panneau lateral modal, ancre a droite ou a gauche |
+| `tabs` | 1.2.0 | `items`, `label` | Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne |
+| `toggle` | 1.2.0 | `pressed`, `label` | Bouton a deux etats, rendu avec `aria-pressed` |
+| `tooltip` | 1.2.0 | `text`, `id` | Aide courte, au survol et au focus clavier |
+
+## Donnees
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `description-list` | 1.3.0 | `items` | Paires libelle et valeur |
+| `stat` | 1.3.0 | `label`, `value`, `hint`, `trend` | Indicateur chiffre |
+| `table` | 1.3.0 | `caption` | Cadre de tableau. L'application fournit `thead`, `tbody` et `tr` |
+| `timeline` | 1.3.0 | `items` | Suite d'evenements dates, dans une liste ordonnee |
+| `toast` | 1.3.0 | `id`, `title`, `message`, `type`, `autohide` | Notification transitoire |
+
+## Patterns d'ecran
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `confirm-dialog` | 1.4.0 | `id`, `title`, `message`, `trigger`, `confirmLabel`, `cancelLabel` | Confirmation d'une action, dans un dialogue natif |
+| `data-region` | 1.4.0 | `state`, `loadingMessage`, `errorMessage`, `emptyMessage` | Region de resultats avec etats explicites : `idle`, `loading`, `error`, `empty` |
+| `detail-layout` | 1.4.0 | `label` | Liste et detail cote a cote sur grand ecran, empiles sur mobile |
+| `filter-bar` | 1.4.0 | `action`, `method`, `submitLabel`, `label` | Barre de filtres sous forme de formulaire GET : elle fonctionne sans JavaScript et l'URL porte l'etat |
+| `form-section` | 1.4.0 | `title`, `description` | Section de formulaire avec titre et description |
+| `page-header` | 1.4.0 | `title`, `description`, `headingLevel` | En-tete de page avec titre, description et actions |
+| `sidebar` | 1.4.0 | `label`, `items` | Navigation laterale, sans JavaScript |
+
+## Composants avances
+
+| Recette | Version | Props | Description |
+|---|---|---|---|
+| `carousel` | 1.5.0 | `label`, `previousLabel`, `nextLabel` | Galerie defilante, avec `scroll-snap` natif |
+| `chart` | 1.5.0 | `type`, `values`, `labels`, `height`, `label` | Graphique SVG simple, rendu par le serveur, sans JavaScript |
+| `combobox` | 1.5.0 | `id`, `name`, `label`, `options`, `placeholder` | Champ avec recherche dans une liste |
+| `command` | 1.5.0 | `trigger`, `label`, `placeholder`, `items` | Palette de commandes dans un dialogue natif |
+| `file-upload` | 1.5.0 | `id`, `name`, `label`, `hint`, `accept`, `multiple` | Depot de fichier, avec l'input natif comme source |

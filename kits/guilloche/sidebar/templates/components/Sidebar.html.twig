@@ -2,8 +2,8 @@
    Le lien courant porte aria-current ; la navigation reste une liste de liens,
    donc elle fonctionne sans JavaScript. #}
 {% props label = 'Navigation', items = [] %}
-<aside {{ attributes.defaults({ class: 'ui-sidebar', 'aria-label': label }) }}>
-  <nav>
+<aside {{ attributes.defaults({ class: 'ui-sidebar' }) }}>
+  <nav aria-label="{{ label }}">
     <ul class="ui-sidebar__list">
       {% for item in items %}
         <li>

@@ -8,7 +8,12 @@
         "assets/controllers/": "%CONTROLLERS_DIR%/"
     },
     "dependencies": {
-        "composer": ["symfony/ux-twig-component:^3.6"],
-        "importmap": ["@hotwired/stimulus"]
-    }
+        "composer": [
+            "symfony/ux-twig-component:^3.6"
+        ],
+        "importmap": [
+            "@hotwired/stimulus"
+        ]
+    },
+    "family": "donnees"
 }

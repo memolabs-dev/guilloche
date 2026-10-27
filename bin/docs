@@ -1,0 +1,111 @@
+#!/usr/bin/env php
+<?php
+//
+// docs — genere docs/COMPONENTS.generated.md depuis les manifests et les
+// templates du kit. Le fichier produit est verifie par la CI : il ne doit
+// jamais diverger des sources.
+declare(strict_types=1);
+
+const ROOT = __DIR__ . '/..';
+const KITS = ROOT . '/kits/guilloche';
+const OUT = ROOT . '/docs/COMPONENTS.generated.md';
+
+const FAMILIES = [
+    'fondation' => 'Fondation',
+    'primitives' => 'Primitives',
+    'formulaires' => 'Formulaires',
+    'navigation' => 'Navigation et surfaces',
+    'donnees' => 'Donnees',
+    'patterns' => 'Patterns d\'ecran',
+    'avances' => 'Composants avances',
+];
+
+/** Premiere phrase du README, apres le titre. */
+function description(string $dir): string
+{
+    $readme = $dir . '/README.md';
+    if (!is_file($readme)) {
+        return '';
+    }
+    foreach (explode("\n", (string) file_get_contents($readme)) as $line) {
+        $line = trim($line);
+        if ('' === $line || str_starts_with($line, '#')) {
+            continue;
+        }
+        return rtrim($line, '.');
+    }
+
+    return '';
+}
+
+/** Noms des props declarees dans le template principal du composant. */
+function props(string $dir): array
+{
+    $templates = glob($dir . '/templates/components/*.html.twig') ?: [];
+    if (!$templates) {
+        return [];
+    }
+    $twig = (string) file_get_contents($templates[0]);
+    if (!preg_match('/\{%\s*props\s+(.+?)%\}/s', $twig, $match)) {
+        return [];
+    }
+    $names = [];
+    foreach (explode(',', $match[1]) as $part) {
+        $part = trim($part);
+        if ('' === $part) {
+            continue;
+        }
+        $name = preg_split('/\s*=/', $part)[0];
+        $names[] = trim($name);
+    }
+
+    return $names;
+}
+
+$recipes = [];
+foreach (glob(KITS . '/*/manifest.json') ?: [] as $manifestPath) {
+    $dir = dirname($manifestPath);
+    $data = json_decode((string) file_get_contents($manifestPath), true) ?: [];
+    $recipes[] = [
+        'name' => basename($dir),
+        'dir' => $dir,
+        'family' => (string) ($data['family'] ?? 'primitives'),
+        'version' => (string) ($data['version-added'] ?? ''),
+        'description' => description($dir),
+        'props' => props($dir),
+    ];
+}
+
+usort($recipes, static fn (array $a, array $b): int => $a['name'] <=> $b['name']);
+
+$lines = [
+    '# Catalogue genere',
+    '',
+    'Fichier genere par `bin/docs` depuis les manifests et les templates du kit.',
+    'Ne pas editer a la main : la CI verifie qu\'il correspond aux sources.',
+    '',
+];
+
+foreach (FAMILIES as $key => $label) {
+    $group = array_values(array_filter($recipes, static fn (array $r): bool => $r['family'] === $key));
+    if (!$group) {
+        continue;
+    }
+    $lines[] = '## ' . $label;
+    $lines[] = '';
+    $lines[] = '| Recette | Version | Props | Description |';
+    $lines[] = '|---|---|---|---|';
+    foreach ($group as $recipe) {
+        $lines[] = sprintf(
+            '| `%s` | %s | %s | %s |',
+            $recipe['name'],
+            $recipe['version'],
+            $recipe['props'] ? implode(', ', array_map(static fn (string $p): string => '`' . $p . '`', $recipe['props'])) : 'aucune',
+            $recipe['description'],
+        );
+    }
+    $lines[] = '';
+}
+
+file_put_contents(OUT, implode("\n", $lines));
+echo sprintf("Catalogue genere : %s (%d recettes)%s", OUT, count($recipes), PHP_EOL);
