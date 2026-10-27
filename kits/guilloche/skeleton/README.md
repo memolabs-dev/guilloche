@@ -10,4 +10,4 @@ Forme du contenu attendu pendant un chargement. Purement decorative.
 
 ## Accessibilite
 
-Le composant est `aria-hidden="true"`. L'annonce du chargement doit etre faite par une region `role="status"` de l'application, pas par le squelette.
+Le composant est `aria-hidden="true"`. L'annonce du chargement doit etre faite par une region `rôle="status"` de l'application, pas par le squelette.

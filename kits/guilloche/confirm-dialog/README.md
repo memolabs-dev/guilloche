@@ -13,7 +13,7 @@ Confirmation d'une action, dans un dialogue natif.
 | `confirmLabel` | requis | Libelle du bouton de confirmation |
 | `cancelLabel` | requis | Libelle du bouton d'annulation |
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/confirm_dialog_controller.js`, identifiant `ui--confirm-dialog`. A la confirmation, il emet `ui:confirm` sur l'element racine puis ferme le dialogue.
 
@@ -22,4 +22,4 @@ document.querySelector('.ui-confirm-dialog-root')
   .addEventListener('ui:confirm', () => form.requestSubmit());
 ```
 
-Aucun libelle n'est impose : les quatre textes viennent des props.
+Aucun libellé n'est impose : les quatre textes viennent des props.

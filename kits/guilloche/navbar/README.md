@@ -13,6 +13,6 @@ Barre de navigation avec marque, liens et bascule mobile.
 
 Les liens viennent du slot.
 
-## Controleur
+## Contrôleur
 
-`assets/controllers/navbar_controller.js`, identifiant `ui--navbar`. Il bascule la navigation et suit `aria-expanded`. En dessous de 40rem, la navigation est masquee par defaut.
+`assets/controllers/navbar_controller.js`, identifiant `ui--navbar`. Il bascule la navigation et suit `aria-expanded`. En dessous de 40rem, la navigation est masquee par défaut.

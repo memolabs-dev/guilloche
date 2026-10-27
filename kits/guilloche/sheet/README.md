@@ -12,6 +12,6 @@ Panneau lateral modal, ancre a droite ou a gauche.
 | `description` | `null` | Texte secondaire |
 | `side` | `right` | `right`, `left` |
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/sheet_controller.js`, identifiant `ui--sheet`. Meme comportement que `Ui:Dialog`, avec un panneau ancre.

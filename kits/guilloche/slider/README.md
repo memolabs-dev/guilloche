@@ -7,7 +7,7 @@ Valeur sur un intervalle, avec `input type="range"` natif.
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `id` | requis | Identifiant, relie le label |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `min` | `0` | Borne basse |
 | `max` | `100` | Borne haute |
 | `step` | `1` | Pas |
@@ -16,4 +16,4 @@ Valeur sur un intervalle, avec `input type="range"` natif.
 
 ## Accessibilite
 
-Le controle est natif : fleches du clavier, Home et End fonctionnent. Le libelle est relie par `for`.
+Le contrôle est natif : fleches du clavier, Home et End fonctionnent. Le libellé est relie par `for`.

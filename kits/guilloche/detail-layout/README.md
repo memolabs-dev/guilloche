@@ -1,6 +1,6 @@
 # DetailLayout — kit Guilloche
 
-Liste et detail cote a cote sur grand ecran, empiles sur mobile.
+Liste et detail cote a cote sur grand écran, empiles sur mobile.
 
 ## Props
 

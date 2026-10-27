@@ -8,7 +8,7 @@ Champ de saisie natif.
 |------|--------|------|
 | `id` | requis | Identifiant, relie le label |
 | `type` | `text` | Type HTML natif |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `value` | `null` | Valeur initiale |
 | `placeholder` | `null` | Texte d'aide dans le champ |
 | `describedBy` | `null` | `aria-describedby` |
@@ -20,6 +20,6 @@ Champ de saisie natif.
 
 ```twig
 <twig:ui:Field id="search" label="Rechercher">
-  <twig:ui:Input id="search" type="search" placeholder="Nom ou categorie" />
+  <twig:ui:Input id="search" type="search" placeholder="Nom ou catégorie" />
 </twig:ui:Field>
 ```

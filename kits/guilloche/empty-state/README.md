@@ -17,4 +17,4 @@ Etat vide, avec une action de sortie dans le slot.
 </twig:ui:EmptyState>
 ```
 
-Note : l'exemple ci-dessus suppose que `Button` est installe. Une recette ne cree pas cette dependance ; le slot accepte n'importe quel bouton de l'application.
+Note : l'exemple ci-dessus suppose que `Button` est installe. Une recette ne créé pas cette dépendance ; le slot accepte n'importe quel bouton de l'application.

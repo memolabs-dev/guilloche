@@ -1,6 +1,6 @@
 # Toggle — kit Guilloche
 
-Bouton a deux etats, rendu avec `aria-pressed`.
+Bouton a deux états, rendu avec `aria-pressed`.
 
 ## Props
 
@@ -9,7 +9,7 @@ Bouton a deux etats, rendu avec `aria-pressed`.
 | `pressed` | `false` | Etat initial, rendu par le serveur |
 | `label` | `null` | Nom accessible quand le slot ne suffit pas |
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/toggle_controller.js`, identifiant `ui--toggle`. Il bascule `aria-pressed` au clic. L'application doit l'enregistrer ; sans JavaScript, l'etat rendu par le serveur reste correct.
 

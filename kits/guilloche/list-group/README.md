@@ -1,6 +1,6 @@
 # ListGroup — kit Guilloche
 
-Liste d'elements avec valeur secondaire optionnelle.
+Liste d'éléments avec valeur secondaire optionnelle.
 
 ## Props
 

@@ -7,7 +7,7 @@ Zone de saisie multiligne. Meme contrat que `Ui:Input`.
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `id` | requis | Identifiant, relie le label |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `rows` | `4` | Hauteur initiale en lignes |
 | `value` | `null` | Contenu initial |
 | `placeholder` | `null` | Texte d'aide |

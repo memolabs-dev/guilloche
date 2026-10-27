@@ -7,7 +7,7 @@ Champ avec prefixe ou suffixe, sans perdre l'input natif.
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `id` | requis | Identifiant, relie le label |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `type` | `text` | Type HTML |
 | `prefix` | `null` | Texte avant le champ |
 | `suffix` | `null` | Texte apres le champ |

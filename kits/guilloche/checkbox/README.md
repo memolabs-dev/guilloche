@@ -1,13 +1,13 @@
 # Checkbox — kit Guilloche
 
-Case a cocher native, habillee sans perdre la semantique.
+Case a cocher native, habillee sans perdre la sémantique.
 
 ## Props
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `id` | requis | Identifiant de l'input |
-| `name` | `null` | Nom du champ (defaut : `id`) |
+| `name` | `null` | Nom du champ (défaut : `id`) |
 | `label` | requis | Libelle cliquable |
 | `checked` | `false` | Etat initial |
 | `disabled` | `false` | Desactive la case |

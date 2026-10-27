@@ -1,6 +1,6 @@
 # DescriptionList — kit Guilloche
 
-Paires libelle et valeur.
+Paires libellé et valeur.
 
 ## Props
 
@@ -12,7 +12,7 @@ Paires libelle et valeur.
 
 ```twig
 <twig:ui:DescriptionList :items="[
-  { term: 'Numero', description: 'F-2026-010' },
-  { term: 'Echeance', description: '30 novembre 2026' }
+  { term: 'Numéro', description: 'F-2026-010' },
+  { term: 'Échéance', description: '30 novembre 2026' }
 ]" />
 ```

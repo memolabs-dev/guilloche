@@ -2,7 +2,7 @@
    passes dans days : { label, href, selected, disabled, empty }. La navigation
    de mois est portee par previous et next, donc elle fonctionne sans
    JavaScript et le retour arriere du navigateur reste coherent. #}
-{% props label, month, days = [], previousLabel, nextLabel, previous = null, next = null %}
+{% props label, month, days = [], previousLabel, nextLabel, previous = null, next = null, weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'] %}
 <div {{ attributes.defaults({ class: 'ui-calendar', role: 'group', 'aria-label': label }) }}>
   <div class="ui-calendar__header">
     <a class="ui-calendar__nav{{ previous ? '' : ' is-disabled' }}" href="{{ previous ?? '#' }}" rel="prev" aria-label="{{ previousLabel }}">
@@ -13,17 +13,20 @@
       <span aria-hidden="true">&rarr;</span>
     </a>
   </div>
+  <ol class="ui-calendar__weekdays" aria-hidden="true">
+    {% for day in weekdays %}<li>{{ day }}</li>{% endfor %}
+  </ol>
   <ol class="ui-calendar__grid">
     {% for day in days %}
       <li class="ui-calendar__cell{{ day.empty|default(false) ? ' is-empty' }}">
         {% if day.empty|default(false) %}
           <span class="ui-calendar__blank" aria-hidden="true"></span>
         {% elseif day.href is defined and day.href %}
-          <a class="ui-calendar__day{{ day.selected|default(false) ? ' is-selected' : '' }}{{ day.disabled|default(false) ? ' is-disabled' : '' }}"
+          <a class="ui-calendar__day{{ day.selected|default(false) ? ' is-selected' : '' }}{{ day.disabled|default(false) ? ' is-disabled' : '' }}{{ day.outside|default(false) ? ' is-outside' : '' }}{{ day.today|default(false) ? ' is-today' : '' }}"
             href="{{ day.href }}"
             {{ day.selected|default(false) ? 'aria-current="date"' }}>{{ day.label }}</a>
         {% else %}
-          <span class="ui-calendar__day{{ day.selected|default(false) ? ' is-selected' : '' }}{{ day.disabled|default(false) ? ' is-disabled' : '' }}"
+          <span class="ui-calendar__day{{ day.selected|default(false) ? ' is-selected' : '' }}{{ day.disabled|default(false) ? ' is-disabled' : '' }}{{ day.outside|default(false) ? ' is-outside' : '' }}{{ day.today|default(false) ? ' is-today' : '' }}"
             {{ day.selected|default(false) ? 'aria-current="date"' }}>{{ day.label }}</span>
         {% endif %}
       </li>

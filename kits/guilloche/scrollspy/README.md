@@ -9,7 +9,7 @@ Sommaire qui suit la section visible.
 | `items` | `[]` | Sections `{ id, label }` |
 | `label` | `Sections` | Nom accessible du `nav` |
 
-## Controleur
+## Contrôleur
 
 `assets/controllers/scrollspy_controller.js`, identifiant `ui--scrollspy`. Il observe les sections par `id` avec `IntersectionObserver` et pose `aria-current="true"` sur le lien visible.
 

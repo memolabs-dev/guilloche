@@ -11,4 +11,4 @@ Indicateur de chargement autonome.
 
 ## Accessibilite
 
-Avec `label`, le spinner porte `role="status"` et `aria-label`. Sans label, il est `aria-hidden="true"` : ne jamais laisser un chargement muet, l'annonce doit exister ailleurs.
+Avec `label`, le spinner porte `rôle="status"` et `aria-label`. Sans label, il est `aria-hidden="true"` : ne jamais laisser un chargement muet, l'annonce doit exister ailleurs.

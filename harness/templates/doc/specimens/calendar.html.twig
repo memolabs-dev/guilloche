@@ -1,0 +1,8 @@
+{% import 'doc/_macros.html.twig' as m %}
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Calendrier</h3></div>
+  <div class="ds__example-render">
+    <twig:ui:Calendar label="Novembre 2026" month="Novembre 2026" previousLabel="Octobre" nextLabel="Décembre" previous="#" next="#" :days="[{ label: '26', outside: true }, { label: '27', outside: true }, { label: '28', outside: true }, { label: '29', outside: true }, { label: '30', outside: true }, { label: '1', href: '#' }, { label: '2', href: '#' }, { label: '3', href: '#' }, { label: '4', href: '#' }, { label: '5', href: '#', today: true }, { label: '6', href: '#' }, { label: '7', href: '#' }, { label: '8', href: '#' }, { label: '9', href: '#' }, { label: '10', href: '#' }, { label: '11', href: '#' }, { label: '12', href: '#' }, { label: '13', href: '#' }, { label: '14', href: '#' }, { label: '15', href: '#' }, { label: '16', href: '#' }, { label: '17', href: '#' }, { label: '18', href: '#' }, { label: '19', href: '#' }, { label: '20', href: '#' }, { label: '21', href: '#' }, { label: '22', href: '#' }, { label: '23', href: '#' }, { label: '24', href: '#' }, { label: '25', href: '#' }, { label: '26', href: '#' }, { label: '27', href: '#', selected: true }, { label: '28', href: '#' }, { label: '29', href: '#' }, { label: '30', href: '#' }]" />
+  </div>
+  {{ m.code('<twig:ui:Calendar label="Novembre 2026" month="Novembre 2026" :days="days" />') }}
+</div>

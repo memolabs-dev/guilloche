@@ -1,13 +1,13 @@
 # Stack — kit Guilloche
 
-Pile d'elements avec un espacement constant.
+Pile d'éléments avec un espacement constant.
 
 ## Props
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
 | `direction` | `vertical` | `vertical`, `horizontal` |
-| `gap` | `3` | Numero de token `--ui-space-*` (1 a 6) |
+| `gap` | `3` | Numéro de token `--ui-space-*` (1 a 6) |
 | `align` | `null` | `start`, `center`, `end`, `stretch` |
 | `justify` | `null` | `start`, `center`, `end`, `between` |
 
