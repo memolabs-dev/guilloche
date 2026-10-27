@@ -56,6 +56,17 @@ final class DocTest extends WebTestCase
         $this->assertSelectorNotExists('.ui-description-list__row:last-child code');
     }
 
+    public function testSealSeparatesValidationFromPendingAndExposesDate(): void
+    {
+        self::createClient()->request('GET', '/components/seal');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ui-seal--validated[role="img"] svg[aria-hidden="true"]');
+        $this->assertSelectorExists('.ui-seal--pending[role="img"][aria-label="En attente de votre validation"]');
+        $this->assertSelectorExists('.ui-seal time[datetime="2026-10-12T10:30:00"]');
+        $this->assertSelectorExists('[data-ui--seal-fresh-value="true"]');
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');
