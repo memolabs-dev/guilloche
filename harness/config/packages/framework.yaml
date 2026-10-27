@@ -1,0 +1,11 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret: '%env(APP_SECRET)%'
+    # Lecture seule, aucun formulaire POST : pas de session.
+    session: false
+    asset_mapper:
+        paths: ['%kernel.project_dir%/assets']
+
+when@test:
+    framework:
+        test: true

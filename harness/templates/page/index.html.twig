@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette temoin : Button{% endblock %}
+
+{% block body %}
+  <main class="page">
+    <h1>Guilloche - recette temoin</h1>
+    <p>Rendu de la recette <code>button</code> du kit Guilloche.</p>
+    <twig:ui:Button intent="primary" size="lg">
+      Valider la mission
+    </twig:ui:Button>
+    <twig:ui:Button appearance="ghost">
+      Bouton secondaire
+    </twig:ui:Button>
+  </main>
+{% endblock %}
