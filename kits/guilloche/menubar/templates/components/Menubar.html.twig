@@ -1,13 +1,13 @@
-{# Ui:Menubar — barre de menus. role="menubar" nomme la barre ; chaque menu est
-   un details avec role="menu" sur son panneau. #}
+{# Ui:Menubar — barre de menus. nomme la barre ; chaque menu est
+   un details avec sur son panneau. #}
 {% props items = [], label %}
 <nav {{ attributes.defaults({ class: 'ui-menubar', 'aria-label': label }) }}>
   <ul class="ui-menubar__list" role="menubar">
     {% for item in items %}
-      <li role="none">
+      <li>
         {% if item.items is defined and item.items %}
           <details class="ui-menubar__group">
-            <summary class="ui-menubar__trigger" role="menuitem">{{ item.label }}</summary>
+            <summary class="ui-menubar__trigger">{{ item.label }}</summary>
             <ul class="ui-menubar__panel" role="menu">
               {% for sub in item.items %}
                 <li role="none"><a role="menuitem" href="{{ sub.href ?? '#' }}">{{ sub.label }}</a></li>
