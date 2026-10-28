@@ -369,6 +369,7 @@ final class DocTest extends WebTestCase
         self::assertCount(1, $crawler->filter('#fv-table .ui-table-wrapper[role="region"][tabindex="0"]'));
         self::assertCount(1, $crawler->filter('#fv-table .ui-table caption'));
         self::assertCount(3, $crawler->filter('#fv-table .ui-table tbody tr'));
+        self::assertCount(1, $crawler->filter('#fv-table .fv__table-hint'));
         self::assertCount(1, $crawler->filter('#fv-dialog .ui-dialog'));
         self::assertCount(1, $crawler->filter('#fv-tabs a[aria-current="page"]'));
         self::assertCount(4, $crawler->filter('#fv-alert .ui-alert'));

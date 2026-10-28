@@ -49,3 +49,6 @@
 .fv__swatches i {height:34px;}
 }
 .fv__panel--wide .ui-table { min-width: 580px; }
+
+.fv__table-hint { display: none; margin: 0; font-size: 11px; color: var(--ui-muted-foreground); }
+@media (max-width: 900px) { .fv__table-hint { display: block; } }

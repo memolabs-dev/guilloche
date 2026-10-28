@@ -822,6 +822,11 @@ test('P0 foundations board: 12 distributed Twig recipes across themes and viewpo
                     await table.focus();
                     await page.keyboard.press('ArrowRight');
                     await page.waitForFunction(()=>document.querySelector('#fv-table .ui-table-wrapper').scrollLeft>0);
+                    assert.equal(await page.locator('.fv__table-hint').isVisible(),true);
+                    // Verify scrolling, then reset before screenshots so the first
+                    // reference and the table caption stay visible in visual evidence.
+                    await table.evaluate(el=>{el.scrollLeft=0;});
+                    await page.waitForFunction(()=>document.querySelector('#fv-table .ui-table-wrapper').scrollLeft===0);
                 }
                 await page.locator('#fv-dropdown-menu summary').click();
                 assert.equal(await page.locator('#fv-dropdown-menu details.ui-dropdown').evaluate(el=>el.open),true);
