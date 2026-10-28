@@ -720,8 +720,10 @@ test('three business compositions render on desktop/mobile in both themes', { ti
                     assert.equal(await page.locator('[data-gp-preview-viewport="mobile"]').getAttribute('aria-pressed'),'true');
                     await page.locator('[data-gp-preview-viewport="desktop"]').click();
                     assert.equal(await page.locator('[data-gp-preview-viewport="desktop"]').getAttribute('aria-pressed'),'true');
-                    await page.locator('[data-gp-pattern-render]').screenshot({
+                    await page.evaluate(() => window.scrollTo(0, 0));
+                    await page.screenshot({
                         path:path.join(DIR,'composition-'+slug+'-'+viewport.name+'-'+theme+'.png'),
+                        fullPage:true,
                         animations:'disabled',
                     });
                 }

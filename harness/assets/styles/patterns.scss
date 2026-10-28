@@ -81,7 +81,12 @@
     font-size: 11px;
     color: var(--gp-muted);
 }
-.gp .ui-page-header { margin-bottom: 22px; }
+.gp__detail-heading {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 18px; flex-wrap: wrap; margin-bottom: 21px;
+}
+.gp__detail-heading .ui-page-header { flex: 1 1 200px; margin: 0; min-width: 0; }
+.gp__detail-heading .ui-badge { flex: none; }
 .gp__detail-meta {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

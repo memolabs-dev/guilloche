@@ -50,6 +50,7 @@ final class CompositionTest extends WebTestCase
         $crawler = $client->request('GET', '/patterns/dossier-detail');
         $this->assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('.gp .ui-page-header'));
+        self::assertCount(1, $crawler->filter('.gp__detail-heading .ui-badge--success'));
         self::assertGreaterThan(3, $crawler->filter('.gp .ui-description-list__row')->count());
         self::assertCount(3, $crawler->filter('.gp .ui-timeline__item'));
         self::assertCount(1, $crawler->filter('.gp .ui-alert'));
