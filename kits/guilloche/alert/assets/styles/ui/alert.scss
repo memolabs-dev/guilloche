@@ -1,50 +1,41 @@
+// Ui:Alert : statuts discrets, texte et icône restent lisibles sans dépendance JS.
 .ui-alert {
     display: flex;
-    gap: var(--ui-space-3);
-    padding: var(--ui-space-3) var(--ui-space-4);
-    border: 1px solid transparent;
-    border-radius: var(--ui-radius-md);
+    box-sizing: border-box;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px 17px;
+    border: 1px solid color-mix(in srgb, var(--ui-alert-color) 22%, transparent);
+    border-radius: var(--ui-radius-lg);
     font-size: var(--ui-text-sm);
-    line-height: 1.5;
+    line-height: 1.6;
 }
-
-.ui-alert--info {
-    --ui-alert-color: var(--ui-info);
-    background: var(--ui-info-soft);
-}
-
-.ui-alert--success {
-    --ui-alert-color: var(--ui-success);
-    background: var(--ui-success-soft);
-}
-
-.ui-alert--warning {
-    --ui-alert-color: var(--ui-warning);
-    background: var(--ui-warning-soft);
-}
-
-.ui-alert--error {
-    --ui-alert-color: var(--ui-danger);
-    background: var(--ui-danger-soft);
-}
-
+.ui-alert--info { --ui-alert-color: var(--ui-info); background: var(--ui-info-soft); }
+.ui-alert--success { --ui-alert-color: var(--ui-success); background: var(--ui-success-soft); }
+.ui-alert--warning { --ui-alert-color: var(--ui-warning); background: var(--ui-warning-soft); }
+.ui-alert--error { --ui-alert-color: var(--ui-danger); background: var(--ui-danger-soft); }
 .ui-alert__icon {
     flex: none;
+    width: 19px;
+    height: 19px;
     margin-top: 2px;
     color: var(--ui-alert-color);
 }
-
 .ui-alert__content {
     display: grid;
-    gap: 2px;
     min-width: 0;
+    gap: 5px;
 }
-
 .ui-alert__title {
-    font-weight: 600;
+    margin: 0;
     color: var(--ui-alert-color);
+    font-size: var(--ui-text-sm);
+    font-weight: 660;
+    line-height: 1.4;
 }
-
 .ui-alert__message {
+    margin: 0;
     color: var(--ui-foreground);
 }
+.ui-alert__content > *:last-child { margin-bottom: 0; }

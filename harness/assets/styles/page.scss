@@ -1285,3 +1285,9 @@ body {
     body:has(.ds__landing) .ds__rail,
     body:has(.ds__showroom-intro) .ds__rail { display: none; }
 }
+
+// Le menu déroulant ouvert reste dans son aire de prévisualisation,
+// sans masquer les onglets de code sous le composant.
+.ds__example-render:has(> .ui-dropdown) {
+    min-height: 250px;
+}

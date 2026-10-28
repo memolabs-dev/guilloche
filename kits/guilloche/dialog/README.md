@@ -1,6 +1,6 @@
 # Dialog — kit Guilloche
 
-Boite modale native (`<dialog>`).
+Boîte modale native (`<dialog>`).
 
 ## Props
 
@@ -8,7 +8,7 @@ Boite modale native (`<dialog>`).
 |------|--------|------|
 | `id` | requis | Identifiant du dialogue |
 | `title` | requis | Titre |
-| `trigger` | `null` | Libelle du bouton d'ouverture rendu avec le dialogue |
+| `trigger` | `null` | Libellé du bouton d'ouverture rendu avec le dialogue |
 | `description` | `null` | Texte secondaire sous le titre |
 | `closeLabel` | `Fermer` | Nom accessible du bouton de fermeture |
 
@@ -16,7 +16,7 @@ Boite modale native (`<dialog>`).
 
 `assets/controllers/dialog_controller.js`, identifiant `ui--dialog`. Il appelle `showModal()` et `close()`. Echap, le focus piege et le retour du focus sont natifs au navigateur.
 
-## Accessibilite
+## Accessibilité
 
 - Le dialogue natif capture le focus et le rend a l'element declencheur a la fermeture.
 - Le bouton de fermeture porte `aria-label` avec la prop `closeLabel` (défaut « Fermer »), surchargeable par l'application.
@@ -26,7 +26,7 @@ Boite modale native (`<dialog>`).
 
 ```twig
 <twig:ui:Dialog id="confirm" title="Confirmer l'envoi" trigger="Envoyer">
-  <p>Cette action est definitive.</p>
+  <p>Cette action est définitive.</p>
 </twig:ui:Dialog>
 ```
 

@@ -2,19 +2,19 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Dialogue simple</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render">
-    <twig:ui:Dialog id="x-dialog" title="Confirmer l envoi" description="La mission sera transmise." trigger="Ouvrir le dialogue">
-      <p>Cette action est definitive.</p>
+    <twig:ui:Dialog id="x-dialog" title="Confirmer l’envoi" description="La mission sera transmise." trigger="Ouvrir le dialogue">
+      <p>Cette action est définitive.</p>
     </twig:ui:Dialog>
   </div>
-  {{ m.code('<twig:ui:Dialog id="confirm" title="Confirmer l envoi" trigger="Ouvrir">
-  <p>Cette action est definitive.</p>
+  {{ m.code('<twig:ui:Dialog id="confirm" title="Confirmer l’envoi" trigger="Ouvrir">
+  <p>Cette action est définitive.</p>
 </twig:ui:Dialog>') }}
 </div>
 
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Confirmation destructive</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render">
-    <twig:ui:ConfirmDialog id="x-confirm" title="Supprimer la mission" message="Cette action est definitive." trigger="Supprimer" confirmLabel="Supprimer" cancelLabel="Annuler" />
+    <twig:ui:ConfirmDialog id="x-confirm" title="Supprimer la mission" message="Cette action est définitive." trigger="Supprimer" confirmLabel="Supprimer" cancelLabel="Annuler" />
   </div>
-  {{ m.code('<twig:ui:ConfirmDialog id="supprimér" title="Supprimer la mission" message="Cette action est definitive." trigger="Supprimer" confirmLabel="Supprimer" cancelLabel="Annuler" />') }}
+  {{ m.code('<twig:ui:ConfirmDialog id="supprimer" title="Supprimer la mission" message="Cette action est définitive." trigger="Supprimer" confirmLabel="Supprimer" cancelLabel="Annuler" />') }}
 </div>

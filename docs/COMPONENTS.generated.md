@@ -28,7 +28,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 
 | Recette | Version | Props | Description |
 |---|---|---|---|
-| `alert` | 1.1.0 | `type`, `title`, `message` | Message d'etat, avec titre et texte optionnels |
+| `alert` | 1.1.0 | `type`, `title`, `message` | Message d’état, avec titre et texte optionnels |
 | `aspect-ratio` | 1.7.0 | `ratio` | Conteneur qui conserve un rapport largeur/hauteur |
 | `avatar` | 1.1.0 | `initials`, `src`, `label`, `size` | Image ou initiales pour représenter une personne ou une organisation |
 | `badge` | 1.1.0 | `tone`, `variant` | Étiquette courte pour un état, un compteur ou une catégorie |
@@ -70,7 +70,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `breadcrumb` | 1.2.0 | `items`, `label` | Fil d'Ariane |
 | `collapsible` | 1.7.0 | `summary`, `open` | Section repliable neutre, sans bordure ni titre de section |
 | `context-menu` | 1.8.0 | `items`, `label` | Menu au clic droit |
-| `dialog` | 1.2.0 | `id`, `title`, `trigger`, `description`, `closeLabel` | Boite modale native (`<dialog>`) |
+| `dialog` | 1.2.0 | `id`, `title`, `trigger`, `description`, `closeLabel` | Boîte modale native (`<dialog>`) |
 | `direction` | 1.8.0 | `dir` | Conteneur avec sens d'ecriture explicite |
 | `dropdown-menu` | 1.3.0 | `label`, `items` | Menu d'actions ou de liens. Repose sur `details` et `summary` : ouverture, clavier et fermeture fonctionnent sans JavaScript |
 | `hover-card` | 1.8.0 | `label`, `id` | Carte d'aperçu au survol et au focus |
@@ -83,7 +83,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `scroll-area` | 1.8.0 | `maxHeight`, `label` | Zone defilante bornee, pour les listes longues dans une carte |
 | `scrollspy` | 2.0.0 | `items`, `label` | Sommaire qui suit la section visible |
 | `sheet` | 1.2.0 | `id`, `title`, `trigger`, `description`, `side`, `closeLabel` | Panneau lateral modal, ancre a droite ou a gauche |
-| `tabs` | 1.2.0 | `items`, `label` | Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne |
+| `tabs` | 1.2.0 | `items`, `label` | Onglets de navigation. Chaque onglet est un lien : l’état vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne |
 | `toggle` | 1.2.0 | `pressed`, `label` | Bouton a deux états, rendu avec `aria-pressed` |
 | `toggle-group` | 1.7.0 | `label` | Groupe de bascules dans un rail commun. Chaque bascule conserve son `aria-pressed` |
 | `tooltip` | 1.2.0 | `text`, `id` | Aide courte, au survol et au focus clavier |

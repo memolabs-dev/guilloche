@@ -2,7 +2,7 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Types</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render ds__example-render--column">
-    <twig:ui:Alert type="info" title="Information" message="Le dossier est en cours d instruction." />
+    <twig:ui:Alert type="info" title="Information" message="Le dossier est en cours d’instruction." />
     <twig:ui:Alert type="success" title="Enregistré" message="La modification a été prise en compte." />
     <twig:ui:Alert type="warning" title="Attention" message="Deux pièces manquent au dossier." />
     <twig:ui:Alert type="error" title="Échec" message="La modification n'a pas pu être enregistrée." />
@@ -13,12 +13,13 @@
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Avec action</h3><button class="ds__example-copy" type="button" data-copy>Copier</button></div>
   <div class="ds__example-render ds__example-render--column">
-    <twig:ui:Alert type="warning" title="Piece manquante">
+    <twig:ui:Alert type="warning" title="Pièce manquante">
       <p>Ajoutez la lettre de mission pour continuer.</p>
-      <twig:ui:Button size="sm" appearance="secondary">Ajouter une piece</twig:ui:Button>
+      <twig:ui:Button size="sm" variant="secondary">Ajouter une pièce</twig:ui:Button>
     </twig:ui:Alert>
   </div>
-  {{ m.code('<twig:ui:Alert type="warning" title="Piece manquante">
+  {{ m.code('<twig:ui:Alert type="warning" title="Pièce manquante">
   <p>Ajoutez la lettre de mission pour continuer.</p>
+  <twig:ui:Button size="sm" variant="secondary">Ajouter une pièce</twig:ui:Button>
 </twig:ui:Alert>') }}
 </div>

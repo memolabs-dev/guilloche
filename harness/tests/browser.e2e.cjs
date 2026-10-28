@@ -379,3 +379,81 @@ test('P0 core recipes preserve control geometry and hover/invalid states in both
         await browser.close();
     }
 });
+
+
+test('P0 interactive surfaces render and work in Chromium across themes and viewports', { timeout: 180_000 }, async () => {
+    mkdirSync(DIR, { recursive: true });
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const size of [
+            { name: 'desktop', width: 1440, height: 900 },
+            { name: 'mobile', width: 390, height: 844 },
+        ]) {
+            for (const theme of ['light', 'dark']) {
+                const page = await browser.newPage({
+                    viewport: { width: size.width, height: size.height },
+                    colorScheme: theme,
+                    reducedMotion: 'reduce',
+                });
+                await page.addInitScript((mode) => {
+                    try { localStorage.setItem('guilloche-doc-theme', mode); } catch {}
+                }, theme);
+                const errors = [];
+                page.on('pageerror', (error) => errors.push(error.message));
+                for (const name of ['dialog', 'tabs', 'alert', 'dropdown-menu']) {
+                    const response = await page.goto(BASE + '/components/' + name, { waitUntil: 'networkidle' });
+                    assert.equal(response?.status(), 200, name + ' must render in Symfony');
+                    const dims = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]);
+                    assert.ok(dims[0] <= dims[1] + 2, name + ' overflows ' + size.name + '/' + theme);
+                    await page.screenshot({
+                        path: path.join(DIR, 'surface-' + name + '-' + size.name + '-' + theme + '.png'),
+                        fullPage: true, animations: 'disabled',
+                    });
+                    if (name === 'dialog') {
+                        const trigger = page.locator('.ui-dialog__trigger').first();
+                        assert.equal(await trigger.evaluate((e) => getComputedStyle(e).height), '40px');
+                        await trigger.click();
+                        assert.equal(await page.locator('dialog.ui-dialog').first().evaluate((d) => d.open), true);
+                        await page.screenshot({
+                            path: path.join(DIR, 'surface-dialog-open-' + size.name + '-' + theme + '.png'),
+                            animations: 'disabled',
+                        });
+                        await page.locator('.ui-dialog__close').first().click();
+                        assert.equal(await page.locator('dialog.ui-dialog').first().evaluate((d) => d.open), false);
+                    }
+                    if (name === 'tabs') {
+                        const current = page.locator('.ui-tabs__tab[aria-current="page"]');
+                        assert.equal(await current.count(), 1, 'navigation tabs must have one current link');
+                        assert.equal(await current.evaluate((e) => getComputedStyle(e).minHeight), '40px');
+                    }
+                    if (name === 'alert') {
+                        assert.ok(await page.locator('.ui-alert[role="status"]').count() >= 3);
+                        assert.ok(await page.locator('.ui-alert[role="alert"]').count() >= 1);
+                        assert.equal(await page.locator('.ui-alert').first().evaluate((e) => getComputedStyle(e).borderTopWidth), '1px');
+                        assert.ok(await page.locator('.ui-alert .ui-button--secondary').count() >= 1, 'alert example must use a supported button variant');
+                    }
+                    if (name === 'dropdown-menu') {
+                        const dropdown = page.locator('.ui-dropdown').first();
+                        const trigger = dropdown.locator('summary.ui-dropdown__trigger');
+                        assert.equal(await trigger.evaluate((e) => getComputedStyle(e).minHeight), '40px');
+                        await trigger.click();
+                        assert.equal(await dropdown.evaluate((e) => e.open), true);
+                        assert.ok(await dropdown.locator('.ui-dropdown__item').count() > 0);
+                        const popup = await dropdown.locator('.ui-dropdown__menu').boundingBox();
+                        const preview = await page.locator('.ds__example-render').first().boundingBox();
+                        assert.ok(popup && preview && popup.y + popup.height <= preview.y + preview.height + 2,
+                            'open dropdown should not cover the Twig code below its preview');
+                        await page.screenshot({
+                            path: path.join(DIR, 'surface-dropdown-open-' + size.name + '-' + theme + '.png'),
+                            animations: 'disabled',
+                        });
+                        await trigger.click();
+                        assert.equal(await dropdown.evaluate((e) => e.open), false);
+                    }
+                }
+                assert.deepEqual(errors, [], size.name + '/' + theme + ' should not throw JS errors');
+                await page.close();
+            }
+        }
+    } finally { await browser.close(); }
+});
