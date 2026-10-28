@@ -1,2 +1,2 @@
-// Le harnais ne charge aucun JavaScript. Les styles du kit passent par
-// <link rel="stylesheet" href="{{ asset('styles/app.scss') }}"> dans base.html.twig.
+// Démonstrateur : bootstrap des vrais contrôleurs, aucun mock des interactions.
+import './stimulus_bootstrap.js';
