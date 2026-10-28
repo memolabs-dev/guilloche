@@ -825,8 +825,18 @@ test('P0 foundations board: 12 distributed Twig recipes across themes and viewpo
                     assert.equal(await page.locator('.fv__table-hint').isVisible(),true);
                     // Verify scrolling, then reset before screenshots so the first
                     // reference and the table caption stay visible in visual evidence.
+                    await table.evaluate(el=>{
+                        el.style.scrollBehavior='auto';
+                        el.scrollTo({left:0,behavior:'instant'});
+                    });
+                    await page.waitForTimeout(180);
                     await table.evaluate(el=>{el.scrollLeft=0;});
-                    await page.waitForFunction(()=>document.querySelector('#fv-table .ui-table-wrapper').scrollLeft===0);
+                    const aligned=await table.evaluate(el=>{
+                        const caption=el.querySelector('.ui-table__caption');
+                        return Math.abs(el.scrollLeft)<1
+                            && caption.getBoundingClientRect().left >= el.getBoundingClientRect().left-2;
+                    });
+                    assert.ok(aligned,'the first column and caption must be visible in screenshots');
                 }
                 await page.locator('#fv-dropdown-menu summary').click();
                 assert.equal(await page.locator('#fv-dropdown-menu details.ui-dropdown').evaluate(el=>el.open),true);
