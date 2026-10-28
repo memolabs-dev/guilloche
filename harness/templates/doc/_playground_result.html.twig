@@ -33,6 +33,22 @@
         <twig:ui:Alert :type="playground.values.type" :title="playground.values.title" :message="playground.values.message" />
       {% elseif item.name == 'progress' %}
         <twig:ui:Progress :value="playground.values.value" :max="100" :label="playground.values.label" :showValue="playground.values.showValue" />
+      {% elseif item.name == 'accordion' %}
+        <twig:ui:Accordion :summary="playground.values.summary" :open="playground.values.open">
+          <p>Texte de la section.</p>
+        </twig:ui:Accordion>
+      {% elseif item.name == 'slider' %}
+        <twig:ui:Slider id="priority" :label="playground.values.label" :min="0" :max="100" :step="playground.values.step" :value="playground.values.value" />
+      {% elseif item.name == 'tabs' %}
+        <twig:ui:Tabs :label="playground.values.label" :items="[
+          { label: 'Aperçu', href: '?section=overview', current: playground.values.current == 'overview' },
+          { label: 'Activité', href: '?section=activity', current: playground.values.current == 'activity' },
+          { label: 'Paramètres', href: '?section=settings', current: playground.values.current == 'settings' }
+        ]" />
+      {% elseif item.name == 'dropdown-menu' %}
+        <twig:ui:DropdownMenu :label="playground.values.label" :items="playground.values.preset == 'exports'
+          ? [{ label: 'Télécharger le CSV', href: '?format=csv' }, { label: 'Télécharger le PDF', href: '?format=pdf' }]
+          : [{ label: 'Voir le dossier', href: '?view=detail' }, { label: 'Voir l’activité', href: '?view=activity' }]" />
       {% elseif item.name == 'table' %}
         <twig:ui:Table :caption="playground.values.caption" :serial="playground.values.serial">
           <thead><tr><th scope="col">Référence</th><th scope="col">Statut</th></tr></thead>

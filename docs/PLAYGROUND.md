@@ -5,8 +5,8 @@ progressive, avec des composants réellement rendus côté serveur.
 
 ## Couverture actuelle
 
-12 recettes : Button, Input, Badge, Card, Dialog, Table, Select, Textarea,
-Checkbox, Switch, Alert et Progress.
+16 recettes : Button, Input, Badge, Card, Dialog, Table, Select, Textarea,
+Checkbox, Switch, Alert, Progress, Accordion, Slider, Tabs et DropdownMenu.
 
 Les schémas sont déclarés uniquement dans
 harness/src/Doc/Playground.php. Une entrée précise les props affichées,
@@ -45,3 +45,14 @@ ne jamais fabriquer une prop par simple substitution d'une chaîne cliente.
 Ne pas prétendre que toutes les props d'une recette sont exposées :
 l'atelier présente une sélection représentative, pas un éditeur de
 template ou un interpréteur Twig libre.
+
+## Composants de navigation
+
+- Accordion et DropdownMenu conservent leur comportement natif details/summary,
+  notamment sans JavaScript.
+- Slider reste un input range natif ; aucune simulation d’un widget ARIA.
+- Tabs contient des liens de navigation, marqués aria-current=page. Ce n’est
+  pas une tablist ARIA : le lien choisi est défini par la prop current et par
+  l’URL à laquelle chaque application associera la route.
+- Les éléments de menu exposent uniquement des URL d’exemple prédéfinies,
+  et non des URLs injectées par les paramètres GET.
