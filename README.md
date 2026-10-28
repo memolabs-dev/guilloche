@@ -110,3 +110,11 @@ Rien de la filiation « prototype Owner » ni d'entretien observé ne figure dan
 ## Licence
 
 MIT — titulaire Guillaume Flambard.
+
+## Git hooks locaux
+
+Après un clone, `composer install` installe automatiquement le hook `.githooks/pre-commit`
+(via `core.hooksPath`), sans écraser un chemin de hooks personnalisé. Commande manuelle :
+`composer hooks`. Le hook vérifie l'index Git, bloque les fichiers de secrets et, lorsque
+PHP est présent, exécute la vérification syntaxique PHP et les validations des recettes.
+La CI reste la référence pour la compilation CSS, les tests Symfony, Chromium et Docker.
