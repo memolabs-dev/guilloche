@@ -5,10 +5,10 @@
 {% props id, title, message, trigger, confirmLabel, cancelLabel %}
 <div {{ attributes.defaults({ class: 'ui-confirm-dialog-root' }) }} data-controller="ui--confirm-dialog">
   <button class="ui-confirm-dialog__trigger" type="button" data-action="ui--confirm-dialog#open">{{ trigger }}</button>
-  <dialog class="ui-confirm-dialog" id="{{ id }}" data-ui--confirm-dialog-target="dialog">
+  <dialog class="ui-confirm-dialog" id="{{ id }}" aria-labelledby="{{ id }}-title" aria-describedby="{{ id }}-message" data-ui--confirm-dialog-target="dialog">
     <div class="ui-confirm-dialog__panel">
-      <h2 class="ui-confirm-dialog__title">{{ title }}</h2>
-      <p class="ui-confirm-dialog__message">{{ message }}</p>
+      <h2 class="ui-confirm-dialog__title" id="{{ id }}-title">{{ title }}</h2>
+      <p class="ui-confirm-dialog__message" id="{{ id }}-message">{{ message }}</p>
       <div class="ui-confirm-dialog__actions">
         <button class="ui-confirm-dialog__cancel" type="button" data-action="ui--confirm-dialog#close">{{ cancelLabel }}</button>
         <button class="ui-confirm-dialog__confirm" type="button" data-action="ui--confirm-dialog#confirm">{{ confirmLabel }}</button>
