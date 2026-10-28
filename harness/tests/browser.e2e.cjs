@@ -457,3 +457,73 @@ test('P0 interactive surfaces render and work in Chromium across themes and view
         }
     } finally { await browser.close(); }
 });
+
+
+test('real server-rendered playground updates six Twig recipes with no overflow', { timeout: 180_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const vp of [
+            { name: 'desktop', width: 1440, height: 900, theme: 'light' },
+            { name: 'mobile', width: 390, height: 844, theme: 'dark' },
+        ]) {
+            const page = await browser.newPage({
+                viewport: { width: vp.width, height: vp.height },
+                colorScheme: vp.theme,
+                reducedMotion: 'reduce',
+            });
+            const errors = [];
+            page.on('pageerror', (err) => errors.push(err.message));
+            await page.addInitScript((value) => localStorage.setItem('guilloche-doc-theme', value), vp.theme);
+
+            for (const [recipe, select, option, expected, code] of [
+                ['button', '#pg-variant', 'danger', '.ds__playground-preview .ui-button--danger', 'variant="danger"'],
+                ['input', '#pg-type', 'email', '.ds__playground-preview input[type=email]', 'type="email"'],
+                ['badge', '#pg-tone', 'warning', '.ds__playground-preview .ui-badge--warning', 'tone="warning"'],
+            ]) {
+                const response = await page.goto(BASE + '/components/' + recipe, { waitUntil: 'networkidle' });
+                assert.equal(response?.status(), 200);
+                await page.selectOption(select, option);
+                await page.locator(expected).waitFor({ state: 'visible' });
+                assert.ok((await page.locator('[data-playground-code]').textContent()).includes(code));
+                assert.ok((await page.evaluate(() => document.documentElement.scrollWidth)) <= vp.width + 2);
+            }
+            for (const [recipe, textInput, updated, classSelector] of [
+                ['card', '#pg-title', 'Nouvelle mission', '.ds__playground-preview .ui-card__title'],
+                ['dialog', '#pg-title', 'Nouvelle mission', '.ds__playground-preview .ui-dialog__title'],
+                ['table', '#pg-caption', 'Nouvelle mission', '.ds__playground-preview .ui-table__caption'],
+            ]) {
+                await page.goto(BASE + '/components/' + recipe, { waitUntil: 'networkidle' });
+                await page.locator(textInput).fill(updated);
+                await page.waitForFunction(([selector, value]) =>
+                    document.querySelector(selector)?.textContent?.includes(value), [classSelector, updated]);
+                assert.match(await page.locator('[data-playground-code]').textContent(), /Nouvelle mission/);
+                assert.ok((await page.evaluate(() => document.documentElement.scrollWidth)) <= vp.width + 2);
+            }
+            await page.locator('[data-playground-viewport="mobile"]').click();
+            assert.equal(await page.locator('[data-playground-preview]').getAttribute('class'),
+                'ds__playground-preview is-compact');
+            assert.deepEqual(errors, [], 'playground JavaScript errors: ' + vp.name);
+            await page.evaluate(() => window.scrollTo(0, 0));
+            await page.screenshot({
+                path: path.join(DIR, 'playground-' + vp.name + '-' + vp.theme + '.png'),
+                fullPage: true, animations: 'disabled',
+            });
+            await page.close();
+        }
+    } finally { await browser.close(); }
+});
+
+test('playground stays useful without JavaScript and uses safe query parameters', { timeout: 75_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+        const page = await context.newPage();
+        await page.goto(BASE + '/components/button');
+        await page.selectOption('#pg-variant', 'outline');
+        await page.locator('[data-playground-form] [type=submit]').click();
+        assert.match(page.url(), /p_variant=outline/);
+        assert.equal(await page.locator('.ds__playground-preview .ui-button--outline').count(), 1);
+        assert.match(await page.locator('[data-playground-code]').textContent(), /variant="outline"/);
+        await context.close();
+    } finally { await browser.close(); }
+});

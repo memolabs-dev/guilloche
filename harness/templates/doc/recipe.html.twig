@@ -25,6 +25,8 @@
 
   <div class="ds__layout">
     <div class="ds__content" data-doc="{{ item.name }}">
+      {% include 'doc/_playground.html.twig' %}
+
       <section class="ds__section" id="exemples">
         <h2 class="ds__section-title">Exemples</h2>
         <div class="ds__examples">
@@ -95,6 +97,7 @@
 
     <aside class="ds__toc" aria-label="Sur cette page">
       <p>Sur cette page</p>
+      {% if playground %}<a href="#playground">Playground</a>{% endif %}
       <a href="#exemples">Exemples</a>
       <a href="#props">Props</a>
       <a href="#accessibilite">Accessibilité</a>
