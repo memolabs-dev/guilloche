@@ -32,7 +32,7 @@ Ne pas editer a la main : la CI verifie qu'il correspond aux sources.
 | `aspect-ratio` | 1.7.0 | `ratio` | Conteneur qui conserve un rapport largeur/hauteur |
 | `avatar` | 1.1.0 | `initials`, `src`, `label`, `size` | Image ou initiales pour représenter une personne ou une organisation |
 | `badge` | 1.1.0 | `tone`, `variant` | Étiquette courte pour un état, un compteur ou une catégorie |
-| `button` | 1.0.0 | `variant`, `intent`, `appearance`, `size`, `type`, `href`, `disabled`, `loading` | Composant bouton natif Symfony, installé par le Symfony UX Toolkit. Aucun libellé en dur : le texte est passé par le slot |
+| `button` | 1.0.0 | `variant`, `intent`, `appearance`, `size`, `type`, `href`, `disabled`, `loading` | Composant bouton Twig natif Symfony, installé depuis le kit Guilloche. Aucun libellé en dur : le texte est passé par le slot |
 | `button-group` | 1.7.0 | `label` | Boutons contigus, avec des coins arrondis aux extremites seulement |
 | `card` | 1.1.0 | `title`, `description`, `footer` | Surface de contenu avec en-tete et pied optionnels |
 | `empty-state` | 1.3.0 | `title`, `message`, `watermark`, `watermarkPath` | Etat vide, avec une action de sortie dans le slot |
