@@ -1,18 +1,20 @@
 <header class="ds__topbar">
-  <a class="ds__brand" href="{{ path('app_home') }}">Guilloche</a>
-  <nav class="ds__topnav" aria-label="Documentation">
-    <a href="{{ path('app_home') }}">Docs</a>
-    <a href="{{ path('app_home') }}#primitives">Composants</a>
+  <a class="ds__brand" href="{{ path('app_home') }}" aria-label="Guilloche, accueil de la documentation"><span class="ds__brandmark" aria-hidden="true">g</span><span>Guilloche</span><span class="ds__brand-separator" aria-hidden="true">/</span><span class="ds__brand-docs">Docs</span></a>
+  <nav class="ds__topnav" aria-label="Documentation principale">
+    <a href="{{ path('app_home') }}#catalogue">Composants</a>
+    <a href="{{ path('app_showcase') }}">Showroom</a>
   </nav>
   <div class="ds__search">
-    <input type="search" placeholder="Rechercher un composant" aria-label="Rechercher un composant" data-doc-search autocomplete="off" />
-    <ul class="ds__search-results" data-doc-search-results hidden>
+    <label class="ds__sr-only" for="ds-component-search">Rechercher un composant</label>
+    <input id="ds-component-search" type="search" placeholder="Rechercher un composant…" data-doc-search autocomplete="off" aria-controls="ds-component-results" aria-expanded="false" />
+    <span class="ds__search-shortcut" aria-hidden="true">⌘ K</span>
+    <ul id="ds-component-results" class="ds__search-results" data-doc-search-results hidden>
       {% for family, items in families %}{% for item in items %}
         <li><a href="{{ path('app_recipe', { recipe: item.name }) }}" data-search-item>{{ item.title }}</a></li>
       {% endfor %}{% endfor %}
     </ul>
   </div>
-  <a class="ds__toplink" href="https://github.com/memolabs-dev/guilloche">GitHub</a>
-  <a class="ds__version" href="https://github.com/memolabs-dev/guilloche/releases/tag/v2.0.0" title="Dernière version stable publiée ; main contient parfois des correctifs supplémentaires">Stable v2.0.0</a>
+  <a class="ds__toplink" href="https://github.com/memolabs-dev/guilloche" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  <a class="ds__version" href="https://github.com/memolabs-dev/guilloche/releases/tag/v2.0.0" title="Version stable publiée">v2.0.0</a>
   <button class="ds__theme" type="button" data-doc-theme aria-label="Changer de thème">Système</button>
 </header>
