@@ -3,7 +3,7 @@
 namespace App\Doc;
 
 /**
- * Playground limité aux props réellement exposées par six recettes Twig.
+ * Playground de props whitelistées, réellement exposées par les recettes Twig.
  * Toute valeur provient d'une liste autorisée ou d'un texte borné, puis est
  * échappée pour la génération de snippets. Aucune évaluation de Twig utilisateur.
  */
@@ -37,25 +37,62 @@ final class Playground
             'description' => ['label' => 'Description', 'type' => 'text', 'default' => 'La mission sera transmise.'],
             'trigger' => ['label' => 'Déclencheur', 'type' => 'text', 'default' => 'Ouvrir le dialogue'],
         ],
+        'select' => [
+            'value' => ['label' => 'Valeur', 'type' => 'select', 'default' => 'ongoing', 'options' => ['draft', 'ongoing', 'done']],
+            'placeholder' => ['label' => 'Placeholder', 'type' => 'text', 'default' => 'Choisir un statut'],
+            'required' => ['label' => 'Obligatoire', 'type' => 'checkbox', 'default' => false],
+            'disabled' => ['label' => 'Désactivé', 'type' => 'checkbox', 'default' => false],
+        ],
+        'textarea' => [
+            'rows' => ['label' => 'Lignes', 'type' => 'number', 'default' => 4, 'min' => 2, 'max' => 8],
+            'placeholder' => ['label' => 'Placeholder', 'type' => 'text', 'default' => 'Notes de mission'],
+            'value' => ['label' => 'Contenu', 'type' => 'text', 'default' => ''],
+            'disabled' => ['label' => 'Désactivé', 'type' => 'checkbox', 'default' => false],
+        ],
+        'checkbox' => [
+            'label' => ['label' => 'Libellé', 'type' => 'text', 'default' => 'Recevoir les notifications'],
+            'checked' => ['label' => 'Coché', 'type' => 'checkbox', 'default' => true],
+            'disabled' => ['label' => 'Désactivé', 'type' => 'checkbox', 'default' => false],
+        ],
+        'switch' => [
+            'label' => ['label' => 'Libellé', 'type' => 'text', 'default' => 'Activer les notifications'],
+            'checked' => ['label' => 'Activé', 'type' => 'checkbox', 'default' => true],
+            'disabled' => ['label' => 'Désactivé', 'type' => 'checkbox', 'default' => false],
+        ],
+        'alert' => [
+            'type' => ['label' => 'Intention', 'type' => 'select', 'default' => 'info', 'options' => ['info', 'success', 'warning', 'error']],
+            'title' => ['label' => 'Titre', 'type' => 'text', 'default' => 'Information'],
+            'message' => ['label' => 'Message', 'type' => 'text', 'default' => 'Votre demande est en cours de traitement.'],
+        ],
+        'progress' => [
+            'value' => ['label' => 'Progression', 'type' => 'number', 'default' => 45, 'min' => 0, 'max' => 100],
+            'label' => ['label' => 'Libellé accessible', 'type' => 'text', 'default' => 'Avancement du dossier'],
+            'showValue' => ['label' => 'Afficher le pourcentage', 'type' => 'checkbox', 'default' => true],
+        ],
         'table' => [
             'caption' => ['label' => 'Titre du tableau', 'type' => 'text', 'default' => 'Missions récentes'],
             'serial' => ['label' => 'Références mono', 'type' => 'checkbox', 'default' => true],
         ],
     ];
 
+    public function count(): int
+    {
+        return count(self::SCHEMAS);
+    }
+
     public function supports(string $recipe): bool
     {
         return isset(self::SCHEMAS[$recipe]);
     }
 
-    /** @return array<string, array{label:string,type:string,default:mixed,options?:list<string>}> */
+    /** @return array<string, array{label:string,type:string,default:mixed,options?:list<string>,min?:int,max?:int}> */
     public function controls(string $recipe): array
     {
         return self::SCHEMAS[$recipe] ?? [];
     }
 
     /** @param array<string, mixed> $query
-     *  @return array<string, string|bool>
+     *  @return array<string, string|bool|int>
      */
     public function normalize(string $recipe, array $query): array
     {
@@ -64,6 +101,12 @@ final class Playground
             $value = $query['p_' . $key] ?? null;
             if ('checkbox' === $control['type']) {
                 $values[$key] = null === $value ? $control['default'] : ('1' === $value);
+            } elseif ('number' === $control['type']) {
+                // L'URL n'est pas une source de confiance : entier décimal borné, ou valeur par défaut.
+                $valid = is_string($value) && preg_match('/^[0-9]{1,3}$/D', $value);
+                $number = $valid ? (int) $value : null;
+                $values[$key] = null !== $number && $number >= $control['min'] && $number <= $control['max']
+                    ? $number : $control['default'];
             } elseif (!is_string($value)) {
                 $values[$key] = $control['default'];
             } elseif ('select' === $control['type']) {
@@ -77,7 +120,7 @@ final class Playground
         return $values;
     }
 
-    /** @param array<string, string|bool> $v */
+    /** @param array<string, string|bool|int> $v */
     public function snippet(string $recipe, array $v): string
     {
         $a = fn (string $key): string => htmlspecialchars((string) ($v[$key] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -89,6 +132,12 @@ final class Playground
             'card' => '<twig:ui:Card title="' . $a('title') . '" description="' . $a('description') . '" footer="' . $a('footer') . '">' . "\n  <p>Contenu de démonstration</p>\n" . '</twig:ui:Card>',
             'dialog' => '<twig:ui:Dialog id="demo-dialog" title="' . $a('title') . '" description="' . $a('description') . '" trigger="' . $a('trigger') . '">' . "\n  <p>Exemple de contenu de dialogue.</p>\n" . '</twig:ui:Dialog>',
             'table' => '<twig:ui:Table caption="' . $a('caption') . '"' . ($v['serial'] ? ' serial' : '') . '>' . "\n  <thead><tr><th scope=\"col\">Référence</th><th scope=\"col\">Statut</th></tr></thead>\n  <tbody><tr><td>F-2026-010</td><td>Validé</td></tr></tbody>\n" . '</twig:ui:Table>',
+            'select' => '<twig:ui:Select id="mission-status" :options="[{ value: \'draft\', label: \'Brouillon\' }, { value: \'ongoing\', label: \'En cours\' }, { value: \'done\', label: \'Terminé\' }]" value="' . $a('value') . '" placeholder="' . $a('placeholder') . '"' . ($v['required'] ? ' required' : '') . ($v['disabled'] ? ' disabled' : '') . ' />',
+            'textarea' => '<twig:ui:Textarea id="mission-notes" :rows="' . $v['rows'] . '" placeholder="' . $a('placeholder') . '" value="' . $a('value') . '"' . ($v['disabled'] ? ' disabled' : '') . ' />',
+            'checkbox' => '<twig:ui:Checkbox id="mission-notify" label="' . $a('label') . '"' . ($v['checked'] ? ' checked' : '') . ($v['disabled'] ? ' disabled' : '') . ' />',
+            'switch' => '<twig:ui:Switch id="mission-alerts" label="' . $a('label') . '"' . ($v['checked'] ? ' checked' : '') . ($v['disabled'] ? ' disabled' : '') . ' />',
+            'alert' => '<twig:ui:Alert type="' . $a('type') . '" title="' . $a('title') . '" message="' . $a('message') . '" />',
+            'progress' => '<twig:ui:Progress :value="' . $v['value'] . '" :max="100" label="' . $a('label') . '"' . ($v['showValue'] ? ' showValue' : '') . ' />',
             default => '',
         };
     }

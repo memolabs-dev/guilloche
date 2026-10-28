@@ -19,6 +19,20 @@
         <twig:ui:Card :title="playground.values.title" :description="playground.values.description" :footer="playground.values.footer"><p>Contenu de démonstration</p></twig:ui:Card>
       {% elseif item.name == 'dialog' %}
         <twig:ui:Dialog id="demo-dialog" :title="playground.values.title" :description="playground.values.description" :trigger="playground.values.trigger"><p>Exemple de contenu de dialogue.</p></twig:ui:Dialog>
+      {% elseif item.name == 'select' %}
+        <label for="mission-status" class="ds__playground-field-label">Statut de la mission</label>
+        <twig:ui:Select id="mission-status" :options="[{ value: 'draft', label: 'Brouillon' }, { value: 'ongoing', label: 'En cours' }, { value: 'done', label: 'Terminé' }]" :value="playground.values.value" :placeholder="playground.values.placeholder" :required="playground.values.required" :disabled="playground.values.disabled" />
+      {% elseif item.name == 'textarea' %}
+        <label for="mission-notes" class="ds__playground-field-label">Notes de mission</label>
+        <twig:ui:Textarea id="mission-notes" :rows="playground.values.rows" :placeholder="playground.values.placeholder" :value="playground.values.value" :disabled="playground.values.disabled" />
+      {% elseif item.name == 'checkbox' %}
+        <twig:ui:Checkbox id="mission-notify" :label="playground.values.label" :checked="playground.values.checked" :disabled="playground.values.disabled" />
+      {% elseif item.name == 'switch' %}
+        <twig:ui:Switch id="mission-alerts" :label="playground.values.label" :checked="playground.values.checked" :disabled="playground.values.disabled" />
+      {% elseif item.name == 'alert' %}
+        <twig:ui:Alert :type="playground.values.type" :title="playground.values.title" :message="playground.values.message" />
+      {% elseif item.name == 'progress' %}
+        <twig:ui:Progress :value="playground.values.value" :max="100" :label="playground.values.label" :showValue="playground.values.showValue" />
       {% elseif item.name == 'table' %}
         <twig:ui:Table :caption="playground.values.caption" :serial="playground.values.serial">
           <thead><tr><th scope="col">Référence</th><th scope="col">Statut</th></tr></thead>

@@ -313,7 +313,7 @@ document.querySelectorAll('[data-playground]').forEach((section) => {
         refresh();
     });
     form.addEventListener('input', (event) => {
-        if (event.target.matches('[type="text"],input:not([type])')) {
+        if (event.target.matches('[type="text"],[type="number"],input:not([type])')) {
             clearTimeout(debounce);
             debounce = setTimeout(refresh, 250);
         }

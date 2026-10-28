@@ -6,7 +6,7 @@
       <h2 class="ds__section-title">Essayez {{ item.title }}</h2>
       <p>Modifiez les propriétés. L’aperçu et le code sont rendus par Symfony et utilisent les mêmes props Twig.</p>
     </div>
-    <span class="ds__playground-beta">6 composants configurables</span>
+    <span class="ds__playground-beta">{{ playground_count }} composants configurables</span>
   </div>
   <div class="ds__playground-layout">
     <form class="ds__playground-controls" action="{{ path('app_recipe', {recipe:item.name}) }}#playground" method="get" data-playground-form>
@@ -25,6 +25,11 @@
           <label class="ds__playground-control" for="pg-{{ name }}">
             <span>{{ control.label }}</span>
             <input id="pg-{{ name }}" name="p_{{ name }}" value="{{ playground.values[name] }}" maxlength="70" />
+          </label>
+        {% elseif control.type == 'number' %}
+          <label class="ds__playground-control" for="pg-{{ name }}">
+            <span>{{ control.label }}</span>
+            <input id="pg-{{ name }}" type="number" name="p_{{ name }}" value="{{ playground.values[name] }}" min="{{ control.min }}" max="{{ control.max }}" step="1" />
           </label>
         {% elseif control.type == 'checkbox' %}
           <label class="ds__playground-toggle" for="pg-{{ name }}">

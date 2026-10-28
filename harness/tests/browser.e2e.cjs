@@ -527,3 +527,83 @@ test('playground stays useful without JavaScript and uses safe query parameters'
         await context.close();
     } finally { await browser.close(); }
 });
+
+
+test('second-wave playgrounds are interactive, safe and render native forms', { timeout: 170_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const v of [
+            { name: 'desktop-light', width: 1440, height: 900, scheme: 'light' },
+            { name: 'mobile-dark', width: 390, height: 844, scheme: 'dark' },
+        ]) {
+            const page = await browser.newPage({
+                viewport: { width: v.width, height: v.height },
+                colorScheme: v.scheme,
+                reducedMotion: 'reduce',
+            });
+            const errors = [];
+            page.on('pageerror', (error) => errors.push(error.message));
+            await page.addInitScript((theme) => localStorage.setItem('guilloche-doc-theme', theme), v.scheme);
+
+            const steps = [
+                ['select', '#pg-value', 'done', '.ds__playground-preview select option[value="done"]:checked', 'value="done"'],
+                ['alert', '#pg-type', 'error', '.ds__playground-preview .ui-alert--error', 'type="error"'],
+            ];
+            for (const [recipe, control, value, selector, code] of steps) {
+                await page.goto(BASE + '/components/' + recipe, { waitUntil: 'networkidle' });
+                await page.selectOption(control, value);
+                await page.locator(selector).waitFor({ state: 'attached' });
+                assert.ok((await page.locator('[data-playground-code]').textContent()).includes(code));
+                assert.ok((await page.evaluate(() => document.documentElement.scrollWidth)) <= v.width + 2);
+            }
+
+            await page.goto(BASE + '/components/textarea', { waitUntil: 'networkidle' });
+            await page.locator('#pg-rows').fill('6');
+            await page.locator('.ds__playground-preview textarea[rows="6"]').waitFor({ state: 'attached' });
+            assert.ok((await page.locator('[data-playground-code]').textContent()).includes(':rows="6"'));
+
+            for (const recipe of ['checkbox', 'switch']) {
+                await page.goto(BASE + '/components/' + recipe, { waitUntil: 'networkidle' });
+                const checkbox = page.locator('#pg-checked');
+                await checkbox.uncheck();
+                await page.waitForFunction(() => {
+                    const input = document.querySelector('.ds__playground-preview input[type=checkbox]');
+                    return input && !input.checked;
+                });
+                assert.ok(!(await page.locator('[data-playground-code]').textContent()).includes(' checked'));
+                assert.ok((await page.evaluate(() => document.documentElement.scrollWidth)) <= v.width + 2);
+            }
+
+            await page.goto(BASE + '/components/progress', { waitUntil: 'networkidle' });
+            await page.locator('#pg-value').fill('85');
+            await page.locator('.ds__playground-preview [role=progressbar][aria-valuenow="85"]').waitFor({ state: 'attached' });
+            assert.ok((await page.locator('[data-playground-code]').textContent()).includes(':value="85"'));
+            await page.locator('[data-playground-viewport=mobile]').click();
+            assert.equal(await page.locator('[data-playground-viewport=mobile]').getAttribute('aria-pressed'), 'true');
+            assert.deepEqual(errors, [], v.name + ': no JS errors');
+            await page.evaluate(() => window.scrollTo(0, 0));
+            await page.screenshot({
+                path: path.join(DIR, 'playground-wave2-' + v.name + '.png'),
+                fullPage: true, animations: 'disabled',
+            });
+            await page.close();
+        }
+    } finally { await browser.close(); }
+});
+
+test('numeric and checkbox playgrounds have SSR fallback when JavaScript is off', { timeout: 75_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+        const page = await context.newPage();
+        await page.goto(BASE + '/components/progress');
+        await page.locator('#pg-value').fill('62');
+        await page.locator('[data-playground-form] [type=submit]').click();
+        assert.equal(await page.locator('[role=progressbar][aria-valuenow="62"]').count() >= 1, true);
+        await page.goto(BASE + '/components/checkbox');
+        await page.locator('#pg-checked').uncheck();
+        await page.locator('[data-playground-form] [type=submit]').click();
+        assert.equal(await page.locator('.ds__playground-preview input[type=checkbox]').isChecked(), false);
+        await context.close();
+    } finally { await browser.close(); }
+});
