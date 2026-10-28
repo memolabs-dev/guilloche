@@ -15,7 +15,7 @@ php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=.
 | `variant` | `null` (résolu en `primary` par défaut) | `primary`, `secondary`, `outline`, `ghost`, `link`, `danger`, `danger-soft` |
 | `intent` | `primary` | Compatibilité : intention historique utilisée lorsque `variant` est absent |
 | `appearance` | `solid` | Compatibilité : apparence historique utilisée lorsque `variant` est absent |
-| `size` | `md` | `sm` (32 px), `md` (36 px), `lg` (40 px) |
+| `size` | `md` | `sm` (34 px), `md` (40 px), `lg` (44 px) |
 | `href` | `null` | Quand présent, rend un lien ; sinon un bouton |
 | `type` | `button` | Type du bouton quand il n'y a pas de `href` |
 | `disabled` | `false` | Désactive le bouton, jamais appliqué à un lien |
@@ -34,10 +34,10 @@ Les props historiques `intent` et `appearance` restent acceptées et sont tradui
 
 ## Styles
 
-- Hauteurs fixes 32, 36 et 40 px, padding horizontal 10, 12 et 16 px, rayon 6 px.
-- Survol et pressé pilotés par les tokens (`primary-hover`, `accent`), jamais par un filtre.
+- Hauteurs fixes par tokens `--ui-control-sm/md/lg` : 34, 40 et 44 px. Padding horizontal 11, 15 et 19 px et rayon médian 9 px.
+- Survol et pressé pilotés par les tokens (`primary-hover`, `accent`), avec animation désactivée si `prefers-reduced-motion: reduce`.
 - Focus : anneau de 2 px décalé de 2 px, sur `:focus-visible` seulement.
-- Désactivé : opacité 0,5 et `pointer-events: none`.
+- Désactivé : opacité 0,55 et `pointer-events: none`.
 
 ## Accessibilité
 
