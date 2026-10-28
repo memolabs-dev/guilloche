@@ -23,3 +23,7 @@ document.querySelector('.ui-confirm-dialog-root')
 ```
 
 Aucun libellé n'est impose : les quatre textes viennent des props.
+
+## Accessibilité
+
+La confirmation utilise un `<dialog>` natif avec `aria-labelledby` vers le titre et `aria-describedby` vers le message d'avertissement. Le texte des actions vient de `confirmLabel` et `cancelLabel`. L'application est responsable de traiter l'événement `ui:confirm`.
