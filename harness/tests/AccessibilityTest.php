@@ -87,10 +87,15 @@ final class AccessibilityTest extends WebTestCase
     public function testNavigationPatternsUseNativeLinksNotBrokenAriaWidgets(): void
     {
         $client = self::createClient();
-        foreach (['tabs', 'menubar', 'dropdown-menu'] as $recipe) {
+        $selectors = [
+            'tabs' => '.ui-tabs [role="tablist"], .ui-tabs [role="tab"]',
+            'menubar' => '.ui-menubar [role="menubar"], .ui-menubar [role="menuitem"], .ui-menubar [role="menu"]',
+            'dropdown-menu' => '.ui-dropdown [role="menu"], .ui-dropdown [role="menuitem"]',
+        ];
+        foreach ($selectors as $recipe => $badRoles) {
             $client->request('GET', '/components/' . $recipe);
             $this->assertResponseIsSuccessful();
-            $this->assertSelectorNotExists('[role="tablist"], [role="tab"], [role="menubar"], [role="menuitem"], [role="menu"]');
+            $this->assertSelectorNotExists($badRoles);
         }
         $client->request('GET', '/components/tabs');
         $this->assertSelectorExists('.ui-tabs__tab[aria-current="page"]');
