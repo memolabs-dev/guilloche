@@ -293,3 +293,89 @@ test('showroom keyboard tabs and form simulation work without sending data', { t
         await browser.close();
     }
 });
+
+
+test('P0 core recipes preserve control geometry and hover/invalid states in both themes', { timeout: 180_000 }, async () => {
+    mkdirSync(DIR, { recursive: true });
+    const browser = await chromium.launch({ headless: true });
+    try {
+        const cases = [
+            { name: 'desktop', width: 1440, height: 900 },
+            { name: 'mobile', width: 390, height: 844 },
+        ];
+        const core = ['button', 'input', 'textarea', 'select', 'badge', 'card', 'table'];
+        for (const size of cases) {
+            for (const theme of ['light', 'dark']) {
+                const page = await browser.newPage({
+                    viewport: { width: size.width, height: size.height },
+                    colorScheme: theme,
+                    reducedMotion: 'reduce',
+                });
+                await page.addInitScript((mode) => {
+                    try { localStorage.setItem('guilloche-doc-theme', mode); } catch {}
+                }, theme);
+                for (const name of core) {
+                    const response = await page.goto(BASE + '/components/' + name, { waitUntil: 'networkidle' });
+                    assert.equal(response?.status(), 200);
+                    const horizontal = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]);
+                    assert.ok(horizontal[0] <= horizontal[1] + 2, 'overflow: ' + name + '/' + size.name + '/' + theme + ' ' + horizontal);
+                    await page.screenshot({
+                        path: path.join(DIR, 'core-' + name + '-' + size.name + '-' + theme + '.png'),
+                        fullPage: true,
+                        animations: 'disabled',
+                    });
+                    if (name === 'button') {
+                        const heights = await page.locator('.ds__example-render .ui-button').evaluateAll((els) =>
+                            Object.fromEntries(['sm', 'md', 'lg'].map((token) => {
+                                const el = els.find((e) => e.classList.contains('ui-button--' + token));
+                                return [token, el ? getComputedStyle(el).height : null];
+                            })),
+                        );
+                        assert.deepEqual(heights, { sm: '34px', md: '40px', lg: '44px' });
+                        const first = page.locator('.ds__example-render .ui-button--primary:not(:disabled)').first();
+                        const before = await first.evaluate((el) => getComputedStyle(el).backgroundColor);
+                        await first.hover();
+                        const after = await first.evaluate((el) => getComputedStyle(el).backgroundColor);
+                        assert.notEqual(after, before, 'primary hover must be distinguishable');
+                        assert.equal(await page.locator('.ds__example-render .ui-button:disabled').count() > 0, true);
+                    }
+                    if (name === 'input') {
+                        assert.equal(await page.locator('#x-text').evaluate((e) => getComputedStyle(e).height), '40px');
+                        assert.equal(await page.locator('#x-invalid').getAttribute('aria-invalid'), 'true');
+                    }
+                    if (name === 'textarea') {
+                        const h = await page.locator('.ds__example-render .ui-textarea').first()
+                            .evaluate((e) => parseFloat(getComputedStyle(e).height));
+                        assert.ok(h >= 112, 'textarea must be tall enough');
+                    }
+                    if (name === 'select') {
+                        const h = await page.locator('.ds__example-render .ui-select').first()
+                            .evaluate((e) => getComputedStyle(e).height);
+                        assert.equal(h, '40px');
+                    }
+                    if (name === 'card') {
+                        const radius = await page.locator('.ds__example-render .ui-card').first()
+                            .evaluate((e) => parseFloat(getComputedStyle(e).borderTopLeftRadius));
+                        assert.ok(radius >= 13, 'card radius should align with surface tokens');
+                    }
+                    if (name === 'badge') {
+                        const h = await page.locator('.ds__example-render .ui-badge').first()
+                            .evaluate((e) => parseFloat(getComputedStyle(e).height));
+                        assert.ok(h >= 23, 'badges need a legible touch target within a row');
+                    }
+                    if (name === 'table') {
+                        const h = await page.locator('.ds__example-render .ui-table tbody tr').first()
+                            .evaluate((e) => parseFloat(getComputedStyle(e).height));
+                        assert.ok(h >= 46, 'table rows must retain readable spacing');
+                        const serialCellWrap = await page.locator('.ui-table--serial-first tbody td:first-child').first()
+                            .evaluate((el) => getComputedStyle(el).whiteSpace);
+                        assert.equal(serialCellWrap, 'nowrap', 'serial numbers should not split on narrow screens');
+                    }
+                }
+                await page.close();
+            }
+        }
+    } finally {
+        await browser.close();
+    }
+});

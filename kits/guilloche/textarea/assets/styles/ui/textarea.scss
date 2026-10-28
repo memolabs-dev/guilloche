@@ -1,6 +1,8 @@
+// Les champs multiligne conservent le même border/focus que Input.
 .ui-textarea {
-    min-height: 96px;
-    padding: var(--ui-space-2) var(--ui-space-3);
-    line-height: 1.5;
+    min-height: 112px;
+    height: auto;
+    padding: 11px 13px;
+    line-height: 1.55;
     resize: vertical;
 }
