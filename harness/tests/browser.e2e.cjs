@@ -212,3 +212,84 @@ test('real Stimulus controllers open dialogs, confirm actions and operate listbo
         await browser.close();
     }
 });
+
+
+test('showroom and redesigned landing are responsive in both themes', { timeout: 150_000 }, async () => {
+    mkdirSync(DIR, { recursive: true });
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const size of [
+            { name: 'desktop', width: 1440, height: 900 },
+            { name: 'mobile', width: 390, height: 844 },
+        ]) {
+            for (const theme of ['light', 'dark']) {
+                const page = await browser.newPage({
+                    viewport: { width: size.width, height: size.height },
+                    reducedMotion: 'reduce',
+                    colorScheme: theme,
+                });
+                await page.addInitScript((mode) => {
+                    try { localStorage.setItem('guilloche-doc-theme', mode); } catch {}
+                }, theme);
+                for (const route of ['', '/showcase']) {
+                    const response = await page.goto(BASE + route, { waitUntil: 'networkidle' });
+                    assert.equal(response?.status(), 200);
+                    const check = await page.evaluate(() => ({
+                        scroll: document.documentElement.scrollWidth,
+                        viewport: innerWidth,
+                        heading: document.querySelector('h1')?.textContent,
+                        tabCount: document.querySelectorAll('.studio [role="tab"]').length,
+                    }));
+                    assert.equal(check.tabCount, 3, 'the showroom must expose all three views');
+                    assert.ok(check.heading, 'landing heading must be present');
+                    assert.ok(check.scroll <= check.viewport + 2,
+                        (route || '/') + ' ' + size.name + '/' + theme + ': horizontal overflow ' + check.scroll);
+                    const name = route ? 'showroom' : 'landing';
+                    await page.screenshot({ path: path.join(DIR, name + '-' + size.name + '-' + theme + '.png'),
+                        fullPage: true, animations: 'disabled' });
+                }
+                await page.close();
+            }
+        }
+    } finally {
+        await browser.close();
+    }
+});
+
+test('showroom keyboard tabs and form simulation work without sending data', { timeout: 75_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        const page = await browser.newPage({ viewport: { width: 1000, height: 800 } });
+        const errors = [];
+        const requests = [];
+        page.on('pageerror', (err) => errors.push(err.message));
+        page.on('request', (req) => { if (req.method() !== 'GET') requests.push(req.url()); });
+        await page.goto(BASE + '/showcase', { waitUntil: 'networkidle' });
+
+        const overview = page.locator('#studio-tab-overview');
+        const data = page.locator('#studio-tab-data');
+        const form = page.locator('#studio-tab-form');
+        assert.equal(await overview.getAttribute('aria-selected'), 'true');
+        await overview.focus();
+        await page.keyboard.press('ArrowRight');
+        assert.equal(await data.getAttribute('aria-selected'), 'true');
+        assert.equal(await page.locator('#studio-panel-overview').isVisible(), false);
+        assert.equal(await page.locator('#studio-panel-data .ui-table').isVisible(), true);
+
+        await form.click();
+        await page.locator('#studio-name').fill('Contrat Atlas');
+        await page.locator('#studio-client').fill('Atlas');
+        await page.locator('#studio-budget').fill('4500');
+        await page.locator('[data-studio-form] button[type=submit]').click();
+        assert.match(await page.locator('[data-studio-feedback]').textContent(), /Aucune donnée enregistrée/);
+        assert.deepEqual(requests, [], 'the studio is a local demo, not a fake backend');
+
+        await page.locator('[data-studio-refresh]').click();
+        assert.equal(await overview.getAttribute('aria-selected'), 'true');
+        await form.click();
+        assert.equal(await page.locator('#studio-name').inputValue(), '');
+        assert.deepEqual(errors, [], 'the showroom must not throw JavaScript exceptions');
+    } finally {
+        await browser.close();
+    }
+});

@@ -63,8 +63,13 @@ final class DocTest extends WebTestCase
         self::createClient()->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Guilloche');
-        $this->assertSelectorTextContains('.ds__meta .ui-badge--success', 'v2.0.0');
+        $this->assertSelectorTextContains('h1', "L'interface de vos outils métier");
+        $this->assertSelectorTextContains('.ds__landing-release', 'v2.0.0');
+        $this->assertSelectorExists('a[href="/showcase"]');
+        $this->assertSelectorCount(3, '.studio__tabs [role="tab"]');
+        $this->assertSelectorExists('.studio .ui-card');
+        $this->assertSelectorExists('.studio .ui-table');
+        $this->assertSelectorCount(3, '.ds__feature-preview .ds__rosette-strip .ui-rosette');
         $this->assertSelectorExists('article.ds__card');
         $this->assertSelectorExists('a[href="/components/button"]');
         $this->assertSelectorExists('a[href="/components/table"]');

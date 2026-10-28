@@ -1,0 +1,104 @@
+{# Showcase du kit, données fictives, aucune action persistante. #}
+<section class="studio" data-studio aria-label="Aperçu interactif d'une application métier Symfony">
+  <div class="studio__top">
+    <div class="studio__identity">
+      <span class="studio__appmark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span>Atelier <span class="studio__identity-muted">/</span> Espace de travail</span>
+    </div>
+    <div class="studio__top-end">
+      <span class="studio__live"><span aria-hidden="true"></span> Démonstration</span>
+      <span class="studio__avatar" aria-label="Compte de démonstration">GF</span>
+    </div>
+  </div>
+  <div class="studio__shell">
+    <aside class="studio__side" aria-label="Navigation fictive de l'application">
+      <span class="studio__side-heading">ESPACE</span>
+      <span class="studio__side-item is-active"><span aria-hidden="true">◫</span> Vue d'ensemble</span>
+      <span class="studio__side-item"><span aria-hidden="true">▤</span> Missions</span>
+      <span class="studio__side-item"><span aria-hidden="true">◷</span> Activité</span>
+      <span class="studio__side-heading studio__side-heading--second">GESTION</span>
+      <span class="studio__side-item"><span aria-hidden="true">▦</span> Facturation</span>
+      <span class="studio__side-item"><span aria-hidden="true">⚙</span> Paramètres</span>
+      <div class="studio__side-bottom"><span class="studio__side-dot"></span> Environnement de démonstration</div>
+    </aside>
+    <div class="studio__workspace">
+      <div class="studio__workspace-heading">
+        <div>
+          <p class="studio__eyebrow">ESPACE / APERÇU</p>
+          <h2>Vue d'ensemble</h2>
+          <p>Une interface métier native, construite avec Twig et Stimulus.</p>
+        </div>
+        <twig:ui:Button size="sm" variant="outline" type="button" data-studio-refresh>Réinitialiser</twig:ui:Button>
+      </div>
+      <div class="studio__tabs" role="tablist" aria-label="Parcours de démonstration">
+        <button type="button" role="tab" id="studio-tab-overview" aria-selected="true" aria-controls="studio-panel-overview" tabindex="0" data-studio-tab="overview">Vue d'ensemble</button>
+        <button type="button" role="tab" id="studio-tab-data" aria-selected="false" aria-controls="studio-panel-data" tabindex="-1" data-studio-tab="data">Données</button>
+        <button type="button" role="tab" id="studio-tab-form" aria-selected="false" aria-controls="studio-panel-form" tabindex="-1" data-studio-tab="form">Formulaire</button>
+      </div>
+      <section class="studio__panel" role="tabpanel" id="studio-panel-overview" aria-labelledby="studio-tab-overview" data-studio-panel="overview">
+        <div class="studio__metrics">
+          <twig:ui:Card title="Missions actives" description="En cours">
+            <div class="studio__metric">12 <small>+2 ce mois</small></div>
+          </twig:ui:Card>
+          <twig:ui:Card title="Chiffre d'affaires" description="Octobre 2026">
+            <div class="studio__metric">28 450 € <small>+12,8 %</small></div>
+          </twig:ui:Card>
+          <twig:ui:Card title="À valider" description="Actions en attente">
+            <div class="studio__metric">04 <small class="studio__metric-note">2 prioritaires</small></div>
+          </twig:ui:Card>
+        </div>
+        <div class="studio__columns">
+          <div class="studio__surface studio__surface--chart">
+            <div class="studio__surface-header"><div><h3>Activité</h3><p>Évolution des six derniers mois</p></div><span class="studio__subtle">2026</span></div>
+            <svg class="studio__chart" viewBox="0 0 520 168" role="img" aria-label="Graphique illustratif : activité en hausse de mai à octobre">
+              <title>Évolution fictive de l'activité</title>
+              <g stroke="currentColor" stroke-opacity=".10" fill="none" stroke-width="1"><path d="M5 24H515M5 64H515M5 104H515M5 144H515"/></g>
+              <path d="M10 126 C55 130 70 91 105 101 S170 120 203 85 S267 91 307 66 S366 80 412 39 S472 56 510 21 L510 144H10Z" fill="url(#studio-area)"/>
+              <path d="M10 126 C55 130 70 91 105 101 S170 120 203 85 S267 91 307 66 S366 80 412 39 S472 56 510 21" fill="none" stroke="var(--studio-chart)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="510" cy="21" r="5.5" fill="var(--studio-chart)" stroke="var(--ui-surface)" stroke-width="3"/>
+              <defs><linearGradient id="studio-area" x1="0" y1="0" x2="0" y2="1"><stop stop-color="var(--studio-chart)" stop-opacity=".22"/><stop offset="1" stop-color="var(--studio-chart)" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+            <div class="studio__months"><span>Mai</span><span>Juin</span><span>Juil.</span><span>Août</span><span>Sept.</span><span>Oct.</span></div>
+          </div>
+          <div class="studio__surface studio__surface--activity">
+            <div class="studio__surface-header"><div><h3>Activité récente</h3><p>Dernières modifications</p></div></div>
+            <div class="studio__timeline">
+              <div><span class="studio__timeline-dot"></span><p><strong>Audit validé</strong><small>Projet Atlas · il y a 2 h</small></p></div>
+              <div><span class="studio__timeline-dot"></span><p><strong>Facture envoyée</strong><small>Mission Horizon · hier</small></p></div>
+              <div><span class="studio__timeline-dot"></span><p><strong>Mission créée</strong><small>Design system · lundi</small></p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="studio__panel" role="tabpanel" id="studio-panel-data" aria-labelledby="studio-tab-data" data-studio-panel="data" hidden>
+        <div class="studio__surface studio__surface--data">
+          <div class="studio__surface-header"><div><h3>Suivi des missions</h3><p>Liste de travail avec statuts</p></div><span class="studio__subtle">4 lignes</span></div>
+          <twig:ui:Table caption="Missions fictives">
+            <thead><tr><th scope="col">Mission</th><th scope="col">Client</th><th scope="col">Statut</th><th scope="col" class="ui-table__num">Budget</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Audit de conformité</strong><small>REF-0241</small></td><td>Atlas</td><td><twig:ui:Badge tone="success">Validée</twig:ui:Badge></td><td class="ui-table__num">4 500 €</td></tr>
+              <tr><td><strong>Portail client</strong><small>REF-0240</small></td><td>Horizon</td><td><twig:ui:Badge tone="warning">En cours</twig:ui:Badge></td><td class="ui-table__num">8 250 €</td></tr>
+              <tr><td><strong>Architecture UI</strong><small>REF-0239</small></td><td>Maison Nord</td><td><twig:ui:Badge>À planifier</twig:ui:Badge></td><td class="ui-table__num">3 200 €</td></tr>
+              <tr><td><strong>Migration applicative</strong><small>REF-0238</small></td><td>Atelier</td><td><twig:ui:Badge tone="success">Validée</twig:ui:Badge></td><td class="ui-table__num">12 500 €</td></tr>
+            </tbody>
+          </twig:ui:Table>
+        </div>
+      </section>
+      <section class="studio__panel" role="tabpanel" id="studio-panel-form" aria-labelledby="studio-tab-form" data-studio-panel="form" hidden>
+        <div class="studio__surface studio__surface--form">
+          <div class="studio__surface-header"><div><h3>Nouvelle mission</h3><p>Exemple de formulaire Symfony avec contrôles natifs</p></div></div>
+          <form data-studio-form class="studio__form">
+            <div><label for="studio-name">Nom de la mission</label><twig:ui:Input id="studio-name" placeholder="Ex. Refonte du portail" required /></div>
+            <div class="studio__form-grid">
+              <div><label for="studio-client">Client</label><twig:ui:Input id="studio-client" placeholder="Organisation" required /></div>
+              <div><label for="studio-budget">Budget estimé (€)</label><twig:ui:Input id="studio-budget" type="number" min="0" placeholder="4500" required /></div>
+            </div>
+            <div class="studio__form-footer"><span>Simulation locale : aucune donnée envoyée.</span><twig:ui:Button type="submit" size="md">Prévisualiser</twig:ui:Button></div>
+            <p class="studio__form-feedback" role="status" data-studio-feedback hidden></p>
+          </form>
+        </div>
+      </section>
+      <p class="studio__disclaimer">Données fictives · Composition démonstrative de recettes Guilloche</p>
+    </div>
+  </div>
+</section>
