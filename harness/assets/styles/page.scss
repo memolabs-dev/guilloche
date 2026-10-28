@@ -1398,3 +1398,84 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .ds__playground-preview { transition: none; }
 }
+
+
+// Rosette : valeur métier de la signature visible sans ajouter de nouveau composant.
+// 58 SVG SSR inchangés : 6 tailles, 4 états et 48 graines indépendantes.
+.ds__rosette-intro { display: grid; gap: 18px; padding: 19px; }
+.ds__rosette-hero {
+    display: grid;
+    grid-template-columns: 106px minmax(0,1fr);
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    padding: 23px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid var(--ds-hairline);
+    background: var(--ds-canvas);
+}
+.ds__rosette-hero-mark {
+    height: 98px;
+    width: 98px;
+    display: grid;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--ds-highlight) 20%, transparent);
+    border-radius: 50%;
+    color: var(--ds-highlight-text);
+    background: var(--ui-surface);
+}
+.ds__rosette-kicker { font-size: 9px; font-weight: 740; letter-spacing: .13em; color: var(--ds-highlight-text); }
+.ds__rosette-hero-text h4 { font-size: 17px; letter-spacing: -.035em; line-height: 1.3; margin: 7px 0; font-weight: 670; }
+.ds__rosette-hero-text p { margin: 0 0 12px; max-width: 400px; font-size: 12px; line-height: 1.6; color: var(--ui-muted-foreground); }
+.ds__rosette-hero-text code { font-size: 11px; color: var(--ds-highlight-text); letter-spacing: .04em; }
+.ds__rosette-scale { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); width: 100%; gap: 7px; }
+.ds__rosette-scale figure { margin: 0; min-height: 74px; padding: 12px 4px 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 7px; border: 1px solid var(--ds-hairline); border-radius: 9px; }
+.ds__rosette-scale figure .ui-rosette { color: var(--ds-highlight-text); }
+.ds__rosette-scale figcaption { font-family: var(--ui-font-mono); font-size: 10px; color: var(--ui-muted-foreground); }
+.ds__rosette-progress-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; min-height: 0; padding: 19px; }
+.ds__rosette-state { margin: 0; padding: 20px 7px 16px; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px solid var(--ds-hairline); border-radius: 11px; background: var(--ds-canvas); }
+.ds__rosette-state:nth-child(1) .ui-rosette { color: var(--ui-warning); }
+.ds__rosette-state:nth-child(2) .ui-rosette { color: var(--ui-info); }
+.ds__rosette-state:nth-child(3) .ui-rosette { color: var(--ui-success); }
+.ds__rosette-state:nth-child(4) .ui-rosette { color: var(--ui-muted-foreground); }
+.ds__rosette-state figcaption { display: grid; gap: 4px; text-align: center; }
+.ds__rosette-state figcaption strong { font-size: 14px; letter-spacing: -.015em; font-variant-numeric: tabular-nums; }
+.ds__rosette-state figcaption span { font-size: 10px; color: var(--ui-muted-foreground); }
+.ds__rosette-grid-note { margin: 0; padding: 15px 19px 0; font-size: 12px; color: var(--ui-muted-foreground); line-height: 1.6; }
+.ds__example-render.ds__planche {
+    display: grid;
+    grid-template-columns: repeat(8,minmax(0,1fr));
+    gap: 10px;
+    min-height: 0;
+    padding: 18px;
+}
+.ds__rosette-reference {
+    min-width: 0;
+    min-height: 65px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ds-hairline);
+    border-radius: 8px;
+    background: var(--ds-canvas);
+    color: var(--ds-highlight-text);
+}
+.ds__rosette-reference figcaption { font: 10px var(--ui-font-mono); color: var(--ui-muted-foreground); }
+@media (max-width: 760px) {
+    .ds__rosette-hero { grid-template-columns: 80px minmax(0,1fr); gap: 14px; padding: 16px; }
+    .ds__rosette-hero-mark { width: 76px; height: 76px; }
+    .ds__rosette-hero-text h4 { font-size: 15px; }
+    .ds__rosette-hero-text p { font-size: 11px; }
+    .ds__rosette-progress-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .ds__example-render.ds__planche { grid-template-columns: repeat(6,minmax(0,1fr)); gap: 6px; padding: 10px; }
+    .ds__rosette-reference { min-height: 60px; }
+}
+@media (max-width: 380px) {
+    .ds__rosette-hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+    .ds__rosette-scale { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
