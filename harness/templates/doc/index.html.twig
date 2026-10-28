@@ -1,41 +1,88 @@
 {% extends 'doc/base.html.twig' %}
 
-{% block title %}Catalogue · Guilloche{% endblock %}
+{% block title %}Guilloche · Design system natif Symfony{% endblock %}
 
 {% block body %}
-  <header class="ds__header">
-    <p class="ds__eyebrow">Design system natif Symfony</p>
-    <h1 class="ds__title">Guilloche</h1>
-    <p class="ds__lead">Composants Twig, tokens CSS et contrôleurs Stimulus, distribués par le Symfony UX Toolkit. {{ total }} recettes, chacune avec son aperçu, son code et ses props.</p>
-    <p class="ds__meta"><span class="ui-badge ui-badge--success ui-badge--soft">v2.0.0</span> <span class="ui-badge ui-badge--neutral ui-badge--soft">MIT</span></p>
-  </header>
-
-  {% for family, items in families %}
-    <section class="ds__section" id="{{ family }}">
-      <h2 class="ds__section-title">{{ {
-        fondation: 'Fondations',
-        primitives: 'Primitives',
-        formulaires: 'Formulaires',
-        navigation: 'Navigation et surfaces',
-        données: 'Données',
-        patterns: "Patterns d'écran",
-        avancés: 'Composants avancés',
-        layout: 'Mise en page',
-        signature: 'Signature'
-      }[family] ?? family }}</h2>
-      <div class="ds__cards">
-        {% for item in items %}
-          <article class="ds__card">
-            <div class="ds__card-head">
-              <h3 class="ds__card-title"><a href="{{ path('app_recipe', { recipe: item.name }) }}">{{ item.title }}</a></h3>
-            </div>
-            <div class="ds__card-preview">
-              {% include 'doc/previews/' ~ item.name ~ '.html.twig' ignore missing %}
-            </div>
-            <p class="ds__card-description">{{ item.description }}</p>
-          </article>
-        {% endfor %}
+  <section class="ds__landing" aria-labelledby="ds-landing-title">
+    <div class="ds__landing-body">
+      <p class="ds__landing-kicker"><span class="ds__landing-spark" aria-hidden="true"></span> DESIGN SYSTEM / SYMFONY & TWIG <span class="ds__landing-release">v2.0.0</span></p>
+      <h1 class="ds__landing-title" id="ds-landing-title">L'interface de vos outils métier, <em>sans compromis.</em></h1>
+      <p class="ds__landing-lead">Des composants Twig soignés, une fondation CSS légère et des interactions Stimulus. Pour construire des applications Symfony que l'on aime utiliser.</p>
+      <div class="ds__landing-actions">
+        <a class="ds__landing-primary" href="{{ path('app_showcase') }}">Découvrir le showroom <span aria-hidden="true">↗</span></a>
+        <a class="ds__landing-secondary" href="#catalogue">Explorer les composants <span aria-hidden="true">↓</span></a>
       </div>
-    </section>
-  {% endfor %}
+      <div class="ds__landing-proof" aria-label="Caractéristiques">
+        <span><strong>{{ total }}</strong> recettes</span><i aria-hidden="true"></i>
+        <span>100 % Twig</span><i aria-hidden="true"></i>
+        <span>Sans framework CSS</span><i aria-hidden="true"></i>
+        <span>Licence MIT</span>
+      </div>
+    </div>
+    <div class="ds__landing-ornament" aria-hidden="true">
+      <span class="ds__orbit ds__orbit--one"></span><span class="ds__orbit ds__orbit--two"></span><span class="ds__orbit ds__orbit--three"></span><span class="ds__orbit ds__orbit--four"></span>
+      <span class="ds__ornament-center">g.</span>
+    </div>
+  </section>
+
+  <section class="ds__home-demo" aria-labelledby="home-showcase-title">
+    <div class="ds__home-section-head">
+      <div>
+        <p class="ds__eyebrow">EN SITUATION</p>
+        <h2 id="home-showcase-title">Un langage visuel, <em>des écrans complets.</em></h2>
+        <p>Une application métier construite avec les composants du kit. Explorez les trois vues directement.</p>
+      </div>
+      <a href="{{ path('app_showcase') }}">Ouvrir en grand <span aria-hidden="true">↗</span></a>
+    </div>
+    {% include 'doc/_studio_canvas.html.twig' %}
+  </section>
+
+  <section class="ds__home-featured" aria-labelledby="essentials-title">
+    <div class="ds__home-section-head">
+      <div><p class="ds__eyebrow">LES ESSENTIELS</p><h2 id="essentials-title">Les fondations du quotidien.</h2><p>Composants indépendants, accessibles et pensés pour les usages métier.</p></div>
+      <a href="#catalogue">Les {{ total }} recettes <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="ds__featured-grid">
+      {% set chosen = ['button', 'input', 'card', 'badge', 'table', 'rosette'] %}
+      {% for family, items in families %}
+        {% for item in items %}
+          {% if item.name in chosen %}
+            <article class="ds__feature-card">
+              <div class="ds__feature-preview">{% include 'doc/previews/' ~ item.name ~ '.html.twig' ignore missing %}</div>
+              <div class="ds__feature-info"><h3><a href="{{ path('app_recipe', { recipe: item.name }) }}">{{ item.title }}</a></h3><span>Voir les exemples <span aria-hidden="true">↗</span></span></div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="catalogue" class="ds__home-catalogue" aria-labelledby="catalogue-title">
+    <div class="ds__home-section-head">
+      <div><p class="ds__eyebrow">BIBLIOTHÈQUE</p><h2 id="catalogue-title">Tous les composants.</h2><p>Un catalogue consultable par famille. Chaque recette a sa documentation, ses props et son code Twig.</p></div>
+    </div>
+    {% for family, items in families %}
+      <details class="ds__catalogue-family" {{ loop.first ? 'open' : '' }}>
+        <summary><span>{{ {
+          fondation: 'Fondations',
+          primitives: 'Primitives',
+          formulaires: 'Formulaires',
+          navigation: 'Navigation et surfaces',
+          donnees: 'Données',
+          patterns: "Patterns d'écran",
+          avances: 'Composants avancés',
+          layout: 'Mise en page',
+          signature: 'Signature'
+        }[family] ?? family }}</span><span class="ds__catalogue-count">{{ items|length }} recettes <span aria-hidden="true">⌄</span></span></summary>
+        <div class="ds__catalogue-list">
+          {% for item in items %}
+            <article class="ds__card">
+              <h3 class="ds__card-title"><a href="{{ path('app_recipe', { recipe: item.name }) }}">{{ item.title }}<span aria-hidden="true">↗</span></a></h3>
+              <p class="ds__card-description">{{ item.description }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      </details>
+    {% endfor %}
+  </section>
 {% endblock %}
