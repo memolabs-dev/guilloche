@@ -11,6 +11,7 @@ Panneau lateral modal, ancre a droite ou a gauche.
 | `trigger` | `null` | Libelle du bouton d'ouverture |
 | `description` | `null` | Texte secondaire |
 | `side` | `right` | `right`, `left` |
+| `closeLabel` | `Fermer` | Nom accessible du bouton de fermeture |
 
 ## Contrôleur
 
