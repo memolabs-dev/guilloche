@@ -68,6 +68,33 @@ jobs:
         if: failure()
         run: tail -50 harness/var/log/dev.log 2>/dev/null || true
 
+  consumer:
+    name: Consommateur Symfony externe — Twig + Stimulus + Chromium
+    runs-on: ubuntu-latest
+    needs: kit
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: memolabs-dev/guilloche-workspace
+          ref: 25f91797341edcc64901321d9c4df6c404a81bb3
+          path: consumer
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Recettes installées puis SSR/Stimulus/E2E dans Workspace
+        run: bash bin/test-consumer
+      - name: Journal Symfony si échec
+        if: failure()
+        run: tail -100 /tmp/guilloche-consumer-integration.log 2>/dev/null || true
+
   browser:
     name: Rendu réel Chromium — bureau et mobile
     runs-on: ubuntu-latest
@@ -121,7 +148,7 @@ jobs:
   docs-image:
     name: Image du catalogue Symfony
     runs-on: ubuntu-latest
-    needs: [kit, browser]
+    needs: [kit, browser, consumer]
     permissions:
       contents: read
       packages: write
