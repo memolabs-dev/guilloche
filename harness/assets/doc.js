@@ -247,3 +247,93 @@ if (docSearch && docResults) {
 for (const link of document.querySelectorAll('.ds__nav a')) {
     if (link.pathname === window.location.pathname && !link.hash) link.setAttribute('aria-current', 'page');
 }
+
+
+// Playground : GET natif sans JavaScript, amélioré par fetch de vrais fragments Twig.
+// Ne génère jamais de HTML de composants ni de snippets à partir de données client.
+document.querySelectorAll('[data-playground]').forEach((section) => {
+    const form = section.querySelector('[data-playground-form]');
+    const status = section.querySelector('[data-playground-status]');
+    const submit = form.querySelector('[type="submit"]');
+    const setStatus = (message) => { if (status) status.textContent = message; };
+    let controller = null;
+    let debounce = null;
+    let mobile = false;
+    submit.hidden = true;
+
+    const syncViewport = () => {
+        const preview = section.querySelector('[data-playground-preview]');
+        preview?.classList.toggle('is-compact', mobile);
+        section.querySelectorAll('[data-playground-viewport]').forEach((button) => {
+            button.setAttribute('aria-pressed', String((button.dataset.playgroundViewport === 'mobile') === mobile));
+        });
+    };
+
+    async function refresh() {
+        controller?.abort();
+        controller = new AbortController();
+        const result = section.querySelector('[data-playground-result]');
+        const url = new URL(form.action);
+        url.search = new URLSearchParams(new FormData(form)).toString();
+        const fragmentUrl = new URL(url);
+        fragmentUrl.searchParams.set('fragment', '1');
+        result?.setAttribute('aria-busy', 'true');
+        setStatus('Mise à jour…');
+        try {
+            const response = await fetch(fragmentUrl, {
+                headers: { 'Accept': 'text/html' },
+                signal: controller.signal,
+            });
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const template = document.createElement('template');
+            template.innerHTML = await response.text();
+            const next = template.content.querySelector('[data-playground-result]');
+            if (!next || !result) throw new Error('Aperçu absent');
+            result.replaceWith(next);
+            syncViewport();
+            history.replaceState(null, '', url.pathname + url.search + '#playground');
+            setStatus('Aperçu à jour');
+        } catch (error) {
+            if (error.name !== 'AbortError') {
+                setStatus('Aperçu indisponible. Utilisez « Appliquer » pour recharger la page.');
+                submit.hidden = false;
+            }
+        } finally {
+            result?.removeAttribute('aria-busy');
+        }
+    }
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        clearTimeout(debounce);
+        refresh();
+    });
+    form.addEventListener('change', () => {
+        clearTimeout(debounce);
+        refresh();
+    });
+    form.addEventListener('input', (event) => {
+        if (event.target.matches('[type="text"],input:not([type])')) {
+            clearTimeout(debounce);
+            debounce = setTimeout(refresh, 250);
+        }
+    });
+    section.addEventListener('click', async (event) => {
+        const viewportButton = event.target.closest('[data-playground-viewport]');
+        if (viewportButton) {
+            mobile = viewportButton.dataset.playgroundViewport === 'mobile';
+            syncViewport();
+            return;
+        }
+        if (!event.target.closest('[data-playground-copy]')) return;
+        const button = event.target.closest('[data-playground-copy]');
+        const source = section.querySelector('[data-playground-code]')?.textContent ?? '';
+        try {
+            await navigator.clipboard.writeText(source);
+            button.textContent = 'Copié';
+            setStatus('Code Twig copié');
+        } catch {
+            setStatus('Copie refusée par le navigateur : sélectionnez le code ci-dessous.');
+        }
+    });
+});
