@@ -1278,3 +1278,10 @@ body {
     .ds__feature-card,.ds__landing-primary,.ds__landing-secondary { transition: none; }
     .ds__feature-card:hover,.ds__landing-primary:hover,.ds__landing-secondary:hover { transform: none; }
 }
+
+.ds__rosette-strip { display: flex; justify-content: center; align-items: center; gap: 16px; }
+.ds__feature-preview .ds__rosette-strip { width: 100%; }
+@media (max-width: 960px) {
+    body:has(.ds__landing) .ds__rail,
+    body:has(.ds__showroom-intro) .ds__rail { display: none; }
+}
