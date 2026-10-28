@@ -186,3 +186,64 @@ if (links.length) {
         if (section) observer.observe(section);
     }
 }
+
+
+// Showroom : onglets accessibles, données statiques SSR et formulaire simulé.
+// Aucun appel réseau ni stockage des données d'exemple.
+document.querySelectorAll('[data-studio]').forEach((studio) => {
+    const tabs = [...studio.querySelectorAll('[data-studio-tab]')];
+    const panels = [...studio.querySelectorAll('[data-studio-panel]')];
+    const form = studio.querySelector('[data-studio-form]');
+    const feedback = studio.querySelector('[data-studio-feedback]');
+    const title = studio.querySelector('.studio__workspace-heading h2');
+    const titles = { overview: "Vue d'ensemble", data: 'Suivi des missions', form: 'Nouvelle mission' };
+    const select = (target, focus = false) => {
+        for (const tab of tabs) {
+            const active = tab.dataset.studioTab === target;
+            tab.setAttribute('aria-selected', String(active));
+            tab.tabIndex = active ? 0 : -1;
+            if (active && focus) tab.focus();
+        }
+        for (const panel of panels) panel.hidden = panel.dataset.studioPanel !== target;
+        if (title) title.textContent = titles[target] ?? titles.overview;
+    };
+    for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener('click', () => select(tab.dataset.studioTab));
+        tab.addEventListener('keydown', (event) => {
+            let next = index;
+            if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+            else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+            else if (event.key === 'Home') next = 0;
+            else if (event.key === 'End') next = tabs.length - 1;
+            else return;
+            event.preventDefault();
+            select(tabs[next].dataset.studioTab, true);
+        });
+    }
+    form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!form.reportValidity() || !feedback) return;
+        feedback.hidden = false;
+        feedback.textContent = 'Aperçu validé localement. Aucune donnée enregistrée ou envoyée.';
+    });
+    studio.querySelector('[data-studio-refresh]')?.addEventListener('click', () => {
+        form?.reset();
+        if (feedback) {
+            feedback.hidden = true;
+            feedback.textContent = '';
+        }
+        select('overview');
+    });
+});
+
+// Indicateurs de recherche et repère de navigation cohérents.
+const docSearch = document.querySelector('[data-doc-search]');
+const docResults = document.querySelector('[data-doc-search-results]');
+if (docSearch && docResults) {
+    const syncExpanded = () => docSearch.setAttribute('aria-expanded', String(!docResults.hidden));
+    new MutationObserver(syncExpanded).observe(docResults, { attributes: true, attributeFilter: ['hidden'] });
+    syncExpanded();
+}
+for (const link of document.querySelectorAll('.ds__nav a')) {
+    if (link.pathname === window.location.pathname && !link.hash) link.setAttribute('aria-current', 'page');
+}
