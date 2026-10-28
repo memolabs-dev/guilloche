@@ -1,35 +1,28 @@
+// Ui:Badge : sémantique de statut sans badge visuellement agressif.
 .ui-badge {
     display: inline-flex;
+    box-sizing: border-box;
     align-items: center;
-    gap: var(--ui-space-1);
-    height: 20px;
-    padding: 0 var(--ui-space-2);
+    justify-content: center;
+    vertical-align: middle;
+    gap: 5px;
+    min-height: 23px;
+    padding: 3px 8px;
     border: 1px solid transparent;
     border-radius: var(--ui-radius-sm);
+    font-family: var(--ui-font-sans);
     font-size: var(--ui-text-xs);
-    font-weight: 500;
-    line-height: 1;
+    font-weight: 630;
+    line-height: 1.15;
+    letter-spacing: .005em;
     white-space: nowrap;
 }
-
 .ui-badge--neutral { --ui-badge-color: var(--ui-foreground); --ui-badge-soft: var(--ui-muted); --ui-badge-on: var(--ui-background); }
 .ui-badge--primary { --ui-badge-color: var(--ui-primary); --ui-badge-soft: var(--ui-accent); --ui-badge-on: var(--ui-primary-foreground); }
 .ui-badge--success { --ui-badge-color: var(--ui-success); --ui-badge-soft: var(--ui-success-soft); --ui-badge-on: var(--ui-success-foreground); }
 .ui-badge--warning { --ui-badge-color: var(--ui-warning); --ui-badge-soft: var(--ui-warning-soft); --ui-badge-on: var(--ui-warning-foreground); }
 .ui-badge--danger { --ui-badge-color: var(--ui-danger); --ui-badge-soft: var(--ui-danger-soft); --ui-badge-on: var(--ui-danger-foreground); }
 .ui-badge--info { --ui-badge-color: var(--ui-info); --ui-badge-soft: var(--ui-info-soft); --ui-badge-on: var(--ui-info-foreground); }
-
-.ui-badge--soft {
-    background: var(--ui-badge-soft);
-    color: var(--ui-badge-color);
-}
-
-.ui-badge--solid {
-    background: var(--ui-badge-color);
-    color: var(--ui-badge-on);
-}
-
-.ui-badge--outline {
-    border-color: var(--ui-border-strong);
-    color: var(--ui-badge-color);
-}
+.ui-badge--soft { background: var(--ui-badge-soft); color: var(--ui-badge-color); }
+.ui-badge--solid { background: var(--ui-badge-color); color: var(--ui-badge-on); }
+.ui-badge--outline { border-color: var(--ui-border); color: var(--ui-badge-color); }

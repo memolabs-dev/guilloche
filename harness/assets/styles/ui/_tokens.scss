@@ -20,7 +20,7 @@
 
     // Traits
     --ui-border: oklch(0.915 0.003 260);
-    --ui-border-strong: oklch(0.55 0.004 260);
+    --ui-border-strong: oklch(0.67 0.006 260);
 
     // Texte : trois niveaux
     --ui-foreground: oklch(0.205 0.006 260);
@@ -34,7 +34,7 @@
     --ui-secondary: oklch(0.965 0.002 260);
     --ui-secondary-foreground: oklch(0.235 0.006 260);
     --ui-accent: oklch(0.955 0.002 260);
-    --ui-ring: oklch(0.55 0.02 260);
+    --ui-ring: oklch(0.56 0.028 260);
 
     // Statuts : texte colore sur fond tres pale, jamais en aplat.
     --ui-danger: oklch(0.55 0.24 27);
@@ -55,11 +55,16 @@
     --ui-attention-line: oklch(0.84 0.07 50);
 
     // Formes
-    --ui-radius-sm: 4px;
-    --ui-radius-md: 8px;
-    --ui-radius-lg: 12px;
-    --ui-radius-xl: 14px;
+    --ui-radius-sm: 6px;
+    --ui-radius-md: 9px;
+    --ui-radius-lg: 13px;
+    --ui-radius-xl: 17px;
     --ui-radius-pill: 999px;
+
+    // Hauteurs communes à tous les contrôles, sans changement de props publiques.
+    --ui-control-sm: 34px;
+    --ui-control-md: 40px;
+    --ui-control-lg: 44px;
 
     // Grille de 4
     --ui-space-1: 4px;
@@ -75,15 +80,15 @@
 
     // Echelle de texte
     --ui-text-xs: 0.75rem;
-    --ui-text-sm: 0.8125rem;
-    --ui-text-md: 0.875rem;
-    --ui-text-lg: 1rem;
+    --ui-text-sm: 0.875rem;
+    --ui-text-md: 0.9375rem;
+    --ui-text-lg: 1.0625rem;
     --ui-text-xl: 1.125rem;
     --ui-text-2xl: 1.25rem;
     --ui-text-3xl: 1.5rem;
     --ui-text-4xl: 1.875rem;
 
-    --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
+    --ui-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.035), 0 1px 3px oklch(0 0 0 / 0.025);
     --ui-shadow-md: 0 4px 12px oklch(0 0 0 / 0.08), 0 1px 2px oklch(0 0 0 / 0.04);
     --ui-shadow-lg: 0 16px 40px oklch(0 0 0 / 0.12), 0 2px 8px oklch(0 0 0 / 0.06);
     --ui-focus-ring: 0 0 0 2px var(--ui-background), 0 0 0 4px var(--ui-ring);
@@ -104,7 +109,7 @@
     --ui-input: oklch(0.24 0.005 260);
 
     --ui-border: oklch(0.3 0.005 260);
-    --ui-border-strong: oklch(0.56 0.006 260);
+    --ui-border-strong: oklch(0.48 0.006 260);
 
     --ui-foreground: oklch(0.96 0.002 260);
     --ui-muted-foreground: oklch(0.72 0.005 260);
@@ -154,7 +159,7 @@
     --ui-input: #ffffff;
 
     --ui-border: #d3dbcf;
-    --ui-border-strong: #6f7d72;
+    --ui-border-strong: #829487;
 
     --ui-foreground: #14261b;
     --ui-muted-foreground: #56665a;
@@ -238,7 +243,7 @@
         --ui-muted: oklch(0.25 0.005 260);
         --ui-input: oklch(0.24 0.005 260);
         --ui-border: oklch(0.3 0.005 260);
-        --ui-border-strong: oklch(0.56 0.006 260);
+        --ui-border-strong: oklch(0.48 0.006 260);
         --ui-foreground: oklch(0.96 0.002 260);
         --ui-muted-foreground: oklch(0.72 0.005 260);
         --ui-subtle-foreground: oklch(0.6 0.005 260);
