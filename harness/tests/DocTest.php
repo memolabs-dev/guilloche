@@ -64,6 +64,7 @@ final class DocTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Guilloche');
+        $this->assertSelectorTextContains('.ds__meta .ui-badge--success', 'v2.0.0');
         $this->assertSelectorExists('article.ds__card');
         $this->assertSelectorExists('a[href="/components/button"]');
         $this->assertSelectorExists('a[href="/components/table"]');
