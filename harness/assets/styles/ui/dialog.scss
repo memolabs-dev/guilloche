@@ -1,85 +1,97 @@
-.ui-dialog-root {
-    display: contents;
-}
+// Dialogue natif : surface lisible, focus clavier et scroll interne.
+.ui-dialog-root { display: contents; }
 
 .ui-dialog__trigger {
     display: inline-flex;
+    box-sizing: border-box;
     align-items: center;
-    min-height: 2.25rem;
-    padding: 0 var(--ui-space-3);
+    justify-content: center;
+    min-height: var(--ui-control-md);
+    padding: 0 15px;
     border: 1px solid var(--ui-border);
     border-radius: var(--ui-radius-md);
-    background: var(--ui-card);
+    background: var(--ui-surface);
     color: var(--ui-foreground);
     font: inherit;
     font-size: var(--ui-text-sm);
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: var(--ui-shadow-sm);
+    transition: background-color var(--ui-duration-fast) var(--ui-ease),
+        border-color var(--ui-duration-fast) var(--ui-ease);
+    &:hover { background: var(--ui-accent); border-color: var(--ui-border-strong); }
+    &:focus-visible { outline: none; box-shadow: var(--ui-focus-ring); }
 }
 
 .ui-dialog {
-    width: min(32rem, calc(100vw - 2rem));
-    max-height: calc(100vh - 4rem);
+    box-sizing: border-box;
+    width: min(34rem, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: auto;
     padding: 0;
     border: 1px solid var(--ui-border);
-    border-radius: var(--ui-radius-lg);
-    background: var(--ui-card);
-    color: var(--ui-card-foreground);
-    box-shadow: var(--ui-shadow-md);
+    border-radius: var(--ui-radius-xl);
+    background: var(--ui-surface);
+    color: var(--ui-foreground);
+    box-shadow: var(--ui-shadow-lg);
     overflow: hidden;
-
-    &::backdrop {
-        background: rgb(0 0 0 / 0.45);
-    }
+    &::backdrop { background: rgb(0 0 0 / .52); }
 }
-
 .ui-dialog__panel {
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 4rem);
+    min-height: 0;
+    max-height: inherit;
 }
-
 .ui-dialog__header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: var(--ui-space-3);
-    padding: var(--ui-space-4);
-    border-bottom: 1px solid var(--ui-border);
+    gap: var(--ui-space-4);
+    padding: 22px 23px 16px;
 }
-
 .ui-dialog__title {
+    margin: 0;
+    font-family: var(--ui-font-sans);
     font-size: var(--ui-text-lg);
-    font-weight: 600;
+    font-weight: 650;
+    line-height: 1.35;
+    letter-spacing: -.02em;
 }
-
 .ui-dialog__description {
-    margin-top: var(--ui-space-1);
+    margin: 7px 0 0;
     font-size: var(--ui-text-sm);
+    line-height: 1.6;
     color: var(--ui-muted-foreground);
 }
-
 .ui-dialog__close {
     display: inline-flex;
+    flex: 0 0 var(--ui-control-sm);
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    flex: none;
+    width: var(--ui-control-sm);
+    height: var(--ui-control-sm);
     border: 0;
     border-radius: var(--ui-radius-md);
     background: transparent;
     color: var(--ui-muted-foreground);
     cursor: pointer;
-
-    &:hover {
-        background: var(--ui-muted);
-        color: var(--ui-foreground);
-    }
+    &:hover { background: var(--ui-muted); color: var(--ui-foreground); }
+    &:focus-visible { outline: none; box-shadow: var(--ui-focus-ring); }
 }
-
 .ui-dialog__body {
-    padding: var(--ui-space-4);
+    min-height: 0;
+    padding: 4px 23px 23px;
     overflow-y: auto;
     font-size: var(--ui-text-sm);
     line-height: 1.6;
+}
+@media (max-width: 35rem) {
+    .ui-dialog__header { padding: 18px 17px 12px; }
+    .ui-dialog__body { padding: 4px 17px 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ui-dialog__trigger { transition: none; }
 }
