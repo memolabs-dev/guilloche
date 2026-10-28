@@ -1,0 +1,37 @@
+<div class="ds__playground-result" data-playground-result>
+  <div class="ds__playground-canvas">
+    <div class="ds__playground-canvas-head">
+      <span class="ds__playground-eyebrow">APERÇU SERVEUR / TWIG RÉEL</span>
+      <div class="ds__playground-viewport" aria-label="Largeur de l’aperçu">
+        <button type="button" data-playground-viewport="desktop" aria-pressed="true">Bureau</button>
+        <button type="button" data-playground-viewport="mobile" aria-pressed="false">Mobile</button>
+      </div>
+    </div>
+    <div class="ds__playground-preview" data-playground-preview>
+      {% if item.name == 'button' %}
+        <twig:ui:Button :variant="playground.values.variant" :size="playground.values.size" :loading="playground.values.loading">{{ playground.values.label }}</twig:ui:Button>
+      {% elseif item.name == 'input' %}
+        <label for="mission-name" class="ds__playground-field-label">Nom de la mission</label>
+        <twig:ui:Input id="mission-name" :type="playground.values.type" :placeholder="playground.values.placeholder" :required="playground.values.required" :disabled="playground.values.disabled" />
+      {% elseif item.name == 'badge' %}
+        <twig:ui:Badge :tone="playground.values.tone" :variant="playground.values.variant">{{ playground.values.label }}</twig:ui:Badge>
+      {% elseif item.name == 'card' %}
+        <twig:ui:Card :title="playground.values.title" :description="playground.values.description" :footer="playground.values.footer"><p>Contenu de démonstration</p></twig:ui:Card>
+      {% elseif item.name == 'dialog' %}
+        <twig:ui:Dialog id="demo-dialog" :title="playground.values.title" :description="playground.values.description" :trigger="playground.values.trigger"><p>Exemple de contenu de dialogue.</p></twig:ui:Dialog>
+      {% elseif item.name == 'table' %}
+        <twig:ui:Table :caption="playground.values.caption" :serial="playground.values.serial">
+          <thead><tr><th scope="col">Référence</th><th scope="col">Statut</th></tr></thead>
+          <tbody><tr><td>F-2026-010</td><td>Validé</td></tr></tbody>
+        </twig:ui:Table>
+      {% endif %}
+    </div>
+  </div>
+  <div class="ds__playground-code">
+    <div class="ds__playground-code-head">
+      <span>Code Twig utilisable</span>
+      <button type="button" data-playground-copy aria-label="Copier le code Twig">Copier <span aria-hidden="true">↗</span></button>
+    </div>
+    <pre><code data-playground-code>{{ playground.source }}</code></pre>
+  </div>
+</div>
