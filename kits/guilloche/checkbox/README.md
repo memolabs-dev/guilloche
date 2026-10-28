@@ -16,3 +16,11 @@ Case a cocher native, habillee sans perdre la sémantique.
 ## Accessibilite
 
 L'input natif reste focusable et annonce son etat. La case visuelle est `aria-hidden="true"`. Le focus est rendu sur la case par `:focus-visible + .ui-check__box`.
+
+## Exemple Twig
+
+Exemple issu du harnais Symfony : adapter identifiants, valeurs et liens fictifs à l'application.
+
+```twig
+<twig:ui:Checkbox id="s-check" label="Notifications" checked />
+```

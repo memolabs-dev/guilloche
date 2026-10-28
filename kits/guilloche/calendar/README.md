@@ -8,6 +8,7 @@ Grille de jours. Les jours sont calcules par le serveur et passes au composant.
 |------|--------|------|
 | `label` | requis | Nom accessible du calendrier |
 | `month` | requis | Libelle du mois affiche |
+| `weekdays` | `['L', 'M', 'M', 'J', 'V', 'S', 'D']` | Libellés des jours de la semaine (ordre et langue) |
 | `days` | `[]` | Jours `{ label, href, selected, disabled, empty }` |
 | `previousLabel` | requis | Nom accessible du bouton precedent |
 | `nextLabel` | requis | Nom accessible du bouton suivant |

@@ -89,7 +89,8 @@ final class RecipeCatalog
             'description' => $this->firstSentence($readme),
             'props' => $props,
             'propsTable' => $this->propsTable($readme),
-            'code' => $this->firstTwigBlock($readme),
+            'code' => $this->firstTwigBlock($readme) ?? $this->previewSnippet(basename($dir)),
+            'accessibilityNotes' => $this->accessibilityNotes($readme),
             'scss' => $this->scss($dir),
         ];
     }
@@ -139,6 +140,33 @@ final class RecipeCatalog
         }
 
         return '';
+    }
+
+    /** Code réutilisable de l'aperçu Twig réel si le README n'a pas d'exemple. */
+    private function previewSnippet(string $recipe): ?string
+    {
+        $path = dirname($this->kitDir, 2) . '/harness/templates/doc/previews/' . $recipe . '.html.twig';
+
+        return is_file($path) ? trim((string) file_get_contents($path)) : null;
+    }
+
+    /** @return list<string> Notes propres au composant ; pas de promesse générique d'accessibilité. */
+    private function accessibilityNotes(string $readme): array
+    {
+        if (!preg_match('/^##\s+Accessibilit[ée]\s*$([\s\S]*?)(?=^##\s+|\z)/mu', $readme, $match)) {
+            return [];
+        }
+
+        $notes = [];
+        foreach (explode("\n", trim($match[1])) as $line) {
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#')) {
+                continue;
+            }
+            $notes[] = trim(preg_replace('/^[*-]\s+/', '', $line));
+        }
+
+        return $notes;
     }
 
     private function firstTwigBlock(string $readme): ?string

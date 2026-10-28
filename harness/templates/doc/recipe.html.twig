@@ -75,7 +75,16 @@
 
   <section class="ds__section" id="accessibilite">
     <h2 class="ds__section-title">Accessibilité</h2>
-    <p class="ds__lead">Le détail est dans le README de la recette : rôles, clavier, noms accessibles et états. Le test de contrat vérifie que chaque champ a un libellé, que les rôles sont renseignés et que les SVG sont nommés ou masqués.</p>
+    {% if item.accessibilityNotes %}
+      <ul class="ds__accessibility-notes">
+        {% for note in item.accessibilityNotes %}
+          <li>{{ note|replace({'`': '', '**': ''}) }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="ds__lead">Les comportements clavier et les contraintes d’accessibilité propres à cette recette ne sont pas encore documentés. Vérifiez son HTML et ses interactions avant utilisation dans un parcours critique.</p>
+    {% endif %}
+    <p><a href="https://github.com/memolabs-dev/guilloche/blob/main/kits/guilloche/{{ item.name }}/README.md">README complet et exemples de la recette</a></p>
   </section>
 
       <nav class="ds__pager" aria-label="Pagination de la documentation">

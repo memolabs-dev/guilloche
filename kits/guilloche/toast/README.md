@@ -10,6 +10,7 @@ Notification transitoire.
 | `title` | requis | Titre |
 | `message` | `null` | Texte |
 | `type` | `info` | `info`, `success`, `warning`, `error` |
+| `closeLabel` | `Fermer` | Nom accessible du bouton de fermeture |
 | `autohide` | `0` | Delai de fermeture en millisecondes, `0` pour rester affiche |
 
 ## Contrôleur

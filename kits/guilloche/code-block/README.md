@@ -11,3 +11,11 @@ Bloc de code avec en-tete optionnel.
 | `language` | `null` | Langage affiche |
 
 `code` est une prop, pas du HTML : aucun contenu n'est interprete. Pour une coloration syntaxique, l'application applique son propre surligneur sur le `code` rendu.
+
+## Exemple Twig
+
+Exemple issu du harnais Symfony : adapter identifiants, valeurs et liens fictifs à l'application.
+
+```twig
+<twig:ui:CodeBlock label="Installation" language="shell" code="php bin/console ux:install button --kit guilloche" />
+```

@@ -1,18 +1,20 @@
 # Button — kit Guilloche
 
-Composant bouton natif Symfony, installé par le Symfony UX Toolkit. Aucun libellé en dur : le texte est passé par le slot.
+Composant bouton Twig natif Symfony, installé depuis le kit Guilloche. Aucun libellé en dur : le texte est passé par le slot.
 
 ## Installation
 
 ```shell
-php bin/console ux:install button --kit guilloche
+php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=.
 ```
 
 ## Props
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
-| `variant` | `primary` | `primary`, `secondary`, `outline`, `ghost`, `link`, `danger`, `danger-soft` |
+| `variant` | `null` (résolu en `primary` par défaut) | `primary`, `secondary`, `outline`, `ghost`, `link`, `danger`, `danger-soft` |
+| `intent` | `primary` | Compatibilité : intention historique utilisée lorsque `variant` est absent |
+| `appearance` | `solid` | Compatibilité : apparence historique utilisée lorsque `variant` est absent |
 | `size` | `md` | `sm` (32 px), `md` (36 px), `lg` (40 px) |
 | `href` | `null` | Quand présent, rend un lien ; sinon un bouton |
 | `type` | `button` | Type du bouton quand il n'y a pas de `href` |
