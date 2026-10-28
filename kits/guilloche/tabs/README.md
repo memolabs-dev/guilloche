@@ -1,6 +1,6 @@
 # Tabs — kit Guilloche
 
-Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne.
+Onglets de navigation. Chaque onglet est un lien : l’état vient de l'URL, sans JavaScript, et le retour arriere du navigateur fonctionne.
 
 ## Props
 
@@ -14,7 +14,7 @@ Onglets de navigation. Chaque onglet est un lien : l'etat vient de l'URL, sans J
 ```twig
 <twig:ui:Tabs :items="[
   { label: 'En cours', href: '?status=open', current: true },
-  { label: 'Terminees', href: '?status=done' }
+  { label: 'Terminées', href: '?status=done' }
 ]" />
 ```
 
