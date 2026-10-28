@@ -1,0 +1,44 @@
+{% if playground %}
+<section class="ds__section ds__playground" id="playground" data-playground>
+  <div class="ds__playground-title">
+    <div>
+      <p class="ds__eyebrow">ATELIER INTERACTIF</p>
+      <h2 class="ds__section-title">Essayez {{ item.title }}</h2>
+      <p>Modifiez les propriétés. L’aperçu et le code sont rendus par Symfony et utilisent les mêmes props Twig.</p>
+    </div>
+    <span class="ds__playground-beta">6 composants configurables</span>
+  </div>
+  <div class="ds__playground-layout">
+    <form class="ds__playground-controls" action="{{ path('app_recipe', {recipe:item.name}) }}#playground" method="get" data-playground-form>
+      <h3>Propriétés</h3>
+      {% for name, control in playground.controls %}
+        {% if control.type == 'select' %}
+          <label class="ds__playground-control" for="pg-{{ name }}">
+            <span>{{ control.label }}</span>
+            <select id="pg-{{ name }}" name="p_{{ name }}">
+              {% for option in control.options %}
+                <option value="{{ option }}" {{ option == playground.values[name] ? 'selected' : '' }}>{{ option }}</option>
+              {% endfor %}
+            </select>
+          </label>
+        {% elseif control.type == 'text' %}
+          <label class="ds__playground-control" for="pg-{{ name }}">
+            <span>{{ control.label }}</span>
+            <input id="pg-{{ name }}" name="p_{{ name }}" value="{{ playground.values[name] }}" maxlength="70" />
+          </label>
+        {% elseif control.type == 'checkbox' %}
+          <label class="ds__playground-toggle" for="pg-{{ name }}">
+            <input type="hidden" name="p_{{ name }}" value="0" />
+            <input type="checkbox" id="pg-{{ name }}" name="p_{{ name }}" value="1" {{ playground.values[name] ? 'checked' : '' }} />
+            <span>{{ control.label }}</span>
+          </label>
+        {% endif %}
+      {% endfor %}
+      <button type="submit" class="ds__playground-apply">Appliquer les propriétés</button>
+      <p class="ds__playground-hint">Sans JavaScript, ce formulaire fonctionne aussi par rechargement de la page.</p>
+      <p class="ds__playground-status" role="status" aria-live="polite" data-playground-status></p>
+    </form>
+    {% include 'doc/_playground_result.html.twig' %}
+  </div>
+</section>
+{% endif %}
