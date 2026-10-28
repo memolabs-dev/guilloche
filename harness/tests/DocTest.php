@@ -269,6 +269,46 @@ final class DocTest extends WebTestCase
         $this->assertSelectorNotExists('[data-playground]');
     }
 
+    public function testSecondWavePlaygroundsRenderActualComponentsAndMatchingTwig(): void
+    {
+        $client = self::createClient();
+        $cases = [
+            ['/components/select?p_value=done&p_required=1', 'select#mission-status[required] option[value="done"][selected]', 'value="done"'],
+            ['/components/textarea?p_rows=6&p_value=Notes%20du%20dossier', 'textarea#mission-notes[rows="6"]', ':rows="6"'],
+            ['/components/checkbox?p_checked=1&p_disabled=0', '.ds__playground-preview input#mission-notify[checked]', 'checked'],
+            ['/components/switch?p_checked=0&p_disabled=1', '.ds__playground-preview input#mission-alerts[disabled]:not([checked])', 'disabled'],
+            ['/components/alert?p_type=error&p_title=Attention', '.ds__playground-preview .ui-alert--error[role="alert"]', 'type="error"'],
+            ['/components/progress?p_value=85&p_showValue=1', '.ds__playground-preview [role="progressbar"][aria-valuenow="85"]', ':value="85"'],
+        ];
+
+        foreach ($cases as [$path, $selector, $snippet]) {
+            $crawler = $client->request('GET', $path);
+            $this->assertResponseIsSuccessful();
+            self::assertCount(1, $crawler->filter($selector), $path);
+            self::assertStringContainsString($snippet, $crawler->filter('[data-playground-code]')->text(), $path);
+        }
+    }
+
+    public function testNumericPlaygroundPropsAreBoundedAndCannotInjectTwig(): void
+    {
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/components/progress?p_value=99999');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ds__playground-preview [role="progressbar"][aria-valuenow="45"]');
+        self::assertStringContainsString(':value="45"', $crawler->filter('[data-playground-code]')->text());
+
+        $crawler = $client->request('GET', '/components/textarea?p_rows%5B%5D=8');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('textarea#mission-notes[rows="4"]');
+        self::assertStringContainsString(':rows="4"', $crawler->filter('[data-playground-code]')->text());
+
+        $crawler = $client->request('GET', '/components/alert?p_type=script&p_title=%3Cscript%3Ebad()%3C%2Fscript%3E');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ds__playground-preview .ui-alert--info');
+        $this->assertSelectorNotExists('.ds__playground-preview script');
+        self::assertStringNotContainsString('<script>', $crawler->filter('[data-playground-code]')->text());
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');

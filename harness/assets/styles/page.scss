@@ -1479,3 +1479,20 @@ body {
     .ds__rosette-hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .ds__rosette-scale { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
+
+// Playground wave 2: native form fields, statuses and progress keep their own semantics.
+.ds__playground-preview > .ui-select,
+.ds__playground-preview > .ui-textarea,
+.ds__playground-preview > .ui-alert,
+.ds__playground-preview > .ui-progress { width: min(100%, 355px); }
+.ds__playground-preview > .ui-textarea { min-height: 106px; }
+.ds__playground-preview > .ui-check,
+.ds__playground-preview > .ui-switch { max-width: 100%; }
+.ds__playground-control input[type=number] { font-variant-numeric: tabular-nums; }
+
+// Dans la fiche Progress, la démonstration a besoin d'une largeur explicite.
+// La recette distribuée ne fixe pas cette largeur : c'est le consommateur qui la choisit.
+.ds__example-render > .ui-progress {
+    width: min(100%, 420px);
+    min-width: 0;
+}

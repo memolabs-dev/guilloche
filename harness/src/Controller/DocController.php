@@ -59,6 +59,7 @@ final class DocController extends AbstractController
             return $this->render('doc/_playground_result.html.twig', [
                 'item' => $all[$index],
                 'playground' => $playground,
+            'playground_count' => $playgroundService->count(),
             ]);
         }
 
@@ -70,6 +71,7 @@ final class DocController extends AbstractController
         return $this->render('doc/recipe.html.twig', [
             'item' => $item,
             'playground' => $playground,
+            'playground_count' => $playgroundService->count(),
             'families' => $catalog->families(),
         ]);
     }
