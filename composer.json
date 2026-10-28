@@ -39,7 +39,14 @@
             "./bin/build-css",
             "cd harness && composer install --no-interaction --no-progress --no-scripts && vendor/bin/phpunit -c phpunit.dist.xml"
         ],
-        "docs": "./bin/docs"
+        "docs": "./bin/docs",
+        "hooks": "sh scripts/install-git-hooks.sh",
+        "post-install-cmd": [
+            "@hooks"
+        ],
+        "post-update-cmd": [
+            "@hooks"
+        ]
     },
     "autoload": {
         "psr-4": {
