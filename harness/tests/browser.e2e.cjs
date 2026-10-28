@@ -430,6 +430,7 @@ test('P0 interactive surfaces render and work in Chromium across themes and view
                         assert.ok(await page.locator('.ui-alert[role="status"]').count() >= 3);
                         assert.ok(await page.locator('.ui-alert[role="alert"]').count() >= 1);
                         assert.equal(await page.locator('.ui-alert').first().evaluate((e) => getComputedStyle(e).borderTopWidth), '1px');
+                        assert.ok(await page.locator('.ui-alert .ui-button--secondary').count() >= 1, 'alert example must use a supported button variant');
                     }
                     if (name === 'dropdown-menu') {
                         const dropdown = page.locator('.ui-dropdown').first();
@@ -438,6 +439,10 @@ test('P0 interactive surfaces render and work in Chromium across themes and view
                         await trigger.click();
                         assert.equal(await dropdown.evaluate((e) => e.open), true);
                         assert.ok(await dropdown.locator('.ui-dropdown__item').count() > 0);
+                        const popup = await dropdown.locator('.ui-dropdown__menu').boundingBox();
+                        const preview = await page.locator('.ds__example-render').first().boundingBox();
+                        assert.ok(popup && preview && popup.y + popup.height <= preview.y + preview.height + 2,
+                            'open dropdown should not cover the Twig code below its preview');
                         await page.screenshot({
                             path: path.join(DIR, 'surface-dropdown-open-' + size.name + '-' + theme + '.png'),
                             animations: 'disabled',
