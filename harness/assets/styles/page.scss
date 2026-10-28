@@ -1,5 +1,6 @@
 @use './patterns';
 @use './composition-doc';
+@use './foundations';
 // Mise en page de la vitrine du harnais. Le kit ne fournit pas de styles de
 // page : cette feuille construit la documentation, rien de plus.
 body {

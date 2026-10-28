@@ -4,7 +4,7 @@
    serial marque la premiere colonne de données ; les autres colonnes peuvent
    utiliser .ui-serial sur leurs cellules. #}
 {% props caption = null, serial = false %}
-<div class="ui-table-wrapper">
+<div class="ui-table-wrapper" role="region" aria-label="{{ caption ?? 'Tableau de données, défilement horizontal' }}" tabindex="0">
   <table {{ attributes.defaults({ class: 'ui-table' ~ (serial ? ' ui-table--serial-first' : '') }) }}>
     {% if caption %}<caption class="ui-table__caption">{{ caption }}</caption>{% endif %}
     {% block content %}{% endblock %}

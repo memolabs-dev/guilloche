@@ -10,6 +10,11 @@ test -f "$APP/templates/kit_lab/dashboard.html.twig"
 cd "$ROOT"
 baseline="$(sha256sum "$APP/templates/components/Ui/Rosette.html.twig" | cut -d ' ' -f1)"
 rm -rf "$APP/templates/components/Kit"
+# A disposable checkout contains an older compiled CSS snapshot. Explicitly
+# remove that known upstream artifact *only here* before reinstalling; in real
+# projects the installer's refusal to overwrite custom CSS stays mandatory.
+test -f "$APP/public/guilloche/guilloche.css"
+rm "$APP/public/guilloche/guilloche.css"
 # Install all recipes used by the real consumer from this installer, not by hand.
 for recipe in alert badge button card description-list field form-section input page-header select stat table textarea timeline rosette; do
     php bin/guilloche-install "$recipe" --namespace=Kit --project="$APP" > /dev/null

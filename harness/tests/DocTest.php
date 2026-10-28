@@ -357,4 +357,41 @@ final class DocTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(404);
     }
+    public function testFoundationsReviewRendersTwelveRealComponents(): void
+    {
+        $crawler = self::createClient()->request('GET', '/foundations');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(12, $crawler->filter('.fv__panel'));
+        foreach (['theme', 'button', 'input', 'textarea', 'select', 'card', 'badge', 'table', 'dialog', 'tabs', 'alert', 'dropdown-menu'] as $name) {
+            self::assertCount(1, $crawler->filter('#fv-' . $name), $name);
+            self::assertCount(1, $crawler->filter('#fv-' . $name . ' a[href="/components/' . $name . '"]'));
+        }
+        self::assertCount(1, $crawler->filter('#fv-table .ui-table-wrapper[role="region"][tabindex="0"]'));
+        self::assertCount(1, $crawler->filter('#fv-table .ui-table caption'));
+        self::assertCount(3, $crawler->filter('#fv-table .ui-table tbody tr'));
+        self::assertCount(1, $crawler->filter('#fv-table .fv__table-hint'));
+        self::assertCount(1, $crawler->filter('#fv-dialog .ui-dialog'));
+        self::assertCount(1, $crawler->filter('#fv-tabs a[aria-current="page"]'));
+        self::assertCount(4, $crawler->filter('#fv-alert .ui-alert'));
+        self::assertCount(1, $crawler->filter('#fv-dropdown-menu details.ui-dropdown'));
+        self::assertCount(3, $crawler->filter('#fv-input .ui-input'));
+        self::assertCount(3, $crawler->filter('#fv-select .ui-select'));
+    }
+
+    public function testEveryTableWrapperHasKeyboardAccessAndAnAccessibleLabel(): void
+    {
+        $client = self::createClient();
+        foreach (['/components/table', '/foundations', '/patterns/mission-dashboard'] as $path) {
+            $crawler = $client->request('GET', $path);
+            $this->assertResponseIsSuccessful();
+            $wrappers = $crawler->filter('.ui-table-wrapper');
+            self::assertGreaterThan(0, $wrappers->count(), $path);
+            foreach ($wrappers as $wrapper) {
+                self::assertSame('0', $wrapper->getAttribute('tabindex'), $path);
+                self::assertSame('region', $wrapper->getAttribute('role'), $path);
+                self::assertNotEmpty($wrapper->getAttribute('aria-label'), $path);
+            }
+        }
+    }
+
 }
