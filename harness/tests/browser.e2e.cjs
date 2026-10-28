@@ -578,6 +578,10 @@ test('second-wave playgrounds are interactive, safe and render native forms', { 
             await page.locator('#pg-value').fill('85');
             await page.locator('.ds__playground-preview [role=progressbar][aria-valuenow="85"]').waitFor({ state: 'attached' });
             assert.ok((await page.locator('[data-playground-code]').textContent()).includes(':value="85"'));
+            const exampleTrackWidth = await page.locator('.ds__example-render > .ui-progress .ui-progress__track').first()
+                .evaluate((el) => el.getBoundingClientRect().width);
+            assert.ok(exampleTrackWidth >= 140,
+                'static Progress example must show a real track, not only a percentage');
             await page.locator('[data-playground-viewport=mobile]').click();
             assert.equal(await page.locator('[data-playground-viewport=mobile]').getAttribute('aria-pressed'), 'true');
             assert.deepEqual(errors, [], v.name + ': no JS errors');

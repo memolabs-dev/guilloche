@@ -1489,3 +1489,10 @@ body {
 .ds__playground-preview > .ui-check,
 .ds__playground-preview > .ui-switch { max-width: 100%; }
 .ds__playground-control input[type=number] { font-variant-numeric: tabular-nums; }
+
+// Dans la fiche Progress, la démonstration a besoin d'une largeur explicite.
+// La recette distribuée ne fixe pas cette largeur : c'est le consommateur qui la choisit.
+.ds__example-render > .ui-progress {
+    width: min(100%, 420px);
+    min-width: 0;
+}
