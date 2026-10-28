@@ -1,6 +1,6 @@
 # Alert — kit Guilloche
 
-Message d'etat, avec titre et texte optionnels.
+Message d’état, avec titre et texte optionnels.
 
 ## Props
 
@@ -21,5 +21,5 @@ Le slot permet d'ajouter du contenu complementaire (lien, bouton).
 ## Exemple
 
 ```twig
-<twig:ui:Alert type="success" title="Enregistre" message="La mission a ete mise a jour." />
+<twig:ui:Alert type="success" title="Enregistré" message="La mission a été mise à jour." />
 ```
