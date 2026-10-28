@@ -688,3 +688,90 @@ test('accordion and dropdown props apply without JavaScript', { timeout: 75_000 
         await ctx.close();
     } finally { await browser.close(); }
 });
+
+test('three business compositions render on desktop/mobile in both themes', { timeout: 170_000 }, async () => {
+    mkdirSync(DIR, { recursive: true });
+    const browser = await chromium.launch({headless: true});
+    try {
+        for (const viewport of [
+            {name:'desktop',width:1440,height:900},
+            {name:'mobile',width:390,height:844},
+        ]) {
+            for (const theme of ['light','dark']) {
+                const page = await browser.newPage({
+                    viewport:{width:viewport.width,height:viewport.height},
+                    colorScheme:theme,reducedMotion:'reduce',
+                });
+                const errors=[], failedAssets=[];
+                page.on('pageerror',e=>errors.push(e.message));
+                page.on('response',response=>{
+                    if(response.status()>=400 && /\/assets\//.test(response.url()))failedAssets.push(response.url());
+                });
+                await page.addInitScript(mode=>localStorage.setItem('guilloche-doc-theme',mode),theme);
+                for (const slug of ['mission-dashboard','dossier-detail','mission-form']) {
+                    const response=await page.goto(BASE+'/patterns/'+slug,{waitUntil:'networkidle'});
+                    assert.equal(response?.status(),200,slug+' must return HTTP 200');
+                    assert.equal(await page.locator('[data-gp-pattern-render] > section.gp').count(),1);
+                    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+                    assert.ok(overflow<=2,slug+'/'+viewport.name+'/'+theme+' overflow '+overflow);
+                    assert.ok(await page.locator('#gp-pattern-twig code').textContent());
+                    assert.ok(await page.locator('#gp-pattern-css code').textContent());
+                    await page.locator('[data-gp-preview-viewport="mobile"]').click();
+                    assert.equal(await page.locator('[data-gp-preview-viewport="mobile"]').getAttribute('aria-pressed'),'true');
+                    await page.locator('[data-gp-preview-viewport="desktop"]').click();
+                    assert.equal(await page.locator('[data-gp-preview-viewport="desktop"]').getAttribute('aria-pressed'),'true');
+                    await page.locator('[data-gp-pattern-render]').screenshot({
+                        path:path.join(DIR,'composition-'+slug+'-'+viewport.name+'-'+theme+'.png'),
+                        animations:'disabled',
+                    });
+                }
+                assert.deepEqual(errors,[],'No JS exceptions: '+viewport.name+'/'+theme);
+                assert.deepEqual(failedAssets,[],'No missing assets');
+                await page.close();
+            }
+        }
+    } finally {await browser.close();}
+});
+
+test('composition form validates without sending data and Twig copy works', {timeout:75000},async()=>{
+    const browser=await chromium.launch({headless:true});
+    try {
+        const context=await browser.newContext({viewport:{width:1100,height:820}});
+        await context.grantPermissions(['clipboard-read','clipboard-write']);
+        const page=await context.newPage();
+        const nonGet=[];
+        page.on('request',req=>{if(req.method()!=='GET')nonGet.push(req.method()+' '+req.url());});
+        await page.goto(BASE+'/patterns/mission-form',{waitUntil:'networkidle'});
+        const button=page.locator('[data-gp-check]');
+        await page.waitForFunction(()=>document.querySelector('[data-gp-check]')?.disabled===false);
+        await button.click();
+        assert.match(await page.locator('[data-gp-status]').textContent(),/Complétez/);
+        await page.locator('#gp-title').fill('Audit pilote');
+        await page.locator('#gp-client').selectOption('atlas');
+        await button.click();
+        assert.match(await page.locator('[data-gp-status]').textContent(),/Aucun enregistrement/);
+        assert.deepEqual(nonGet,[],'the demo must never submit data');
+        await page.locator('button[data-gp-copy="gp-pattern-twig"]').click();
+        assert.match(await page.locator('[data-gp-copy-status]').first().textContent(),/Copié/);
+        const copied=await page.evaluate(()=>navigator.clipboard.readText());
+        assert.match(copied,/twig:ui:FormSection/);
+        await context.close();
+    } finally {await browser.close();}
+});
+
+test('compositions remain readable in SSR with JavaScript disabled', {timeout:75000},async()=>{
+    const browser=await chromium.launch({headless:true});
+    try {
+        const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+        const page=await context.newPage();
+        for(const slug of ['mission-dashboard','dossier-detail','mission-form']) {
+            const response=await page.goto(BASE+'/patterns/'+slug);
+            assert.equal(response?.status(),200);
+            assert.equal(await page.locator('[data-gp-pattern-render] > .gp').count(),1);
+        }
+        assert.equal(await page.locator('[data-gp-check]').isDisabled(),true);
+        assert.equal(await page.locator('noscript').count()>=1,true);
+        assert.equal(await page.locator('#gp-pattern-twig code').count(),1);
+        await context.close();
+    } finally {await browser.close();}
+});

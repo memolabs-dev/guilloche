@@ -37,6 +37,19 @@
     {% include 'doc/_studio_canvas.html.twig' %}
   </section>
 
+  <section class="gp-doc__home-feature" aria-labelledby="gp-home-feature-title">
+    <div class="ds__home-section-head">
+      <div><p class="ds__eyebrow">COMPOSITIONS</p><h2 id="gp-home-feature-title">Des exemples complets, <em>prêts à adapter.</em></h2>
+      <p>Tableau de bord, dossier et formulaire : rendu réel, Twig exact, CSS de mise en page.</p></div>
+      <a href="{{ path('app_patterns') }}">Parcourir les compositions <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="gp-doc__home-links">
+      <a href="{{ path('app_pattern', {slug:'mission-dashboard'}) }}">Pilotage de missions <span aria-hidden="true">↗</span></a>
+      <a href="{{ path('app_pattern', {slug:'dossier-detail'}) }}">Détail de dossier <span aria-hidden="true">↗</span></a>
+      <a href="{{ path('app_pattern', {slug:'mission-form'}) }}">Formulaire de mission <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
   <section class="ds__home-featured" aria-labelledby="essentials-title">
     <div class="ds__home-section-head">
       <div><p class="ds__eyebrow">LES ESSENTIELS</p><h2 id="essentials-title">Les fondations du quotidien.</h2><p>Composants indépendants, accessibles et pensés pour les usages métier.</p></div>

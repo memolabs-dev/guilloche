@@ -13,6 +13,7 @@
   <button class="ds__rail-toggle" type="button" data-doc-nav aria-expanded="false">Navigation</button>
   <nav class="ds__nav" aria-label="Composants" data-doc-nav-panel>
     <a class="ds__nav-home" href="{{ path('app_home') }}">Catalogue</a>
+    <a class="ds__nav-home" href="{{ path('app_patterns') }}">Compositions métier</a>
     {% for family, items in families %}
       <p class="ds__nav-family">{{ labels[family] ?? family }}</p>
       {% for item in items %}

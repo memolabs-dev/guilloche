@@ -1,0 +1,39 @@
+{# COMPOSITION DE DÉMONSTRATION : dossier fictif, sans backend. #}
+<section class="gp gp--detail" aria-label="Dossier fictif Atlas">
+  <nav class="gp__breadcrumb" aria-label="Fil d’Ariane du dossier">Dossiers <span aria-hidden="true">/</span> AR-2026-042</nav>
+  <twig:ui:PageHeader title="Dossier Atlas" description="Revue de conformité · Référence AR-2026-042" :headingLevel="2">
+    <twig:ui:Badge tone="success" variant="soft">Validé</twig:ui:Badge>
+  </twig:ui:PageHeader>
+
+  <div class="gp__detail-meta" aria-label="Vue synthétique du dossier">
+    <div><span>Responsable</span><strong>Équipe Atlas</strong></div>
+    <div><span>Dernière activité</span><strong>26 octobre 2026</strong></div>
+    <div><span>Échéance</span><strong>4 novembre 2026</strong></div>
+  </div>
+
+  <div class="gp__columns gp__columns--detail">
+    <div class="gp__main-column">
+      <twig:ui:Card title="Informations du dossier" description="Références et suivi">
+        <twig:ui:DescriptionList :items="[
+          { term: 'Référence', description: 'AR-2026-042', serial: true },
+          { term: 'Client', description: 'Atelier Atlas' },
+          { term: 'Type de mission', description: 'Audit de conformité' },
+          { term: 'Responsable', description: 'Camille Martin' },
+          { term: 'Date de création', description: '16 octobre 2026' },
+          { term: 'Statut', description: 'Validé' }
+        ]" />
+      </twig:ui:Card>
+      <twig:ui:Alert type="info" title="Dossier de démonstration" message="Les noms et les dates de cette fiche sont fictifs. Aucune donnée n’est sauvegardée." />
+    </div>
+
+    <aside class="gp__side-column" aria-label="Historique du dossier">
+      <twig:ui:Card title="Historique" description="Trois événements récents">
+        <twig:ui:Timeline :items="[
+          { date: '26 octobre', title: 'Dossier validé', description: 'Contrôle achevé' },
+          { date: '23 octobre', title: 'Pièces reçues', description: 'Documents conformes' },
+          { date: '16 octobre', title: 'Dossier créé', description: 'Ouverture initiale' }
+        ]" />
+      </twig:ui:Card>
+    </aside>
+  </div>
+</section>
