@@ -48,6 +48,12 @@
 .ui-table :where(tbody tr:focus-within) {
     background: var(--ui-accent);
 }
+// Les références métier restent entières ; le conteneur fait défiler
+// horizontalement le tableau si la largeur mobile ne suffit pas.
+.ui-table--serial-first tbody tr > :first-child {
+    white-space: nowrap;
+}
+
 .ui-table__num {
     text-align: right;
     font-variant-numeric: tabular-nums;
