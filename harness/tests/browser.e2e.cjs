@@ -142,3 +142,71 @@ test('ConfirmDialog trigger remains centered and fully visible at both viewports
         await browser.close();
     }
 });
+
+
+test('real browser serializes Input, Select and Textarea without explicit name', { timeout: 45_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        const page = await browser.newPage();
+        await page.goto(BASE + '/components/input', { waitUntil: 'networkidle' });
+        await page.locator('#contract-title').fill('Mission Alpha');
+        await page.locator('#contract-status').selectOption('done');
+        await page.locator('#contract-note').fill('Validation réelle');
+        const entries = await page.locator('form[data-form-contract]').evaluate(
+            (form) => Object.fromEntries(new FormData(form).entries()),
+        );
+        assert.deepEqual(entries, {
+            'contract-title': 'Mission Alpha',
+            'contract-status': 'done',
+            'contract-note': 'Validation réelle',
+        });
+    } finally {
+        await browser.close();
+    }
+});
+
+test('real Stimulus controllers open dialogs, confirm actions and operate listboxes', { timeout: 90_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        const page = await browser.newPage({ viewport: { width: 900, height: 800 } });
+        const errors = [];
+        page.on('pageerror', (error) => errors.push(error.message));
+
+        await page.goto(BASE + '/components/dialog', { waitUntil: 'networkidle' });
+        await page.locator('.ui-dialog__trigger').first().click();
+        assert.equal(await page.locator('dialog.ui-dialog').first().evaluate((dialog) => dialog.open), true,
+            'Stimulus must actually open native dialog');
+        await page.locator('.ui-dialog__close').first().click();
+        assert.equal(await page.locator('dialog.ui-dialog').first().evaluate((dialog) => dialog.open), false);
+
+        await page.evaluate(() => {
+            window.__guillocheConfirmCount = 0;
+            document.addEventListener('ui:confirm', () => window.__guillocheConfirmCount++);
+        });
+        await page.locator('.ui-confirm-dialog__trigger').first().click();
+        assert.equal(await page.locator('dialog.ui-confirm-dialog').first().evaluate((dialog) => dialog.open), true);
+        await page.locator('.ui-confirm-dialog__confirm').first().click();
+        assert.equal(await page.evaluate(() => window.__guillocheConfirmCount), 1,
+            'Confirmation must dispatch application action event exactly once');
+
+        await page.goto(BASE + '/components/combobox', { waitUntil: 'networkidle' });
+        const input = page.locator('.ui-combobox__input').first();
+        await input.fill('Audit');
+        assert.equal(await input.getAttribute('aria-expanded'), 'true');
+        await page.locator('.ui-combobox__option:visible').first().click();
+        assert.equal(await page.locator('.ui-combobox input[type=hidden]').first().inputValue(), '2');
+        assert.equal(await input.getAttribute('aria-expanded'), 'false');
+
+        await page.goto(BASE + '/components/command', { waitUntil: 'networkidle' });
+        await page.locator('.ui-command__trigger').first().click();
+        assert.equal(await page.locator('dialog.ui-command__dialog').first().evaluate((dialog) => dialog.open), true);
+        await page.locator('.ui-command__input').first().fill('documents');
+        assert.equal(await page.locator('.ui-command__item:visible').count(), 1);
+        await page.keyboard.press('Escape');
+        assert.equal(await page.locator('dialog.ui-command__dialog').first().evaluate((dialog) => dialog.open), false);
+
+        assert.deepEqual(errors, [], 'No JavaScript exception during real component interactions');
+    } finally {
+        await browser.close();
+    }
+});
