@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Regression de l'installateur tiers : simulation, copie, idempotence,
+# protection des personnalisations et chemins de sortie.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+TEMP="$(mktemp -d)"
+trap 'rm -rf "$TEMP"' EXIT
+APP="$TEMP/symfony-app"
+mkdir -p "$APP"
+printf '{"name":"example/symfony-app","type":"project"}\n' > "$APP/composer.json"
+INSTALLER="$ROOT/bin/guilloche-install"
+
+php "$INSTALLER" --list | grep -qx 'rosette'
+php "$INSTALLER" button --project="$APP" --dry-run > "$TEMP/dry-run.txt"
+grep -q 'CREER templates/components/ui/Button.html.twig' "$TEMP/dry-run.txt"
+test ! -e "$APP/templates/components/ui/Button.html.twig"
+
+php "$INSTALLER" button --project="$APP" > "$TEMP/first.txt"
+test -f "$APP/templates/components/ui/Button.html.twig"
+test -f "$APP/public/guilloche/guilloche.css"
+test -f "$APP/public/guilloche/fonts.css"
+test -f "$APP/public/guilloche/fonts/geist/geist-variable.woff2"
+cmp "$APP/templates/components/ui/Button.html.twig" "$ROOT/kits/guilloche/button/templates/components/Button.html.twig"
+cmp "$APP/public/guilloche/guilloche.css" "$ROOT/dist/guilloche.css"
+cmp "$APP/public/guilloche/fonts.css" "$ROOT/kits/guilloche/theme/assets/fonts.css"
+
+php "$INSTALLER" button --project="$APP" > "$TEMP/repeat.txt"
+grep -q '0 fichier(s) installé(s)' "$TEMP/repeat.txt"
+
+printf 'Ma personnalisation utilisateur\n' > "$APP/templates/components/ui/Button.html.twig"
+if php "$INSTALLER" button --project="$APP" 2> "$TEMP/conflict.txt"; then
+    echo "ERROR: changed user file was overwritten" >&2
+    exit 1
+fi
+grep -q 'CONFLIT templates/components/ui/Button.html.twig' "$TEMP/conflict.txt"
+grep -q 'Ma personnalisation utilisateur' "$APP/templates/components/ui/Button.html.twig"
+
+# Un autre composant peut toujours être installé sans écraser Button.
+php "$INSTALLER" rosette --project="$APP" > "$TEMP/rosette.txt"
+test -f "$APP/templates/components/ui/Rosette.html.twig"
+test -f "$APP/assets/controllers/ui/rosette_controller.js"
+cmp "$APP/assets/controllers/ui/rosette_controller.js" "$ROOT/kits/guilloche/rosette/assets/controllers/rosette_controller.js"
+
+# Un projet ne doit jamais écrire à travers un symlink vers l'extérieur.
+OUTSIDE="$TEMP/external-file"
+printf 'RESTE INTACT\n' > "$OUTSIDE"
+ln -s "$OUTSIDE" "$APP/templates/components/ui/Seal.html.twig"
+if php "$INSTALLER" seal --project="$APP" 2> "$TEMP/symlink.txt"; then
+    echo "ERROR: symlink destination was accepted" >&2
+    exit 1
+fi
+grep -q 'Lien symbolique dans la destination' "$TEMP/symlink.txt"
+grep -q 'RESTE INTACT' "$OUTSIDE"
+test ! -e "$APP/assets/controllers/ui/seal_controller.js"
+
+# Chemins non conformes : refus, même en simulation.
+if php "$INSTALLER" ../rosette --project="$APP" --dry-run > /dev/null 2>&1; then
+    echo "ERROR: traversal accepted" >&2
+    exit 1
+fi
+
+echo "OK: installateur tiers non destructif, idempotent et sécurisé."
