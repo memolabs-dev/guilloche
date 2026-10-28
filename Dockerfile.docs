@@ -19,7 +19,7 @@ RUN composer install --no-dev --no-scripts --no-interaction --no-progress --pref
     && php bin/console asset-map:compile
 
 FROM base AS runtime
-ENV APP_ENV=prod APP_DEBUG=0 SERVER_NAME=:80
+ENV APP_ENV=prod APP_DEBUG=0 SERVER_NAME=:80 SERVER_ROOT=/app/harness/public
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --from=builder /app/kits/ /app/kits/
 COPY --from=builder /app/harness/ /app/harness/
