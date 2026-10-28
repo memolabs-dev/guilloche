@@ -17,3 +17,23 @@
   </div>
   {{ m.code('<twig:ui:Input id="champ" placeholder="Désactivé" disabled />') }}
 </div>
+
+<div class="ds__example">
+  <div class="ds__example-head"><h3 class="ds__example-title">Soumission native : les noms suivent les identifiants</h3></div>
+  <div class="ds__example-render ds__example-render--column">
+    <form id="guilloche-form-contract" data-form-contract>
+      <twig:ui:Field id="contract-title" label="Nom du dossier">
+        <twig:ui:Input id="contract-title" value="Dossier initial" />
+      </twig:ui:Field>
+      <twig:ui:Field id="contract-status" label="Statut">
+        <twig:ui:Select id="contract-status" value="open" :options="[{value:'open',label:'En cours'},{value:'done',label:'Terminé'}]" />
+      </twig:ui:Field>
+      <twig:ui:Field id="contract-note" label="Note">
+        <twig:ui:Textarea id="contract-note" value="À examiner" />
+      </twig:ui:Field>
+    </form>
+  </div>
+  {{ m.code('<twig:ui:Input id="contract-title" value="Dossier initial" />
+<twig:ui:Select id="contract-status" value="open" :options="[{value: \'open\', label: \'En cours\'}]" />
+<twig:ui:Textarea id="contract-note" value="À examiner" />') }}
+</div>
