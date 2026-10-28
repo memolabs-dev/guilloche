@@ -203,6 +203,8 @@ test('real Stimulus controllers open dialogs, confirm actions and operate listbo
         await page.locator('.ui-command__input').first().fill('documents');
         assert.equal(await page.locator('.ui-command__item:visible').count(), 1);
         await page.keyboard.press('Escape');
+        // Native <dialog> dispatches cancel/close in a subsequent browser task.
+        await page.waitForFunction(() => !document.querySelector('dialog.ui-command__dialog')?.open, { timeout: 3000 });
         assert.equal(await page.locator('dialog.ui-command__dialog').first().evaluate((dialog) => dialog.open), false);
 
         assert.deepEqual(errors, [], 'No JavaScript exception during real component interactions');
