@@ -201,6 +201,58 @@ final class DocTest extends WebTestCase
         self::assertSame($shapes, $shapesAgain, 'Path geometry must not depend on render instance or request');
     }
 
+
+    public function testPlaygroundUsesOnlyRealTwigPropsAndUpdatesServerRenderedOutput(): void
+    {
+        $client = self::createClient();
+        $cases = [
+            ['/components/button?p_variant=danger&p_size=lg&p_label=Archiver', '.ds__playground-preview .ui-button--danger.ui-button--lg', 'variant="danger"'],
+            ['/components/input?p_type=email&p_required=1&p_placeholder=Courriel', '.ds__playground-preview input#mission-name[type="email"][required]', 'placeholder="Courriel"'],
+            ['/components/badge?p_tone=warning&p_variant=outline&p_label=En%20attente', '.ds__playground-preview .ui-badge--warning.ui-badge--outline', 'En attente'],
+            ['/components/card?p_title=Dossier%20Atlas&p_description=Relecture', '.ds__playground-preview .ui-card__title', 'title="Dossier Atlas"'],
+            ['/components/dialog?p_title=Validation&p_trigger=Confirmer', '.ds__playground-preview dialog#demo-dialog[aria-labelledby="demo-dialog-title"]', 'trigger="Confirmer"'],
+            ['/components/table?p_caption=Factures&p_serial=1', '.ds__playground-preview .ui-table--serial-first', 'caption="Factures"'],
+        ];
+
+        foreach ($cases as [$url, $selector, $snippet]) {
+            $crawler = $client->request('GET', $url);
+            $this->assertResponseIsSuccessful();
+            self::assertCount(1, $crawler->filter($selector), $url);
+            self::assertStringContainsString($snippet, $crawler->filter('[data-playground-code]')->text(), $url);
+            self::assertCount(1, $crawler->filter('form[data-playground-form]'), $url);
+        }
+    }
+
+    public function testPlaygroundFragmentIsServerRenderedWithoutRestOfDocument(): void
+    {
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/components/button?p_variant=outline&p_size=sm&fragment=1');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(1, $crawler->filter('[data-playground-result]'));
+        self::assertCount(1, $crawler->filter('.ds__playground-preview .ui-button--outline.ui-button--sm'));
+        self::assertCount(0, $crawler->filter('html, body, form[data-playground-form]'));
+        self::assertStringContainsString('size="sm"', $crawler->filter('[data-playground-code]')->text());
+    }
+
+    public function testPlaygroundRejectsUnknownVariantsAndEscapesUntrustedText(): void
+    {
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/components/button?p_variant=injected&p_label=%3Cscript%3Ealert(1)%3C%2Fscript%3E');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(1, $crawler->filter('.ds__playground-preview .ui-button--primary'));
+        self::assertCount(0, $crawler->filter('.ds__playground-preview script'));
+        self::assertStringNotContainsString('<script>', $crawler->filter('[data-playground-code]')->text());
+
+        $crawler = $client->request('GET', '/components/card?p_title%5B%5D=unexpected');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(1, $crawler->filter('.ds__playground-preview .ui-card__title'));
+        self::assertStringContainsString('Suivi de mission', $crawler->filter('[data-playground-code]')->text());
+
+        $client->request('GET', '/components/rosette?fragment=1');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorNotExists('[data-playground]');
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');
