@@ -1,35 +1,44 @@
+// Ui:Tabs : liens de navigation et aria-current=page, pas de faux role=tab.
 .ui-tabs__list {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--ui-space-1);
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 4px;
+    max-width: 100%;
+    overflow-x: auto;
     border-bottom: 1px solid var(--ui-border);
+    scrollbar-width: thin;
 }
-
+.ui-tabs__list > li { display: flex; flex: none; }
 .ui-tabs__tab {
     display: inline-flex;
+    box-sizing: border-box;
+    position: relative;
     align-items: center;
+    justify-content: center;
     gap: var(--ui-space-2);
-    padding: var(--ui-space-2) var(--ui-space-3);
+    min-height: var(--ui-control-md);
+    padding: 0 15px;
+    border: 0;
     border-bottom: 2px solid transparent;
+    border-radius: var(--ui-radius-sm) var(--ui-radius-sm) 0 0;
     color: var(--ui-muted-foreground);
     font-size: var(--ui-text-sm);
-    font-weight: 500;
+    font-weight: 530;
+    white-space: nowrap;
     text-decoration: none;
-    transition: color var(--ui-duration-fast) var(--ui-ease), border-color var(--ui-duration-fast) var(--ui-ease);
-
-    &:hover {
-        color: var(--ui-foreground);
-    }
-
-    &:focus-visible {
-        outline: none;
-        box-shadow: var(--ui-focus-ring);
-        border-radius: var(--ui-radius-sm);
-    }
+    transition: color var(--ui-duration-fast) var(--ui-ease),
+        background-color var(--ui-duration-fast) var(--ui-ease),
+        border-color var(--ui-duration-fast) var(--ui-ease);
+    &:hover { color: var(--ui-foreground); background: var(--ui-muted); }
+    &:focus-visible { outline: none; box-shadow: inset var(--ui-focus-ring); }
 }
-
-.ui-tabs__tab.is-current {
+.ui-tabs__tab.is-current,
+.ui-tabs__tab[aria-current='page'] {
     border-bottom-color: var(--ui-primary);
     color: var(--ui-foreground);
-    font-weight: 600;
+    font-weight: 650;
+}
+@media (prefers-reduced-motion: reduce) {
+    .ui-tabs__tab { transition: none; }
 }
