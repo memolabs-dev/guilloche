@@ -117,3 +117,42 @@ jobs:
       - name: Journal du serveur si échec
         if: failure()
         run: tail -100 /tmp/guilloche-browser.log || true
+
+  docs-image:
+    name: Image du catalogue Symfony
+    runs-on: ubuntu-latest
+    needs: [kit, browser]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construire la documentation autonome
+        run: docker build --file Dockerfile.docs --tag guilloche-ui:ci .
+      - name: Démarrer et vérifier les routes Symfony
+        run: |
+          docker run -d --name guilloche-ui-smoke --publish 127.0.0.1:8099:80 --env APP_SECRET=temporary-ci-docs guilloche-ui:ci
+          trap 'docker rm -f guilloche-ui-smoke >/dev/null 2>&1 || true' EXIT
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8099/ > /tmp/guilloche-index.html; then
+              break
+            fi
+            sleep 1
+          done
+          grep -q '74 recettes' /tmp/guilloche-index.html
+          curl --fail --silent http://127.0.0.1:8099/components/button | grep -q 'Button'
+          curl --fail --silent http://127.0.0.1:8099/components/rosette | grep -q 'Rosette'
+      - name: Authentification au registre GitHub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publier l'image validée
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker tag guilloche-ui:ci ghcr.io/memolabs-dev/guilloche-ui:latest
+          docker tag guilloche-ui:ci ghcr.io/memolabs-dev/guilloche-ui:sha-${GITHUB_SHA::12}
+          docker push ghcr.io/memolabs-dev/guilloche-ui:latest
+          docker push ghcr.io/memolabs-dev/guilloche-ui:sha-${GITHUB_SHA::12}
