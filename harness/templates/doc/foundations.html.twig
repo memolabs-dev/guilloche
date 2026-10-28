@@ -1,0 +1,160 @@
+{% extends 'doc/base.html.twig' %}
+{% block title %}Revue des 12 fondations · Guilloche{% endblock %}
+{% block body %}
+<nav class="ds__crumbs" aria-label="Fil d’Ariane"><a href="{{ path('app_home') }}">Catalogue</a><span aria-hidden="true">/</span><span aria-current="page">Fondations</span></nav>
+<header class="fv__intro">
+  <p class="ds__eyebrow">REVUE VISUELLE / 12 FONDATIONS</p>
+  <h1>Une interface cohérente, <em>dans tous ses états.</em></h1>
+  <p>Une même planche de contrôle pour comparer le thème, les primitives et les surfaces interactives du vrai kit Twig. Aucun composant simulé : les aperçus viennent de Symfony.</p>
+  <div class="fv__intro-actions">
+    <a href="{{ path('app_showcase') }}">Voir les compositions <span aria-hidden="true">↗</span></a>
+    <span>Clair / sombre via le contrôle en haut à droite</span>
+  </div>
+</header>
+
+<div class="fv__grid" aria-label="Matrice visuelle des douze fondations">
+  <section class="fv__panel fv__panel--wide" id="fv-theme" aria-labelledby="fv-theme-title">
+    <header class="fv__panel-head"><span>01</span><h2 id="fv-theme-title">Theme &amp; tokens</h2><a href="{{ path('app_recipe', {recipe:'theme'}) }}">Tokens ↗</a></header>
+    <p class="fv__explain">La même palette s’adapte au clair et au sombre ; une seule échelle de densité et de rayons.</p>
+    <div class="fv__swatches" aria-label="Surfaces et intentions du thème">
+      <div><i style="background:var(--ui-background)"></i><span>Canvas</span></div>
+      <div><i style="background:var(--ui-surface)"></i><span>Surface</span></div>
+      <div><i style="background:var(--ui-muted)"></i><span>Muted</span></div>
+      <div><i style="background:var(--ui-primary)"></i><span>Action</span></div>
+      <div><i style="background:var(--ui-success)"></i><span>Succès</span></div>
+      <div><i style="background:var(--ui-warning)"></i><span>Alerte</span></div>
+      <div><i style="background:var(--ui-danger)"></i><span>Erreur</span></div>
+    </div>
+  </section>
+
+  <section class="fv__panel" id="fv-button" aria-labelledby="fv-button-title">
+    <header class="fv__panel-head"><span>02</span><h2 id="fv-button-title">Button</h2><a href="{{ path('app_recipe', {recipe:'button'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Primary, secondary, outline, disabled et chargement.</p>
+    <div class="fv__stack">
+      <div class="fv__line">
+        <twig:ui:Button>Enregistrer</twig:ui:Button>
+        <twig:ui:Button variant="secondary">Annuler</twig:ui:Button>
+        <twig:ui:Button variant="outline">Options</twig:ui:Button>
+      </div>
+      <div class="fv__line">
+        <twig:ui:Button variant="danger" size="sm">Supprimer</twig:ui:Button>
+        <twig:ui:Button disabled>Indisponible</twig:ui:Button>
+        <twig:ui:Button loading>Chargement</twig:ui:Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="fv__panel" id="fv-input" aria-labelledby="fv-input-title">
+    <header class="fv__panel-head"><span>03</span><h2 id="fv-input-title">Input</h2><a href="{{ path('app_recipe', {recipe:'input'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">État normal, validation et désactivation ; focus clavier natif.</p>
+    <div class="fv__field-row">
+      <label for="fv-field">Saisie normale</label>
+      <twig:ui:Input id="fv-field" placeholder="Nom du dossier" />
+      <label for="fv-field-invalid">Valeur invalide</label>
+      <twig:ui:Input id="fv-field-invalid" value="Valeur à corriger" invalid />
+      <label for="fv-field-disabled">Désactivé</label>
+      <twig:ui:Input id="fv-field-disabled" value="Non modifiable" disabled />
+    </div>
+  </section>
+
+  <section class="fv__panel" id="fv-textarea" aria-labelledby="fv-textarea-title">
+    <header class="fv__panel-head"><span>04</span><h2 id="fv-textarea-title">Textarea</h2><a href="{{ path('app_recipe', {recipe:'textarea'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Même bordure, même rayon et focus que les autres champs.</p>
+    <div class="fv__field-row">
+      <label for="fv-note">Note libre</label>
+      <twig:ui:Textarea id="fv-note" :rows="3" placeholder="Décrivez votre mission…" />
+      <label for="fv-note-disabled">Lecture seule / désactivé</label>
+      <twig:ui:Textarea id="fv-note-disabled" :rows="2" value="Note archivée" disabled />
+    </div>
+  </section>
+
+  <section class="fv__panel" id="fv-select" aria-labelledby="fv-select-title">
+    <header class="fv__panel-head"><span>05</span><h2 id="fv-select-title">Select</h2><a href="{{ path('app_recipe', {recipe:'select'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Sélection native, erreur et désactivation sans JavaScript.</p>
+    <div class="fv__field-row">
+      <label for="fv-select-normal">Statut du dossier</label>
+      <twig:ui:Select id="fv-select-normal" :options="[{value:'new',label:'Nouveau'}, {value:'active',label:'En cours'}, {value:'done',label:'Terminé'}]" value="active" />
+      <label for="fv-select-invalid">Validation requise</label>
+      <twig:ui:Select id="fv-select-invalid" :options="[{value:'new',label:'Nouveau'}, {value:'done',label:'Terminé'}]" invalid />
+      <label for="fv-select-disabled">Désactivé</label>
+      <twig:ui:Select id="fv-select-disabled" :options="[{value:'done',label:'Terminé'}]" value="done" disabled />
+    </div>
+  </section>
+
+  <section class="fv__panel" id="fv-card" aria-labelledby="fv-card-title">
+    <header class="fv__panel-head"><span>06</span><h2 id="fv-card-title">Card</h2><a href="{{ path('app_recipe', {recipe:'card'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Surface, hiérarchie typographique et séparation du pied.</p>
+    <twig:ui:Card title="Dossier de conformité" description="Mission AR-2026-042" footer="Mis à jour aujourd’hui">
+      <div class="fv__card-summary"><strong>En cours d’analyse</strong><twig:ui:Badge tone="info">En cours</twig:ui:Badge></div>
+    </twig:ui:Card>
+  </section>
+
+  <section class="fv__panel" id="fv-badge" aria-labelledby="fv-badge-title">
+    <header class="fv__panel-head"><span>07</span><h2 id="fv-badge-title">Badge</h2><a href="{{ path('app_recipe', {recipe:'badge'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Un statut se reconnaît au texte, pas uniquement à sa couleur.</p>
+    <div class="fv__line fv__badge-line">
+      <twig:ui:Badge tone="neutral">Brouillon</twig:ui:Badge>
+      <twig:ui:Badge tone="info">En cours</twig:ui:Badge>
+      <twig:ui:Badge tone="success">Validé</twig:ui:Badge>
+      <twig:ui:Badge tone="warning">À vérifier</twig:ui:Badge>
+      <twig:ui:Badge tone="danger">Bloqué</twig:ui:Badge>
+    </div>
+  </section>
+
+  <section class="fv__panel fv__panel--wide" id="fv-table" aria-labelledby="fv-table-title">
+    <header class="fv__panel-head"><span>08</span><h2 id="fv-table-title">Table</h2><a href="{{ path('app_recipe', {recipe:'table'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Colonnes lisibles et références monospaces. Sur mobile, le tableau est défilable horizontalement au clavier.</p>
+    <twig:ui:Table caption="Suivi des missions" serial>
+      <thead><tr><th scope="col">Référence</th><th scope="col">Objet</th><th scope="col">Statut</th><th scope="col" class="ui-table__num">Budget</th></tr></thead>
+      <tbody>
+        <tr><td>AR-2026-042</td><td>Audit de conformité</td><td><twig:ui:Badge tone="success">Validé</twig:ui:Badge></td><td class="ui-table__num">4 500 €</td></tr>
+        <tr><td>AR-2026-043</td><td>Portail client</td><td><twig:ui:Badge tone="warning">En cours</twig:ui:Badge></td><td class="ui-table__num">8 250 €</td></tr>
+        <tr><td>AR-2026-044</td><td>Design system</td><td><twig:ui:Badge tone="neutral">À planifier</twig:ui:Badge></td><td class="ui-table__num">3 200 €</td></tr>
+      </tbody>
+    </twig:ui:Table>
+  </section>
+
+  <section class="fv__panel" id="fv-dialog" aria-labelledby="fv-dialog-title">
+    <header class="fv__panel-head"><span>09</span><h2 id="fv-dialog-title">Dialog</h2><a href="{{ path('app_recipe', {recipe:'dialog'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Boîte modale native avec fermeture, Échap et retour du focus.</p>
+    <twig:ui:Dialog id="fv-dialog-overlay" title="Confirmation" trigger="Ouvrir un dialogue" description="Vérifiez les informations avant de poursuivre.">
+      <p>Ce dialogue est une démonstration : aucune modification n’est effectuée.</p>
+    </twig:ui:Dialog>
+  </section>
+
+  <section class="fv__panel" id="fv-tabs" aria-labelledby="fv-tabs-title">
+    <header class="fv__panel-head"><span>10</span><h2 id="fv-tabs-title">Tabs</h2><a href="{{ path('app_recipe', {recipe:'tabs'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Navigation par liens, pas de faux onglets ARIA.</p>
+    <twig:ui:Tabs label="Sections du dossier" :items="[
+      {label:'Aperçu',href:'#fv-tabs',current:true},
+      {label:'Activité',href:'#fv-tabs'},
+      {label:'Documents',href:'#fv-tabs'}
+    ]" />
+  </section>
+
+  <section class="fv__panel fv__panel--wide" id="fv-alert" aria-labelledby="fv-alert-title">
+    <header class="fv__panel-head"><span>11</span><h2 id="fv-alert-title">Alert</h2><a href="{{ path('app_recipe', {recipe:'alert'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Les quatre intentions : messages compréhensibles en clair comme en sombre.</p>
+    <div class="fv__alert-grid">
+      <twig:ui:Alert type="info" title="Information" message="Le traitement peut continuer." />
+      <twig:ui:Alert type="success" title="Terminé" message="Les données ont été enregistrées." />
+      <twig:ui:Alert type="warning" title="Attention" message="Deux justificatifs manquent au dossier." />
+      <twig:ui:Alert type="error" title="Erreur" message="Le formulaire contient une erreur." />
+    </div>
+  </section>
+
+  <section class="fv__panel" id="fv-dropdown-menu" aria-labelledby="fv-dropdown-title">
+    <header class="fv__panel-head"><span>12</span><h2 id="fv-dropdown-title">DropdownMenu</h2><a href="{{ path('app_recipe', {recipe:'dropdown-menu'}) }}">Détails ↗</a></header>
+    <p class="fv__explain">Menu d’actions natif, utilisable sans JavaScript ni gestionnaire de clic.</p>
+    <twig:ui:DropdownMenu label="Actions du dossier" :items="[
+      {label:'Voir le dossier',href:'#fv-dropdown-menu'},
+      {label:'Voir l’activité',href:'#fv-dropdown-menu'}
+    ]" />
+  </section>
+</div>
+<section class="fv__bottom-note">
+  <h2>Un outil de contrôle, pas une nouvelle API</h2>
+  <p>Chaque section utilise les recettes réellement distribuées. Les états focus et hover se vérifient au clavier et à la souris. Les tests Chromium collectent les captures à 390 et 1440 px, en clair et en sombre, et contrôlent les interactions ainsi que les débordements.</p>
+  <a href="{{ path('app_patterns') }}">Voir ensuite les compositions métier ↗</a>
+</section>
+{% endblock %}

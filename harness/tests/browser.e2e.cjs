@@ -779,3 +779,89 @@ test('compositions remain readable in SSR with JavaScript disabled', {timeout:75
         await context.close();
     } finally {await browser.close();}
 });
+
+test('P0 foundations board: 12 distributed Twig recipes across themes and viewports', { timeout: 140_000 }, async () => {
+    mkdirSync(DIR, { recursive: true });
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const vp of [{name:'desktop',width:1440,height:900},{name:'mobile',width:390,height:844}]) {
+            for (const theme of ['light','dark']) {
+                const page=await browser.newPage({
+                    viewport:{width:vp.width,height:vp.height}, colorScheme:theme, reducedMotion:'reduce',
+                });
+                await page.addInitScript(mode=>localStorage.setItem('guilloche-doc-theme',mode),theme);
+                const errors=[];page.on('pageerror',e=>errors.push(e.message));
+                const response=await page.goto(BASE+'/foundations',{waitUntil:'networkidle'});
+                assert.equal(response?.status(),200);
+                const sections=await page.locator('.fv__grid > .fv__panel').count();
+                assert.equal(sections,12,'one real Twig rendering per foundation');
+                const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+                assert.ok(overflow<=2,'foundations have no document-level horizontal overflow: '+vp.name+'/'+theme);
+                assert.equal(await page.locator('#fv-input .ui-input[aria-invalid=true]').count(),1);
+                assert.equal(await page.locator('#fv-textarea .ui-textarea:disabled').count(),1);
+                assert.equal(await page.locator('#fv-select .ui-select:disabled').count(),1);
+                assert.equal(await page.locator('#fv-button .ui-button:disabled').count(),2);
+                assert.equal(await page.locator('#fv-card .ui-card').count(),1);
+                assert.equal(await page.locator('#fv-badge .ui-badge').count(),5);
+                assert.equal(await page.locator('#fv-table .ui-table tbody tr').count(),3);
+                assert.equal(await page.locator('#fv-alert .ui-alert').count(),4);
+                assert.equal(await page.locator('#fv-tabs a[aria-current=page]').count(),1);
+                const input=page.locator('#fv-field');
+                await input.focus();
+                assert.equal(await input.evaluate(el=>getComputedStyle(el).height),'40px');
+                const color=await input.evaluate(el=>getComputedStyle(el).borderColor);
+                const invalidColor=await page.locator('#fv-field-invalid').evaluate(el=>getComputedStyle(el).borderColor);
+                assert.notEqual(color,invalidColor,'invalid input gets a distinct border');
+                const table=page.locator('#fv-table .ui-table-wrapper');
+                assert.equal(await table.getAttribute('tabindex'),'0');
+                assert.equal(await table.getAttribute('role'),'region');
+                assert.ok(await table.getAttribute('aria-label'));
+                if(vp.width===390) {
+                    const metrics=await table.evaluate(el=>({scroll:el.scrollWidth,client:el.clientWidth}));
+                    assert.ok(metrics.scroll>metrics.client,'table must be horizontally scrollable');
+                    await table.focus();
+                    await page.keyboard.press('ArrowRight');
+                    await page.waitForFunction(()=>document.querySelector('#fv-table .ui-table-wrapper').scrollLeft>0);
+                }
+                await page.locator('#fv-dropdown-menu summary').click();
+                assert.equal(await page.locator('#fv-dropdown-menu details.ui-dropdown').evaluate(el=>el.open),true);
+                await page.locator('#fv-dropdown-menu summary').click();
+                await page.locator('#fv-dialog .ui-dialog__trigger').click();
+                assert.equal(await page.locator('#fv-dialog dialog.ui-dialog').evaluate(el=>el.open),true);
+                await page.keyboard.press('Escape');
+                assert.equal(await page.locator('#fv-dialog dialog.ui-dialog').evaluate(el=>el.open),false);
+                assert.deepEqual(errors,[],'no JS errors');
+                await page.evaluate(()=>window.scrollTo(0,0));
+                await page.screenshot({
+                    path:path.join(DIR,'foundations-board-'+vp.name+'-'+theme+'.png'),
+                    fullPage:true,animations:'disabled',
+                });
+                for(const id of ['button','input','table','alert']) {
+                    await page.locator('#fv-'+id).screenshot({
+                        path:path.join(DIR,'foundations-'+id+'-'+vp.name+'-'+theme+'.png'),animations:'disabled',
+                    });
+                }
+                await page.close();
+            }
+        }
+    } finally {await browser.close();}
+});
+
+test('P0 foundations board works without JavaScript', {timeout:45000}, async()=>{
+    const browser=await chromium.launch({headless:true});
+    try {
+        const ctx=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+        const page=await ctx.newPage();
+        const response=await page.goto(BASE+'/foundations');
+        assert.equal(response?.status(),200);
+        assert.equal(await page.locator('.fv__panel').count(),12);
+        const menu=page.locator('#fv-dropdown-menu details');
+        await menu.locator('summary').click();
+        assert.equal(await menu.evaluate(e=>e.open),true);
+        const table=page.locator('#fv-table .ui-table-wrapper');
+        await table.focus();
+        await page.keyboard.press('ArrowRight');
+        await page.waitForFunction(()=>document.querySelector('#fv-table .ui-table-wrapper').scrollLeft>0);
+        await ctx.close();
+    } finally {await browser.close();}
+});

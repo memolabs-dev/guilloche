@@ -21,6 +21,14 @@ final class DocController extends AbstractController
         ]);
     }
 
+    #[Route('/foundations', name: 'app_foundations', methods: ['GET'])]
+    public function foundations(RecipeCatalog $catalog): Response
+    {
+        return $this->render('doc/foundations.html.twig', [
+            'families' => $catalog->families(),
+        ]);
+    }
+
     #[Route('/showcase', name: 'app_showcase')]
     public function showcase(RecipeCatalog $catalog): Response
     {

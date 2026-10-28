@@ -14,6 +14,7 @@
   <nav class="ds__nav" aria-label="Composants" data-doc-nav-panel>
     <a class="ds__nav-home" href="{{ path('app_home') }}">Catalogue</a>
     <a class="ds__nav-home" href="{{ path('app_patterns') }}">Compositions métier</a>
+    <a class="ds__nav-home" href="{{ path('app_foundations') }}">Revue des 12 fondations</a>
     {% for family, items in families %}
       <p class="ds__nav-family">{{ labels[family] ?? family }}</p>
       {% for item in items %}

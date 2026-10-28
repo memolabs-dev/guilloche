@@ -8,6 +8,15 @@
     border-radius: var(--ui-radius-lg);
     background: var(--ui-surface);
 }
+.ui-table-wrapper:focus-visible {
+    outline: 2px solid var(--ui-ring);
+    outline-offset: 2px;
+}
+// Défilement accessible au clavier même lorsque JavaScript est désactivé.
+.ui-table-wrapper {
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+}
 .ui-table {
     width: 100%;
     border-collapse: separate;
