@@ -6,7 +6,7 @@ Menu d'actions ou de liens. Repose sur `details` et `summary` : ouverture, clavi
 
 | Prop | Défaut | Rôle |
 |------|--------|------|
-| `label` | requis | Libelle du declencheur |
+| `label` | requis | Libellé du déclencheur |
 | `items` | `[]` | Entrees `{ label, href }` |
 
 ## Exemple
@@ -14,7 +14,7 @@ Menu d'actions ou de liens. Repose sur `details` et `summary` : ouverture, clavi
 ```twig
 <twig:ui:DropdownMenu label="Actions" :items="[
   { label: 'Ouvrir', href: path('app_show', { id: 1 }) },
-  { label: 'Telecharger', href: '/export/1' }
+  { label: 'Télécharger', href: '/export/1' }
 ]" />
 ```
 
