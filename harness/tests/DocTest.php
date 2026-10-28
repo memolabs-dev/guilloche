@@ -25,6 +25,39 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('textarea#s-textarea[name="s-textarea"]');
     }
 
+    public function testAllRecipesHaveAnActualRenderedPreviewAndReusableCode(): void
+    {
+        $client = self::createClient();
+        $catalog = self::getContainer()->get(\App\Doc\RecipeCatalog::class);
+        $recipes = $catalog->all();
+
+        self::assertCount(74, $recipes);
+        foreach ($recipes as $recipe) {
+            $name = $recipe['name'];
+            $crawler = $client->request('GET', '/components/' . $name);
+            $this->assertResponseIsSuccessful();
+            self::assertGreaterThan(0, $crawler->filter($name === 'theme' ? '.ds__swatches' : '.ds__example-render')->count(),
+                'Recette sans aperçu visible : ' . $name);
+            $specimen = dirname(__DIR__) . '/templates/doc/specimens/' . $name . '.html.twig';
+            if (!is_file($specimen)) {
+                self::assertNotEmpty($recipe['code'], 'Recette sans exemple copiable : ' . $name);
+                self::assertGreaterThan(0, $crawler->filter('.ds__example-code code')->count(),
+                    'Fiche sans extrait Twig rendu : ' . $name);
+            }
+        }
+    }
+
+    public function testDocumentationShowsRealAccessibilityNotesRatherThanClaimingCertification(): void
+    {
+        $client = self::createClient();
+        $client->request('GET', '/components/dialog');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ds__accessibility-notes li');
+        $client->request('GET', '/components/card');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('#accessibilite', 'ne sont pas encore documentés');
+    }
+
     public function testCatalogueListsRecipes(): void
     {
         self::createClient()->request('GET', '/');
