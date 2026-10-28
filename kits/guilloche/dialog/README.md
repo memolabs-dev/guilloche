@@ -29,3 +29,5 @@ Boite modale native (`<dialog>`).
   <p>Cette action est definitive.</p>
 </twig:ui:Dialog>
 ```
+
+Le `<dialog>` porte `aria-labelledby` vers le `h2` de la fenêtre, et `aria-describedby` vers la description lorsqu'elle existe. Le `id` transmis par l'application doit être unique sur la page.

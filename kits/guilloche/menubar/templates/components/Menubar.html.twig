@@ -1,21 +1,21 @@
-{# Ui:Menubar — barre de menus. role="menubar" nomme la barre ; chaque menu est
-   un details avec role="menu" sur son panneau. #}
+{# Ui:Menubar — navigation native en listes, liens et details/summary. Pas un
+   widget ARIA menubar : la navigation clavier reste Tab/Entrée native. #}
 {% props items = [], label %}
 <nav {{ attributes.defaults({ class: 'ui-menubar', 'aria-label': label }) }}>
-  <ul class="ui-menubar__list" role="menubar">
+  <ul class="ui-menubar__list">
     {% for item in items %}
-      <li role="none">
+      <li>
         {% if item.items is defined and item.items %}
           <details class="ui-menubar__group">
-            <summary class="ui-menubar__trigger" role="menuitem">{{ item.label }}</summary>
-            <ul class="ui-menubar__panel" role="menu">
+            <summary class="ui-menubar__trigger">{{ item.label }}</summary>
+            <ul class="ui-menubar__panel">
               {% for sub in item.items %}
-                <li role="none"><a role="menuitem" href="{{ sub.href ?? '#' }}">{{ sub.label }}</a></li>
+                <li><a href="{{ sub.href ?? '#' }}">{{ sub.label }}</a></li>
               {% endfor %}
             </ul>
           </details>
         {% else %}
-          <a class="ui-menubar__link" role="menuitem" href="{{ item.href ?? '#' }}">{{ item.label }}</a>
+          <a class="ui-menubar__link" href="{{ item.href ?? '#' }}">{{ item.label }}</a>
         {% endif %}
       </li>
     {% endfor %}
