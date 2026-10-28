@@ -1,0 +1,19 @@
+{% extends 'doc/base.html.twig' %}
+{% block title %}Showroom · Guilloche{% endblock %}
+{% block body %}
+  <nav class="ds__crumbs" aria-label="Fil d'Ariane"><a href="{{ path('app_home') }}">Guilloche</a><span aria-hidden="true">/</span><span aria-current="page">Showroom</span></nav>
+  <header class="ds__showroom-intro">
+    <div>
+      <p class="ds__eyebrow">SHOWROOM / SCÉNARIOS MÉTIER</p>
+      <h1 class="ds__landing-title">De vrais écrans, <em>pas seulement des composants.</em></h1>
+      <p class="ds__landing-lead">Un espace de travail, des données et un formulaire construits à partir de composants Twig. Changez d'onglet et essayez le formulaire : cette démonstration ne persiste aucune donnée.</p>
+    </div>
+    <a class="ds__landing-link" href="{{ path('app_recipe', { recipe: 'button' }) }}">Voir les composants <span aria-hidden="true">↗</span></a>
+  </header>
+  {% include 'doc/_studio_canvas.html.twig' %}
+  <section class="ds__showroom-footer" aria-label="Comment fonctionne ce showroom">
+    <div><span class="ds__step">01</span><h2>Rendu serveur</h2><p>Toutes les données d'exemple et les composants sont rendus en Twig. Le contenu est présent sans JavaScript.</p></div>
+    <div><span class="ds__step">02</span><h2>Interactions progressives</h2><p>Les onglets et la simulation de formulaire restent de petites interactions côté navigateur, sans API fictive.</p></div>
+    <div><span class="ds__step">03</span><h2>Styles maîtrisés</h2><p>Les boutons, badges, tableaux, champs et cartes viennent du kit ; la composition d'écran appartient à l'application.</p></div>
+  </section>
+{% endblock %}
