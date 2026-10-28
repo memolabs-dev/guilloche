@@ -9,3 +9,7 @@ services:
     App\Doc\RecipeCatalog:
         arguments:
             $kitDir: '%kernel.project_dir%/../kits/guilloche'
+
+    App\Doc\CompositionCatalog:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

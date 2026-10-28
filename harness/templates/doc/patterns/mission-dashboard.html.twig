@@ -1,0 +1,45 @@
+{# COMPOSITION DE DÉMONSTRATION : données fictives, aucun backend. #}
+<section class="gp gp--dashboard" aria-label="Tableau de bord des missions">
+  <header class="gp__header">
+    <div>
+      <p class="gp__eyebrow">ESPACE DE TRAVAIL / OCTOBRE 2026</p>
+      <h2 class="gp__title">Vue d’ensemble</h2>
+      <p class="gp__lead">L’essentiel de votre activité, en un coup d’œil.</p>
+    </div>
+    <twig:ui:Button variant="outline" size="sm" href="#gp-mission-list">Voir les missions</twig:ui:Button>
+  </header>
+
+  <div class="gp__stats" aria-label="Indicateurs fictifs de l’activité">
+    <twig:ui:Stat label="Missions actives" value="12" hint="2 nouvelles ce mois" trend="up" />
+    <twig:ui:Stat label="Chiffre d’affaires" value="28 450 €" hint="Octobre 2026" trend="up" />
+    <twig:ui:Stat label="Actions à traiter" value="4" hint="2 validations prioritaires" trend="flat" />
+  </div>
+
+  <div class="gp__columns">
+    <div id="gp-mission-list" class="gp__main-column">
+      <twig:ui:Card title="Missions récentes" description="Quatre dossiers de démonstration">
+        <twig:ui:Table caption="Liste des missions fictives" serial>
+          <thead>
+            <tr><th scope="col">Référence</th><th scope="col">Mission</th><th scope="col">Statut</th><th scope="col" class="ui-table__num">Budget</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AR-0241</td><td>Audit de conformité</td><td><twig:ui:Badge tone="success">Validée</twig:ui:Badge></td><td class="ui-table__num">4 500 €</td></tr>
+            <tr><td>AR-0240</td><td>Portail client</td><td><twig:ui:Badge tone="warning">En cours</twig:ui:Badge></td><td class="ui-table__num">8 250 €</td></tr>
+            <tr><td>AR-0239</td><td>Design system</td><td><twig:ui:Badge tone="neutral">À planifier</twig:ui:Badge></td><td class="ui-table__num">3 200 €</td></tr>
+            <tr><td>AR-0238</td><td>Migration applicative</td><td><twig:ui:Badge tone="success">Validée</twig:ui:Badge></td><td class="ui-table__num">12 500 €</td></tr>
+          </tbody>
+        </twig:ui:Table>
+      </twig:ui:Card>
+    </div>
+
+    <aside class="gp__side-column" aria-label="Activité récente fictive">
+      <twig:ui:Card title="Activité récente" description="Dernières étapes enregistrées">
+        <twig:ui:Timeline :items="[
+          { date: 'Aujourd’hui', title: 'Audit validé', description: 'Projet Atlas' },
+          { date: 'Hier', title: 'Facture envoyée', description: 'Mission Horizon' },
+          { date: 'Lundi', title: 'Dossier créé', description: 'Portail client' }
+        ]" />
+      </twig:ui:Card>
+    </aside>
+  </div>
+</section>

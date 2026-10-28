@@ -1,0 +1,72 @@
+{% extends 'doc/base.html.twig' %}
+{% block title %}{{ pattern.title }} · Compositions Guilloche{% endblock %}
+{% block body %}
+  <nav class="ds__crumbs" aria-label="Fil d’Ariane">
+    <a href="{{ path('app_patterns') }}">Compositions</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">{{ pattern.title }}</span>
+  </nav>
+  <header class="gp-doc__intro gp-doc__intro--detail">
+    <p class="ds__eyebrow">COMPOSITION / {{ pattern.eyebrow }}</p>
+    <h1>{{ pattern.title }}</h1>
+    <p>{{ pattern.summary }} Les informations présentées sont fictives : cette page ne modifie aucune donnée.</p>
+    <div class="gp-doc__tags">
+      {% for piece in pattern.pieces %}<span>{{ piece }}</span>{% endfor %}
+    </div>
+  </header>
+
+  <section class="gp-doc__frame" data-gp-pattern-frame aria-label="Rendu du modèle {{ pattern.title }}">
+    <div class="gp-doc__frame-bar">
+      <div class="gp-doc__frame-id"><span class="gp-doc__live-dot" aria-hidden="true"></span>Aperçu réel · Twig Components</div>
+      <div class="gp-doc__frame-viewports" role="group" aria-label="Largeur du rendu">
+        <button type="button" data-gp-preview-viewport="desktop" aria-pressed="true">Bureau</button>
+        <button type="button" data-gp-preview-viewport="mobile" aria-pressed="false">Mobile</button>
+      </div>
+    </div>
+    <div class="gp-doc__render" data-gp-pattern-render>
+      {% include 'doc/patterns/' ~ pattern.slug ~ '.html.twig' %}
+    </div>
+  </section>
+
+  <section class="gp-doc__source-section" aria-labelledby="source-title">
+    <div class="gp-doc__source-head">
+      <h2 id="source-title">Reprendre cette composition</h2>
+      <p>Les extraits ci-dessous proviennent des fichiers qui rendent l’aperçu, sans code fictif reconstruit.</p>
+    </div>
+    <details class="gp-doc__source" open>
+      <summary><strong>01 · Template Twig</strong><span>Composants Guilloche</span></summary>
+      <div class="gp-doc__source-action">
+        <a href="https://github.com/memolabs-dev/guilloche/tree/main/harness/templates/doc/patterns">Voir les fichiers sources</a>
+        <span data-gp-copy-status role="status" aria-live="polite"></span>
+        <button type="button" data-gp-copy="gp-pattern-twig" disabled>Copier Twig</button>
+      </div>
+      <pre id="gp-pattern-twig"><code>{{ pattern.twig }}</code></pre>
+    </details>
+    <details class="gp-doc__source">
+      <summary><strong>02 · CSS de composition</strong><span>Classes gp-* hors du kit</span></summary>
+      <div class="gp-doc__source-action">
+        <span>Styles partagés par les trois exemples</span>
+        <span data-gp-copy-status role="status" aria-live="polite"></span>
+        <button type="button" data-gp-copy="gp-pattern-css" disabled>Copier CSS</button>
+      </div>
+      <pre id="gp-pattern-css"><code>{{ pattern.css }}</code></pre>
+    </details>
+    {% if pattern.slug == 'mission-form' %}
+      <details class="gp-doc__source">
+        <summary><strong>03 · Interaction JavaScript facultative</strong><span>Validation locale uniquement</span></summary>
+        <div class="gp-doc__source-action">
+          <span>À remplacer par votre traitement Symfony et sa protection CSRF</span>
+          <span data-gp-copy-status role="status" aria-live="polite"></span>
+          <button type="button" data-gp-copy="gp-pattern-js" disabled>Copier JS</button>
+        </div>
+        <pre id="gp-pattern-js"><code>{{ pattern.js }}</code></pre>
+      </details>
+    {% endif %}
+  </section>
+  <section class="gp-doc__notes">
+    <h2>Pour l’utiliser dans une application</h2>
+    <p>Installez les recettes Guilloche référencées, copiez le Twig et le CSS ci-dessus, puis remplacez les exemples statiques par des données de votre contrôleur Symfony. Pour le formulaire, ajoutez votre route, les validations serveur et la protection CSRF : la démonstration ne sauvegarde rien.</p>
+    <a href="{{ path('app_patterns') }}">Explorer les autres compositions <span aria-hidden="true">↗</span></a>
+  </section>
+  <script src="{{ asset('pattern-interactions.js') }}" defer></script>
+{% endblock %}

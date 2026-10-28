@@ -1,0 +1,39 @@
+{% extends 'doc/base.html.twig' %}
+{% block title %}Compositions métier · Guilloche{% endblock %}
+{% block body %}
+  <nav class="ds__crumbs" aria-label="Fil d’Ariane">
+    <a href="{{ path('app_home') }}">Guilloche</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Compositions</span>
+  </nav>
+  <header class="gp-doc__intro">
+    <p class="ds__eyebrow">COMPOSITIONS / EXEMPLES PRÊTS À ADAPTER</p>
+    <h1>Des composants qui deviennent <em>des écrans.</em></h1>
+    <p>Trois exemples Symfony/Twig complets : de vrais composants, des données fictives, le code source exact et le CSS qui permet de reproduire le rendu.</p>
+  </header>
+  <section class="gp-doc__gallery" aria-label="Modèles de pages">
+    {% for slug, pattern in patterns %}
+      <article class="gp-doc__gallery-card">
+        <div class="gp-doc__gallery-art gp-doc__gallery-art--{{ loop.index }}" aria-hidden="true">
+          <span class="gp-doc__gallery-art-top"></span>
+          <span class="gp-doc__gallery-art-line"></span>
+          <span class="gp-doc__gallery-art-line gp-doc__gallery-art-line--short"></span>
+          <span class="gp-doc__gallery-art-blocks"><i></i><i></i><i></i></span>
+        </div>
+        <div class="gp-doc__gallery-body">
+          <span class="gp-doc__overline">0{{ loop.index }} / {{ pattern.eyebrow }}</span>
+          <h2><a href="{{ path('app_pattern', { slug: slug }) }}">{{ pattern.title }} <span aria-hidden="true">↗</span></a></h2>
+          <p>{{ pattern.summary }}</p>
+          <div class="gp-doc__tags">
+            {% for piece in pattern.pieces|slice(0, 4) %}<span>{{ piece }}</span>{% endfor %}
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+  <section class="gp-doc__notes">
+    <h2>Une architecture volontairement simple</h2>
+    <p>Le kit fournit les composants Twig. Les classes <code>gp-*</code> composent les pages dans l’application. Le code et les styles sont copiables séparément, sans introduire de dépendance à un framework CSS.</p>
+    <a href="{{ path('app_showcase') }}">Voir aussi le showroom interactif <span aria-hidden="true">↗</span></a>
+  </section>
+{% endblock %}

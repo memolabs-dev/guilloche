@@ -1,0 +1,46 @@
+{# COMPOSITION DE DÉMONSTRATION : validation native, aucune soumission réseau. #}
+<section class="gp gp--form" aria-label="Création d’une mission fictive">
+  <header class="gp__header">
+    <div>
+      <p class="gp__eyebrow">NOUVELLE MISSION / EXEMPLE</p>
+      <h2 class="gp__title">Préparer une mission</h2>
+      <p class="gp__lead">Des champs clairs, groupés par intention.</p>
+    </div>
+  </header>
+  <twig:ui:Alert type="info" title="Exemple sans persistance" message="Le bouton vérifie les champs sur cette page ; aucune information n’est envoyée." />
+
+  <form class="gp__form" data-gp-demo-form>
+    <twig:ui:FormSection title="Informations générales" description="Les informations indispensables à la mission.">
+      <div class="gp__form-grid">
+        <twig:ui:Field id="gp-title" label="Nom de la mission" help="Choisissez un nom court et reconnaissable." required>
+          <twig:ui:Input id="gp-title" placeholder="Audit du portail client" required describedBy="gp-title-help" />
+        </twig:ui:Field>
+        <twig:ui:Field id="gp-client" label="Client" required>
+          <twig:ui:Select id="gp-client" :options="[
+            { value: 'atlas', label: 'Atelier Atlas' },
+            { value: 'horizon', label: 'Horizon' },
+            { value: 'nord', label: 'Maison Nord' }
+          ]" placeholder="Choisir un client" required />
+        </twig:ui:Field>
+        <twig:ui:Field id="gp-budget" label="Budget estimé" help="Montant indicatif en euros.">
+          <twig:ui:Input id="gp-budget" type="number" placeholder="4500" describedBy="gp-budget-help" />
+        </twig:ui:Field>
+        <twig:ui:Field id="gp-due" label="Échéance prévisionnelle">
+          <twig:ui:Input id="gp-due" type="date" />
+        </twig:ui:Field>
+      </div>
+    </twig:ui:FormSection>
+
+    <twig:ui:FormSection title="Contexte de la mission" description="Ajoutez les attentes et les étapes clés.">
+      <twig:ui:Field id="gp-notes" label="Description" help="Précisez le périmètre et les livrables attendus.">
+        <twig:ui:Textarea id="gp-notes" :rows="4" placeholder="Objectifs, livrables, contexte…" describedBy="gp-notes-help" />
+      </twig:ui:Field>
+    </twig:ui:FormSection>
+
+    <footer class="gp__form-actions">
+      <p class="gp__form-status" data-gp-status role="status" aria-live="polite">Données fictives · Aucun envoi au serveur</p>
+      <twig:ui:Button type="button" variant="primary" disabled data-gp-check>Vérifier les champs</twig:ui:Button>
+    </footer>
+    <noscript><p class="gp__form-status">La vérification facultative nécessite JavaScript ; les champs restent accessibles.</p></noscript>
+  </form>
+</section>
