@@ -1,7 +1,7 @@
 # Guilloche — revue visuelle P0 des fondamentaux
 
-Statut : **première tranche du ticket #57**, non publiée en version stable.
-Périmètre : la recette `theme` (tokens) et les recettes `button`, `input`, `textarea`, `select`, `card`, `badge`, `table`.
+Statut : **douze recettes fondamentales traitées sur deux PR**, non publiées en version stable.
+Périmètre : `theme` (tokens), `button`, `input`, `textarea`, `select`, `card`, `badge`, `table`, `dialog`, `tabs`, `alert`, `dropdown-menu`.
 
 ## Décisions
 
@@ -14,9 +14,9 @@ Périmètre : la recette `theme` (tokens) et les recettes `button`, `input`, `te
 
 ## Matrice de validation visuelle
 
-Les captures Chromium de la CI comparent ces sept recettes sur les quatre variantes
+Les captures Chromium de la CI comparent ces onze composants (plus les tokens de thème) sur les quatre variantes
 `desktop-light`, `desktop-dark`, `mobile-light` et `mobile-dark`, avec les fichiers
-`core-<recette>-<viewport>-<theme>.png`.
+`core-<recette>-<viewport>-<theme>.png` et `surface-<recette>-<viewport>-<theme>.png`.
 
 | Recette | À vérifier |
 | --- | --- |
@@ -26,16 +26,21 @@ Les captures Chromium de la CI comparent ces sept recettes sur les quatre varian
 | Select | 40 px, flèche, valeurs et navigation clavier native |
 | Card | 13 px de rayon, titres/description, footer, rythme intérieur |
 | Badge | au moins 23 px, nuances `soft`, `solid`, `outline`, clair/sombre |
-| Table | lignes au moins 46 px, lecture des colonnes, focus-within, débordement interne |
+| Table | lignes au moins 46 px, références non scindées, focus-within, débordement interne |
+| Dialog | bouton 40 px, titre et description, fermeture clavier, scroll natif |
+| Tabs | liens de navigation (pas de faux widget tablist), aria-current et scroll mobile |
+| Alert | textes et icônes, rôle status/alert correct, contraste en clair/sombre |
+| DropdownMenu | details/summary natifs, ouverture sans JS, menu et liens accessibles |
 
 La CI valide également la synchronisation du harnais et l'égalité exacte de `dist/guilloche.css`
 avec `bin/build-css`. Les captures **ne sont pas à elles seules une certification d'accessibilité** :
 il faut vérifier les composants dans l'application consommatrice.
 
-## Hors de portée de cette tranche
+## Hors de portée du P0
 
-`Dialog`, `Tabs`, `Alert` et `DropdownMenu` restent à revoir, de même que
-la signature `Rosette` (non incluse dans les douze composants fondamentaux du #57).
+La signature `Rosette` ne fait pas partie des douze recettes fondamentales de #57.
+Le playground de props configurables appartient au ticket #58. Il reste à organiser
+la revue visuelle finale dans le vrai consommateur avant de taguer une release.
 
 Ne pas taguer de release ni déployer `guilloche-workspace` tant que la validation
 visuelle du consommateur n'a pas été réalisée. Cette documentation ne remplace pas
