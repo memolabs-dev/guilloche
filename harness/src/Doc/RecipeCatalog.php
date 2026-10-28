@@ -39,7 +39,7 @@ final class RecipeCatalog
     /** @return array<string, list<array<string, mixed>>> */
     public function families(): array
     {
-        $order = ['fondation', 'primitives', 'formulaires', 'navigation', 'donnees', 'patterns', 'avances', 'layout'];
+        $order = ['fondation', 'primitives', 'signature', 'formulaires', 'navigation', 'donnees', 'patterns', 'avances', 'layout'];
         $families = [];
         foreach ($this->all() as $recipe) {
             $families[$recipe['family']][] = $recipe;

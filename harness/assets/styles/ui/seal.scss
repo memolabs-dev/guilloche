@@ -16,6 +16,10 @@
     display: block;
 }
 
+.ui-seal__trace {
+    stroke-width: 1;
+}
+
 .ui-seal__text {
     display: inline-flex;
     align-items: baseline;
@@ -45,12 +49,12 @@
 }
 
 .ui-seal.is-fresh .ui-seal__trace {
-    stroke-dasharray: 1200;
+    stroke-dasharray: 100;
     animation: ui-seal-print 520ms var(--ui-ease) both;
 }
 
 @keyframes ui-seal-print {
-    from { stroke-dashoffset: 1200; }
+    from { stroke-dashoffset: 100; }
     to { stroke-dashoffset: 0; }
 }
 

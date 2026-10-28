@@ -1,3 +1,4 @@
+(() => {
 // Demonstration : le harnais ne charge pas Stimulus. Meme algorithme que
 // le controleur ui--rosette du kit, applique aux rosettes de la page.
 const hash = (text) => {
@@ -53,3 +54,4 @@ document.querySelectorAll('[data-ui--rosette-seed-value]').forEach((element) => 
         main.style.strokeDashoffset = String(length * (1 - progress / 100));
     }
 });
+})();

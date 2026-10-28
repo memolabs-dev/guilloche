@@ -1,3 +1,4 @@
+(() => {
 // Demonstration : meme algorithme que le controleur ui--seal du kit.
 const hash = (text) => {
     let value = 2166136261;
@@ -47,3 +48,4 @@ document.querySelectorAll('[data-ui--seal-seed-value]').forEach((element) => {
     seal.classList.add('is-fresh');
     seal.addEventListener('animationend', () => seal.classList.remove('is-fresh'), { once: true });
 });
+})();
