@@ -12,6 +12,10 @@ export default class extends Controller {
         this.inputTarget.focus();
     }
 
+    close() {
+        if (this.dialogTarget.open) this.dialogTarget.close();
+    }
+
     filter() {
         const term = this.inputTarget.value.toLowerCase();
         for (const item of this.items) {
