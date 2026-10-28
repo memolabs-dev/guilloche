@@ -861,7 +861,11 @@ test('P0 foundations board works without JavaScript', {timeout:45000}, async()=>
         const table=page.locator('#fv-table .ui-table-wrapper');
         await table.focus();
         await page.keyboard.press('ArrowRight');
-        await page.waitForFunction(()=>document.querySelector('#fv-table .ui-table-wrapper').scrollLeft>0);
+        // page.waitForFunction cannot run in a JavaScript-disabled context.
+        // Playwright's CDP evaluation can still inspect the native scroll offset.
+        await page.waitForTimeout(250);
+        const offset = await table.evaluate(el => el.scrollLeft);
+        assert.ok(offset > 0, 'native keyboard scroll must work without page JavaScript');
         await ctx.close();
     } finally {await browser.close();}
 });
