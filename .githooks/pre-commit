@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+git diff --cached --check
+if git diff --cached --name-only --diff-filter=ACMR | grep -E '(^|/)\.env($|\.(local|production|development|test)$)|\.(pem|p12|p8)$' >/dev/null; then
+  echo "pre-commit: private environment/key file staged" >&2
+  exit 1
+fi
+
+# PHP is optional on the host (CI enforces all PHP checks). When present, lint
+# exactly the PHP staged in Git, not potentially unstaged working-tree edits.
+if git diff --cached --name-only --diff-filter=ACMR | grep -E '\.php$' >/dev/null; then
+  if command -v php >/dev/null 2>&1; then
+    git diff --cached --name-only --diff-filter=ACMR | grep -E '\.php$' |
+      while IFS= read -r file; do
+        git show ":$file" | php -l >/dev/null || { echo "PHP syntax invalid: $file" >&2; exit 1; }
+      done
+  else
+    echo "pre-commit: PHP CLI unavailable; PHP syntax stays enforced by CI" >&2
+  fi
+fi
+
+if git diff --cached --name-only --diff-filter=ACMR | grep -E '^(kits/|bin/lint-recipes|bin/docs)' >/dev/null; then
+  if command -v php >/dev/null 2>&1; then
+    ./bin/lint-recipes
+    php bin/docs --self-test
+  else
+    echo "pre-commit: PHP CLI unavailable; kit checks stay enforced by CI" >&2
+  fi
+fi
