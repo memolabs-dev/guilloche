@@ -4,7 +4,7 @@
 {% props trigger, label, placeholder = null, items = [] %}
 <div {{ attributes.defaults({ class: 'ui-command' }) }} data-controller="ui--command">
   <button class="ui-command__trigger" type="button" data-action="ui--command#open">{{ trigger }}</button>
-  <dialog class="ui-command__dialog" data-ui--command-target="dialog" aria-label="{{ label }}">
+  <dialog class="ui-command__dialog" data-ui--command-target="dialog" aria-label="{{ label }}" data-action="keydown.esc->ui--command#close">
     <input class="ui-command__input" type="search" placeholder="{{ placeholder ?? false }}"
       aria-label="{{ label }}" data-ui--command-target="input"
       data-action="input->ui--command#filter keydown->ui--command#navigate" />
