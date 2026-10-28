@@ -1,0 +1,80 @@
+name: Installation externe depuis une release
+
+on:
+  workflow_dispatch: {}
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  consumer:
+    name: Composer stable via VCS + copie réelle des recettes
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+      - name: Simuler un projet Symfony consommateur neuf
+        run: |
+          mkdir consumer
+          cat > consumer/composer.json <<'JSON'
+          {
+            "name": "guilloche/consumer-smoke",
+            "description": "Application externe éphémère pour tester la release",
+            "type": "project",
+            "require": {
+              "php": "^8.4"
+            },
+            "repositories": [
+              {
+                "type": "vcs",
+                "url": "https://github.com/memolabs-dev/guilloche"
+              }
+            ]
+          }
+          JSON
+      - name: Résoudre Guilloche 2 depuis un vrai tag GitHub, sans Packagist
+        working-directory: consumer
+        run: |
+          composer require --no-interaction --no-progress --no-scripts 'memolabs-dev/guilloche:^2.0'
+          composer show memolabs-dev/guilloche --format=json | php -r '
+            $package = json_decode(stream_get_contents(STDIN), true, flags: JSON_THROW_ON_ERROR);
+            if (!in_array("2.0.0", $package["versions"] ?? [], true)) {
+                fwrite(STDERR, "Version stable 2.0.0 non résolue depuis VCS\n");
+                exit(1);
+            }
+          '
+      - name: Installer réellement Button et Rosette dans le projet
+        working-directory: consumer
+        run: |
+          php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=. --dry-run
+          test ! -e templates/components/ui/Button.html.twig
+          php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=.
+          php vendor/memolabs-dev/guilloche/bin/guilloche-install rosette --project=.
+          php vendor/memolabs-dev/guilloche/bin/guilloche-install seal --project=.
+          test -s templates/components/ui/Button.html.twig
+          test -s templates/components/ui/Rosette.html.twig
+          test -s templates/components/ui/Seal.html.twig
+          test -s assets/controllers/ui/rosette_controller.js
+          test -s public/guilloche/guilloche.css
+          test -s public/guilloche/fonts.css
+          test -s public/guilloche/fonts/geist/geist-variable.woff2
+      - name: Autoload et calculs SSR du paquet publié
+        working-directory: consumer
+        run: |
+          php -r '
+            require "vendor/autoload.php";
+            $first = \Guilloche\Signature\RosetteGeometry::paths("AR-2026-042");
+            $second = \Guilloche\Signature\RosetteGeometry::paths("AR-2026-043");
+            $seal = \Guilloche\Signature\RosetteGeometry::sealPath("camille");
+            if ($first["main"] === $second["main"] || strlen($first["main"]) < 1000 || strlen($seal) < 1000) {
+                fwrite(STDERR, "Calcul SVG déterministe indisponible\n");
+                exit(1);
+            }
+            echo "OK: paquet stable, installateur et rendu PHP\n";
+          '
