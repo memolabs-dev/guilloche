@@ -114,7 +114,7 @@ foreach ($manifest['copy-files'] as $from => $to) {
         fail("Chemin non supporté dans la recette : $from => $to");
     }
 }
-if ($copy === []) {
+if ($copy === [] && $recipe !== 'theme') {
     fail("La recette $recipe ne contient aucun fichier installable.");
 }
 
