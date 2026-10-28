@@ -1,0 +1,191 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Install one Guilloche recipe in a Symfony application.
+ *
+ * Unlike Symfony UX Toolkit's built-in --kit option, this installer works with
+ * third-party kits installed through Composer. No edits to project configuration,
+ * no shell execution, no network access, and no replacement of customized files.
+ *
+ * php vendor/memolabs-dev/guilloche/bin/guilloche-install rosette --project=.
+ * php vendor/memolabs-dev/guilloche/bin/guilloche-install --list
+ */
+const ROOT = __DIR__ . '/..';
+
+function fail(string $message, int $status = 1): never
+{
+    fwrite(STDERR, "Guilloche: $message\n");
+    exit($status);
+}
+
+$recipe = null;
+$project = '.';
+$dryRun = false;
+$list = false;
+
+foreach (array_slice($argv, 1) as $argument) {
+    if ($argument === '--dry-run') {
+        $dryRun = true;
+    } elseif ($argument === '--list') {
+        $list = true;
+    } elseif (str_starts_with($argument, '--project=')) {
+        $project = substr($argument, strlen('--project='));
+    } elseif (!str_starts_with($argument, '-') && $recipe === null) {
+        $recipe = $argument;
+    } else {
+        fail("Argument inconnu : $argument");
+    }
+}
+
+$kit = ROOT . '/kits/guilloche';
+if ($list) {
+    foreach (glob($kit . '/*/manifest.json') ?: [] as $manifest) {
+        echo basename(dirname($manifest)), "\n";
+    }
+    exit(0);
+}
+
+if ($recipe === null || preg_match('/^[a-z][a-z0-9-]*$/D', $recipe) !== 1) {
+    fail('Usage : guilloche-install <recette> [--project=/chemin/app] [--dry-run] | --list');
+}
+
+$app = realpath($project);
+if ($app === false || !is_dir($app) || !is_file($app . '/composer.json')) {
+    fail('Le dossier cible doit être une application Symfony existante avec composer.json');
+}
+if ($app === realpath(ROOT)) {
+    fail('Ne pas installer dans le dépôt Guilloche lui-même.');
+}
+
+$source = realpath($kit . '/' . $recipe);
+if ($source === false || !str_starts_with($source . '/', realpath($kit) . '/')) {
+    fail("Recette inconnue : $recipe");
+}
+$manifest = json_decode(file_get_contents($source . '/manifest.json') ?: '', true);
+if (!is_array($manifest) || !isset($manifest['copy-files']) || !is_array($manifest['copy-files'])) {
+    fail("Manifest invalide : $recipe");
+}
+
+/** @var array<string, string> $copy map: absolute destination => absolute source */
+$copy = [];
+
+/**
+ * Traverse a known source directory and prepare a non-destructive copy plan.
+ * No symlinks, path traversal, or unrelated files are permitted.
+ */
+function addDirectory(array &$copy, string $from, string $to): void
+{
+    if (!is_dir($from)) {
+        fail("Répertoire source manquant : $from");
+    }
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($from, FilesystemIterator::SKIP_DOTS)
+    );
+    foreach ($iterator as $file) {
+        if ($file->isLink()) {
+            fail("Lien symbolique interdit dans la recette : {$file->getPathname()}");
+        }
+        if (!$file->isFile()) {
+            continue;
+        }
+        $relative = substr($file->getPathname(), strlen($from) + 1);
+        $destination = $to . '/' . $relative;
+        if (isset($copy[$destination])) {
+            fail("Destination dupliquée : $destination");
+        }
+        $copy[$destination] = $file->getPathname();
+    }
+}
+
+// Only copy-files paths supported by this independent installer. Component
+// templates live under ui/, Stimulus controller paths under ui/ too.
+// These match TwigComponent's anonymous_template_directory and StimulusBundle
+// AssetMapper defaults. CSS is delivered as a standalone prebuilt asset.
+foreach ($manifest['copy-files'] as $from => $to) {
+    $pair = [$from, $to];
+    if ($pair === ['templates/components/', '%COMPONENTS_DIR%/']) {
+        addDirectory($copy, $source . '/templates/components', $app . '/templates/components/ui');
+    } elseif ($pair === ['assets/controllers/', '%CONTROLLERS_DIR%/']) {
+        addDirectory($copy, $source . '/assets/controllers', $app . '/assets/controllers/ui');
+    } else {
+        fail("Chemin non supporté dans la recette : $from => $to");
+    }
+}
+if ($copy === [] && $recipe !== 'theme') {
+    fail("La recette $recipe ne contient aucun fichier installable.");
+}
+
+// Copy the compiled CSS and self-hosted fonts (fonts.css URLs are relative).
+$copy[$app . '/public/guilloche/guilloche.css'] = ROOT . '/dist/guilloche.css';
+$copy[$app . '/public/guilloche/fonts.css'] = $kit . '/theme/assets/fonts.css';
+addDirectory($copy, $kit . '/theme/assets/fonts', $app . '/public/guilloche/fonts');
+ksort($copy);
+
+$new = [];
+$identical = [];
+$conflicts = [];
+foreach ($copy as $destination => $original) {
+    if (!is_file($original)) {
+        fail("Fichier source introuvable : $original");
+    }
+    // Refuse symlink paths from project root downwards, including the target.
+    $relative = substr($destination, strlen($app) + 1);
+    $cursor = $app;
+    foreach (explode('/', $relative) as $segment) {
+        $cursor .= '/' . $segment;
+        if (is_link($cursor)) {
+            fail("Lien symbolique dans la destination : $cursor");
+        }
+    }
+    if (file_exists($destination)) {
+        if (!is_file($destination) || hash_file('sha256', $destination) !== hash_file('sha256', $original)) {
+            $conflicts[] = $relative;
+        } else {
+            $identical[] = $relative;
+        }
+    } else {
+        $new[] = $relative;
+    }
+}
+
+if ($conflicts) {
+    foreach ($conflicts as $path) {
+        fwrite(STDERR, "CONFLIT $path\n");
+    }
+    fail('Aucun fichier modifié. Fusionnez vos personnalisations avant de relancer.', 2);
+}
+
+if ($dryRun) {
+    foreach ($new as $path) {
+        echo "CREER $path\n";
+    }
+    foreach ($identical as $path) {
+        echo "IDENTIQUE $path\n";
+    }
+    echo "Simulation : ", count($new), ' nouveau(x), ', count($identical), " identique(s).\n";
+    exit(0);
+}
+
+foreach ($new as $relative) {
+    $destination = $app . '/' . $relative;
+    $parent = dirname($destination);
+    if (!is_dir($parent) && !mkdir($parent, 0755, true) && !is_dir($parent)) {
+        fail("Impossible de créer : $parent");
+    }
+    if (!copy($copy[$destination], $destination)) {
+        fail("Impossible de copier : $relative");
+    }
+    echo "INSTALLE $relative\n";
+}
+printf("Guilloche %s : %d fichier(s) installé(s), %d inchangé(s).\n", $recipe, count($new), count($identical));
+echo "\nAjoutez une seule fois dans votre layout Twig :\n";
+echo "  <link rel=\"stylesheet\" href=\"{{ asset('guilloche/fonts.css') }}\">\n";
+echo "  <link rel=\"stylesheet\" href=\"{{ asset('guilloche/guilloche.css') }}\">\n";
+echo "\nComposant : <twig:ui:", ucfirst($recipe), " ... />\n";
+echo "Si la recette utilise Stimulus, vérifiez que le projet charge assets/controllers/ui/ via StimulusBundle.\n";
+if ($recipe === 'rosette' || $recipe === 'seal') {
+    echo "Pour le dessin SSR sans JavaScript, déclarez Guilloche\\Signature\\AutoGeometrySubscriber dans config/services.yaml.\n";
+}

@@ -125,6 +125,9 @@ foreach (glob(KITS_DIR . '/*/manifest.json', GLOB_BRACE) as $recipeManifest) {
             checkSourceDoesNotEscape($label, $source);
             checkSourceDoesNotEscape($label, $destination);
             checkPlaceholders($label, $destination);
+            if (!is_dir($dir . '/' . $source)) {
+                error(sprintf('%s : repertoire copy-files inexistant "%s"', $label, $source));
+            }
         }
     }
 

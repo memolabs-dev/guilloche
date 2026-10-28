@@ -31,6 +31,10 @@ jobs:
         run: npm install -g sass@1.106.1
       - name: Schemas et recettes
         run: ./bin/lint-recipes
+      - name: Installer tiers (simulation, fichiers et conflits)
+        run: bash bin/test-installer
+      - name: Métadonnées Composer
+        run: composer validate --strict --no-check-publish
       - name: Miroir du kit dans le harnais
         run: php bin/check-harness
       - name: Contraste des tokens

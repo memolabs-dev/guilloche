@@ -1,41 +1,36 @@
-# Publication sur Packagist
+# Publication de Guilloche sur Packagist
 
-Le paquet `memolabs-dev/guilloche` est declare dans `composer.json`. La publication demande le compte Packagist du proprietaire : elle ne peut pas etre faite par un agent.
+Le paquet Composer est `memolabs-dev/guilloche` et les versions viennent des **tags GitHub**, pas d'un champ `version` dans `composer.json`.
 
-## Metadonnees
+## État de publication
 
-| Champ | Valeur |
-|---|---|
-| Nom | `memolabs-dev/guilloche` |
-| Type | `library` |
-| Licence | MIT |
-| Depot | `https://github.com/memolabs-dev/guilloche` |
-| Branche par defaut | `main` |
+- Une release GitHub et son tag ne suffisent **pas** à créer un paquet Packagist.
+- La page Packagist doit d'abord être enregistrée par le compte propriétaire du dépôt (ou un compte habilité).
+- Tant que ce n'est pas fait, utiliser le dépôt VCS Composer, ce qui est déjà prouvé dans le consommateur Guilloche Workspace.
 
-## Procedure
+## Vérifications obligatoires avant chaque version
 
-1. Se connecter sur `packagist.org` avec le compte GitHub proprietaire du depot.
-2. `Submit` puis saisir l'URL du depot : `https://github.com/memolabs-dev/guilloche`.
-3. Packagist lit `composer.json` et cree le paquet. Il propose ensuite d'installer le webhook GitHub.
-4. Accepter le webhook : chaque poussée sur `main` met alors a jour la version du paquet.
-5. Verifier la page du paquet : description, licence, versions et nombre de telechargements.
+1. `main` propre, CI de contrat et Chromium verte.
+2. `composer validate --strict --no-check-publish`.
+3. `bash bin/test-installer` : simulation, deux recettes réelles, styles et polices, refus d'écraser un fichier existant.
+4. `kits/guilloche/manifest.json` aligné sur le tag `vX.Y.Z`.
+5. Changelog et documentation d'installation cohérents.
+6. Tag annoté et GitHub Release pointant sur un commit validé. Jamais sur une PR non testée.
 
-## Verification apres publication
+## Enregistrement Packagist (action propriétaire)
 
-```shell
-composer show memolabs-dev/guilloche
-```
+1. Ouvrir <https://packagist.org/packages/submit> et s'authentifier avec le compte propriétaire.
+2. Soumettre le dépôt `https://github.com/memolabs-dev/guilloche`.
+3. Autoriser/configurer la mise à jour du dépôt si Packagist le propose.
+4. Vérifier que le tag stable de la release apparaît effectivement dans <https://packagist.org/packages/memolabs-dev/guilloche>.
+5. Vérifier l'installation depuis un projet Symfony vierge :
+   `composer require 'memolabs-dev/guilloche:^2.0'` et ensuite `php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=.`.
 
-Puis, dans un projet consommateur :
+La commande `php bin/console ux:install button --kit=guilloche` **ne fonctionne pas automatiquement** : Symfony UX Toolkit référence ses kits intégrés, et Composer ne les étend pas. Guilloche fournit `bin/guilloche-install` pour copier les recettes externes.
 
-```shell
-composer require memolabs-dev/guilloche
-php bin/console ux:install button --kit guilloche
-```
+## Installation par dépôt VCS avant Packagist
 
-## Sans publication
-
-Un projet peut consommer le depot sans Packagist en declarant la source VCS :
+Dans le `composer.json` de l'application consommatrice :
 
 ```json
 {
@@ -45,15 +40,8 @@ Un projet peut consommer le depot sans Packagist en declarant la source VCS :
 }
 ```
 
-Composer lit alors les tags du depot. Sans tag, il installe `dev-main`.
+Ensuite `composer require 'memolabs-dev/guilloche:^2.0'` si `v2.0.0` existe, puis utiliser le même installateur. Le consommateur peut aussi figer un commit avec un alias `dev-main#<sha>` en attendant la version stable.
 
-## Tags
+### Ne pas promettre une publication non vérifiée
 
-La version du kit est declaree dans `kits/guilloche/manifest.json` et dans `composer.json`. Pour publier une version stable, creer un tag Git correspondant a la politique de `docs/VERSIONING.md` :
-
-```shell
-git tag -a v1.6.0 -m "v1.6.0"
-git push origin v1.6.0
-```
-
-Packagist detecte le tag et publie la version.
+La preuve de publication est la disponibilité de la page du paquet et sa résolution par Composer, **pas** seulement la présence du tag GitHub. Ne jamais partager une commande de Packagist comme « opérationnelle » avant l'avoir validée sur une installation vierge.
