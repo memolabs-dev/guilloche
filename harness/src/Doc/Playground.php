@@ -88,7 +88,7 @@ final class Playground
             'badge' => '<twig:ui:Badge tone="' . $a('tone') . '" variant="' . $a('variant') . '">' . $a('label') . '</twig:ui:Badge>',
             'card' => '<twig:ui:Card title="' . $a('title') . '" description="' . $a('description') . '" footer="' . $a('footer') . '">' . "\n  <p>Contenu de démonstration</p>\n" . '</twig:ui:Card>',
             'dialog' => '<twig:ui:Dialog id="demo-dialog" title="' . $a('title') . '" description="' . $a('description') . '" trigger="' . $a('trigger') . '">' . "\n  <p>Exemple de contenu de dialogue.</p>\n" . '</twig:ui:Dialog>',
-            'table' => '<twig:ui:Table caption="' . $a('caption') . '"' . ($v['serial'] ? ' serial' : '') . '>' . "\n  <thead><tr><th scope="col">Référence</th><th scope="col">Statut</th></tr></thead>\n  <tbody><tr><td>F-2026-010</td><td>Validé</td></tr></tbody>\n" . '</twig:ui:Table>',
+            'table' => '<twig:ui:Table caption="' . $a('caption') . '"' . ($v['serial'] ? ' serial' : '') . '>' . "\n  <thead><tr><th scope=\"col\">Référence</th><th scope=\"col\">Statut</th></tr></thead>\n  <tbody><tr><td>F-2026-010</td><td>Validé</td></tr></tbody>\n" . '</twig:ui:Table>',
             default => '',
         };
     }
