@@ -12,8 +12,9 @@ Guilloche se positionne donc comme un **design system natif Symfony pour les app
 
 ## Ce que contient ce dépôt
 
-- `kits/guilloche/` — miroir du format `symfony/ux-toolkit 3.x/kits` : un kit `guilloche` avec ses recettes (ici `button` en v1).
+- `kits/guilloche/` — 74 recettes au format des manifests Symfony UX Toolkit (fondation, primitives et composants métier).
 - `harness/` — app Symfony minimale (AssetMapper + SassBundle) qui installe et rend les recettes ; c'est là que vivent les tests de contrat.
+- `bin/guilloche-install` — installation vérifiable, non destructive, des recettes dans une application Symfony tierce.
 - `bin/lint-recipes` — validation des schémas de recette, placeholders, chemins, fusion de classes, absence de référence `App\`.
 - `bin/build-css` — émet `dist/guilloche.css` depuis les partials SCSS.
 - `dist/guilloche.css` — CSS précompilé pour les apps sans SassBundle.
@@ -31,19 +32,23 @@ Guilloche se positionne donc comme un **design system natif Symfony pour les app
 
 ## Catalogue
 
-Le kit livre la fondation (`theme`) et 66 composants : primitives, formulaires, navigation et surfaces, donnees, patterns d'ecran, composants avances, groupes, listes, media, navigation avancee, calendrier et code a usage unique.
+Le kit livre 74 recettes (dont la fondation `theme`), couvrant : primitives, formulaires, navigation et surfaces, donnees, patterns d'ecran, composants avances, groupes, listes, media, navigation avancee, calendrier et code a usage unique.
 
 Le catalogue detaille, les principes et les vagues suivantes sont dans [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
 
-## Installation
+## Installation dans une application Symfony
 
-Comme dependance Composer, une fois le paquet publie sur Packagist :
+**Prérequis :** PHP 8.4+, Symfony UX TwigComponent 3.6+, une application avec `composer.json`, `templates/`, `assets/` et `public/`. Installer StimulusBundle pour les recettes interactives.
+
+### 1. Ajouter la dépendance Composer
+
+Lorsque la publication Packagist sera active :
 
 ```shell
-composer require memolabs-dev/guilloche
+composer require memolabs-dev/guilloche:^2.0
 ```
 
-Sans publication, declarer la source VCS dans le projet consommateur :
+En attendant, déclarer le dépôt VCS dans le `composer.json` de l'application :
 
 ```json
 {
@@ -53,15 +58,44 @@ Sans publication, declarer la source VCS dans le projet consommateur :
 }
 ```
 
-Puis installer une recette avec le Toolkit :
+Puis installer une version stable taguée avec Composer, ou `dev-main` si aucun tag compatible n'est encore disponible.
+
+### 2. Installer les recettes du kit
 
 ```shell
-php bin/console ux:install button --kit guilloche
+php vendor/memolabs-dev/guilloche/bin/guilloche-install --list
+php vendor/memolabs-dev/guilloche/bin/guilloche-install theme --project=.
+php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=. --dry-run
+php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=.
+php vendor/memolabs-dev/guilloche/bin/guilloche-install rosette --project=.
 ```
 
-Sans Composer, le depot peut etre clone : les styles sont dans `kits/guilloche/**/assets/styles/ui/` et le CSS precompile dans `dist/guilloche.css`.
+L'installateur fonctionne **sans toucher aux fichiers existants personnalisés** : il refuse toute modification conflictuelle avant de créer quoi que ce soit. Relancer la même installation est sans effet ; `--dry-run` affiche le plan sans écrire. Il copie les templates dans `templates/components/ui/`, les contrôleurs éventuels dans `assets/controllers/ui/`, ainsi que le CSS précompilé et les polices auto-hébergées dans `public/guilloche/`.
 
-La procedure de publication est dans [`docs/PACKAGIST.md`](docs/PACKAGIST.md).
+Dans le layout Twig, ajouter les deux feuilles de style (une seule fois) :
+
+```twig
+<link rel="stylesheet" href="{{ asset('guilloche/fonts.css') }}">
+<link rel="stylesheet" href="{{ asset('guilloche/guilloche.css') }}">
+```
+
+Pour les recettes interactives, configurer le chargement des contrôleurs Stimulus sous `assets/controllers/ui/` selon le bundler utilisé. Les composants copiés s'emploient sous la forme `<twig:ui:Button>Valider</twig:ui:Button>`.
+
+Pour `Rosette` et `Seal`, enregistrer une fois le calculateur Symfony dans `config/services.yaml` :
+
+```yaml
+services:
+    Guilloche\Signature\AutoGeometrySubscriber:
+        tags: ['kernel.event_subscriber']
+```
+
+Le serveur injecte alors le SVG déterministe à partir de `seed` ou `by` directement dans le HTML, sans JavaScript.
+
+**Important :** `php bin/console ux:install ... --kit=guilloche` n'est **pas** une commande d'installation supportée automatiquement par la version officielle de Symfony UX Toolkit. Celle-ci reconnaît ses kits intégrés ; un paquet Composer tiers n'ajoute pas son kit à cette liste. Guilloche fournit donc son propre installateur compatible avec les manifests du kit, en attendant une éventuelle intégration upstream. Voir la [documentation officielle](https://symfony.com/bundles/ux-toolkit).
+
+Sans Composer, l'outil peut aussi être exécuté directement depuis un clone de Guilloche, avec `php bin/guilloche-install button --project=/chemin/vers/app`.
+
+La procédure de publication est dans [`docs/PACKAGIST.md`](docs/PACKAGIST.md).
 
 ## Provenance
 
