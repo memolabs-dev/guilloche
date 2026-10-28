@@ -11,6 +11,7 @@ declare(strict_types=1);
  * no shell execution, no network access, and no replacement of customized files.
  *
  * php vendor/memolabs-dev/guilloche/bin/guilloche-install rosette --project=.
+ * php vendor/memolabs-dev/guilloche/bin/guilloche-install card --namespace=Kit --project=.
  * php vendor/memolabs-dev/guilloche/bin/guilloche-install --list
  */
 const ROOT = __DIR__ . '/..';
@@ -25,6 +26,8 @@ $recipe = null;
 $project = '.';
 $dryRun = false;
 $list = false;
+$namespace = 'ui'; // Compatibilité des installations historiques.
+$namespaceGiven = false;
 
 foreach (array_slice($argv, 1) as $argument) {
     if ($argument === '--dry-run') {
@@ -33,12 +36,28 @@ foreach (array_slice($argv, 1) as $argument) {
         $list = true;
     } elseif (str_starts_with($argument, '--project=')) {
         $project = substr($argument, strlen('--project='));
+    } elseif (str_starts_with($argument, '--namespace=')) {
+        if ($namespaceGiven) {
+            fail('Option --namespace dupliquée.');
+        }
+        $namespaceGiven = true;
+        $namespace = substr($argument, strlen('--namespace='));
     } elseif (!str_starts_with($argument, '-') && $recipe === null) {
         $recipe = $argument;
     } else {
         fail("Argument inconnu : $argument");
     }
 }
+
+// Strict ASCII identifier: no separators, whitespace, Unicode confusables or
+// Twig namespace separators. The legacy ui namespace is reserved.
+if ($namespaceGiven && (
+    preg_match('/^[A-Z][A-Za-z0-9]*$/D', $namespace) !== 1
+    || strcasecmp($namespace, 'ui') === 0
+)) {
+    fail('Namespace invalide : utilisez un identifiant ASCII PascalCase (ex. Kit), différent du namespace historique ui.');
+}
+$stimulusNamespace = strtolower($namespace);
 
 $kit = ROOT . '/kits/guilloche';
 if ($list) {
@@ -49,7 +68,7 @@ if ($list) {
 }
 
 if ($recipe === null || preg_match('/^[a-z][a-z0-9-]*$/D', $recipe) !== 1) {
-    fail('Usage : guilloche-install <recette> [--project=/chemin/app] [--dry-run] | --list');
+    fail('Usage : guilloche-install <recette> [--project=/chemin/app] [--namespace=Kit] [--dry-run] | --list');
 }
 
 $app = realpath($project);
@@ -100,16 +119,17 @@ function addDirectory(array &$copy, string $from, string $to): void
     }
 }
 
-// Only copy-files paths supported by this independent installer. Component
-// templates live under ui/, Stimulus controller paths under ui/ too.
-// These match TwigComponent's anonymous_template_directory and StimulusBundle
-// AssetMapper defaults. CSS is delivered as a standalone prebuilt asset.
+// A namespace controls both TwigComponent paths and Stimulus identifiers.
+// Twig component names are PascalCase (Kit:Button); controller identifiers are
+// lowercase (kit--rosette); applications with manual Stimulus registration
+// must register these controllers explicitly.
+// The legacy default keeps ui/ and ui--* byte-for-byte unchanged.
 foreach ($manifest['copy-files'] as $from => $to) {
     $pair = [$from, $to];
     if ($pair === ['templates/components/', '%COMPONENTS_DIR%/']) {
-        addDirectory($copy, $source . '/templates/components', $app . '/templates/components/ui');
+        addDirectory($copy, $source . '/templates/components', $app . '/templates/components/' . $namespace);
     } elseif ($pair === ['assets/controllers/', '%CONTROLLERS_DIR%/']) {
-        addDirectory($copy, $source . '/assets/controllers', $app . '/assets/controllers/ui');
+        addDirectory($copy, $source . '/assets/controllers', $app . '/assets/controllers/' . $stimulusNamespace);
     } else {
         fail("Chemin non supporté dans la recette : $from => $to");
     }
@@ -124,6 +144,46 @@ $copy[$app . '/public/guilloche/fonts.css'] = $kit . '/theme/assets/fonts.css';
 addDirectory($copy, $kit . '/theme/assets/fonts', $app . '/public/guilloche/fonts');
 ksort($copy);
 
+// Custom namespaces remap Stimulus attributes in Twig, but not the ui-* CSS
+// class names. This is deliberately restricted to the component templates.
+function expectedContents(string $original, string $relative, string $namespace, string $stimulusNamespace): ?string
+{
+    if ($namespace === 'ui' || !str_starts_with($relative, 'templates/components/' . $namespace . '/') || !str_ends_with($relative, '.html.twig')) {
+        return null;
+    }
+
+    $source = file_get_contents($original);
+    if ($source === false) {
+        fail("Source illisible : $original");
+    }
+
+    return str_replace('ui--', $stimulusNamespace . '--', $source);
+}
+
+// Reject case-insensitive aliases even on case-sensitive filesystems.
+// Preflight all paths before writing. Also checks dangling symlinks.
+function verifyDestinationPath(string $app, string $relative): void
+{
+    $cursor = $app;
+    foreach (explode('/', $relative) as $segment) {
+        if (is_dir($cursor)) {
+            $entries = scandir($cursor);
+            if ($entries === false) {
+                fail("Dossier illisible : $cursor");
+            }
+            foreach ($entries as $entry) {
+                if ($entry !== '.' && $entry !== '..' && strcasecmp($entry, $segment) === 0 && $entry !== $segment) {
+                    fail("Collision insensible à la casse : $cursor/$entry ↔ $segment", 2);
+                }
+            }
+        }
+        $cursor .= '/' . $segment;
+        if (is_link($cursor)) {
+            fail("Lien symbolique dans la destination : $cursor", 2);
+        }
+    }
+}
+
 $new = [];
 $identical = [];
 $conflicts = [];
@@ -131,17 +191,12 @@ foreach ($copy as $destination => $original) {
     if (!is_file($original)) {
         fail("Fichier source introuvable : $original");
     }
-    // Refuse symlink paths from project root downwards, including the target.
     $relative = substr($destination, strlen($app) + 1);
-    $cursor = $app;
-    foreach (explode('/', $relative) as $segment) {
-        $cursor .= '/' . $segment;
-        if (is_link($cursor)) {
-            fail("Lien symbolique dans la destination : $cursor");
-        }
-    }
+    verifyDestinationPath($app, $relative);
+    $transformed = expectedContents($original, $relative, $namespace, $stimulusNamespace);
+    $expectedHash = $transformed === null ? hash_file('sha256', $original) : hash('sha256', $transformed);
     if (file_exists($destination)) {
-        if (!is_file($destination) || hash_file('sha256', $destination) !== hash_file('sha256', $original)) {
+        if (!is_file($destination) || hash_file('sha256', $destination) !== $expectedHash) {
             $conflicts[] = $relative;
         } else {
             $identical[] = $relative;
@@ -175,7 +230,12 @@ foreach ($new as $relative) {
     if (!is_dir($parent) && !mkdir($parent, 0755, true) && !is_dir($parent)) {
         fail("Impossible de créer : $parent");
     }
-    if (!copy($copy[$destination], $destination)) {
+    verifyDestinationPath($app, $relative);
+    $transformed = expectedContents($copy[$destination], $relative, $namespace, $stimulusNamespace);
+    $written = $transformed === null
+        ? copy($copy[$destination], $destination)
+        : file_put_contents($destination, $transformed) !== false;
+    if (!$written) {
         fail("Impossible de copier : $relative");
     }
     echo "INSTALLE $relative\n";
@@ -184,8 +244,8 @@ printf("Guilloche %s : %d fichier(s) installé(s), %d inchangé(s).\n", $recipe,
 echo "\nAjoutez une seule fois dans votre layout Twig :\n";
 echo "  <link rel=\"stylesheet\" href=\"{{ asset('guilloche/fonts.css') }}\">\n";
 echo "  <link rel=\"stylesheet\" href=\"{{ asset('guilloche/guilloche.css') }}\">\n";
-echo "\nComposant : <twig:ui:", ucfirst($recipe), " ... />\n";
-echo "Si la recette utilise Stimulus, vérifiez que le projet charge assets/controllers/ui/ via StimulusBundle.\n";
+echo "\nComposant : <twig:", $namespace, ":", ucfirst($recipe), " ... />\n";
+echo "Si la recette utilise Stimulus, vérifiez que le projet charge assets/controllers/", $stimulusNamespace, "/ (identifiants ", $stimulusNamespace, "--*) via StimulusBundle.\n";
 if ($recipe === 'rosette' || $recipe === 'seal') {
     echo "Pour le dessin SSR sans JavaScript, déclarez Guilloche\\Signature\\AutoGeometrySubscriber dans config/services.yaml.\n";
 }

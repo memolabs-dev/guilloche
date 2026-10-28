@@ -45,3 +45,9 @@ Ensuite `composer require 'memolabs-dev/guilloche:^2.0'` si `v2.0.0` existe, pui
 ### Ne pas promettre une publication non vérifiée
 
 La preuve de publication est la disponibilité de la page du paquet et sa résolution par Composer, **pas** seulement la présence du tag GitHub. Ne jamais partager une commande de Packagist comme « opérationnelle » avant l'avoir validée sur une installation vierge.
+
+Dans une application contenant déjà des composants Twig sous Ui, utiliser
+--namespace=Kit pour installer les templates sous Kit et les contrôleurs
+Stimulus sous kit, avec les identifiants réécrits. CSS et polices restent
+communs. Seules les pages ciblées doivent charger cette feuille si un autre
+thème métier coexiste.

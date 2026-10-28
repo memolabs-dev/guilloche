@@ -63,4 +63,103 @@ if php "$INSTALLER" ../rosette --project="$APP" --dry-run > /dev/null 2>&1; then
     exit 1
 fi
 
-echo "OK: installateur tiers non destructif, idempotent et sécurisé."
+
+# Verify a namespace that coexists with old Ui components.
+CUSTOM="$TEMP/custom-app"
+mkdir -p "$CUSTOM/templates/components/Ui" "$CUSTOM/assets/controllers/Ui"
+printf '{"name":"example/custom-app","type":"project"}\n' > "$CUSTOM/composer.json"
+printf 'LOCAL UI INTACT\n' > "$CUSTOM/templates/components/Ui/Card.html.twig"
+printf 'LOCAL JS INTACT\n' > "$CUSTOM/assets/controllers/Ui/rosette_controller.js"
+
+# All manifests must support the custom namespace at least in dry-run mode.
+while IFS= read -r recipe; do
+    php "$INSTALLER" "$recipe" --namespace=Kit --project="$CUSTOM" --dry-run > /dev/null
+done < <(php "$INSTALLER" --list)
+
+php "$INSTALLER" card --project="$CUSTOM" --namespace=Kit --dry-run > "$TEMP/custom-plan.txt"
+grep -q 'CREER templates/components/Kit/Card.html.twig' "$TEMP/custom-plan.txt"
+test ! -e "$CUSTOM/templates/components/Kit/Card.html.twig"
+test ! -e "$CUSTOM/public/guilloche/guilloche.css"
+php "$INSTALLER" card --project="$CUSTOM" --namespace=Kit > "$TEMP/custom-install.txt"
+grep -Fq '<twig:Kit:Card' "$TEMP/custom-install.txt"
+cmp "$CUSTOM/templates/components/Kit/Card.html.twig" "$ROOT/kits/guilloche/card/templates/components/Card.html.twig"
+test "$(cat "$CUSTOM/templates/components/Ui/Card.html.twig")" = "LOCAL UI INTACT"
+test "$(cat "$CUSTOM/assets/controllers/Ui/rosette_controller.js")" = "LOCAL JS INTACT"
+php "$INSTALLER" card --project="$CUSTOM" --namespace=Kit > "$TEMP/custom-repeat.txt"
+grep -q '0 fichier(s) installé(s)' "$TEMP/custom-repeat.txt"
+
+# Stimulus attributes, controller path and CSS class names.
+php "$INSTALLER" rosette --project="$CUSTOM" --namespace=Kit > "$TEMP/custom-rosette.txt"
+test -f "$CUSTOM/templates/components/Kit/Rosette.html.twig"
+test -f "$CUSTOM/assets/controllers/kit/rosette_controller.js"
+grep -q 'data-controller="kit--rosette"' "$CUSTOM/templates/components/Kit/Rosette.html.twig"
+grep -q 'data-kit--rosette-seed-value=' "$CUSTOM/templates/components/Kit/Rosette.html.twig"
+! grep -q 'data-controller="ui--rosette"' "$CUSTOM/templates/components/Kit/Rosette.html.twig"
+grep -q 'ui-rosette' "$CUSTOM/templates/components/Kit/Rosette.html.twig"
+cmp "$CUSTOM/assets/controllers/kit/rosette_controller.js" "$ROOT/kits/guilloche/rosette/assets/controllers/rosette_controller.js"
+php "$INSTALLER" rosette --project="$CUSTOM" --namespace=Kit > "$TEMP/custom-rosette-repeat.txt"
+grep -q '0 fichier(s) installé(s)' "$TEMP/custom-rosette-repeat.txt"
+php "$INSTALLER" dialog --project="$CUSTOM" --namespace=Kit > /dev/null
+grep -q 'kit--dialog#open' "$CUSTOM/templates/components/Kit/Dialog.html.twig"
+test -f "$CUSTOM/assets/controllers/kit/dialog_controller.js"
+
+# Atomic refusal of customized component edits.
+printf 'CUSTOM COMPONENT\n' > "$CUSTOM/templates/components/Kit/Badge.html.twig"
+if php "$INSTALLER" badge --project="$CUSTOM" --namespace=Kit 2> "$TEMP/custom-conflict.txt"; then
+    echo "ERROR: customized Kit/Badge was overwritten" >&2; exit 1
+fi
+grep -q 'CONFLIT templates/components/Kit/Badge.html.twig' "$TEMP/custom-conflict.txt"
+test "$(cat "$CUSTOM/templates/components/Kit/Badge.html.twig")" = 'CUSTOM COMPONENT'
+
+# Multi-file recipe must be atomic if one of its destinations conflicts.
+mkdir -p "$CUSTOM/assets/controllers/kit"
+printf 'USER SHEET SCRIPT\n' > "$CUSTOM/assets/controllers/kit/sheet_controller.js"
+if php "$INSTALLER" sheet --project="$CUSTOM" --namespace=Kit > /dev/null 2> "$TEMP/sheet-conflict.txt"; then
+    echo "ERROR: partial multi-file install accepted" >&2; exit 1
+fi
+grep -q 'CONFLIT assets/controllers/kit/sheet_controller.js' "$TEMP/sheet-conflict.txt"
+test ! -e "$CUSTOM/templates/components/Kit/Sheet.html.twig"
+test "$(cat "$CUSTOM/assets/controllers/kit/sheet_controller.js")" = "USER SHEET SCRIPT"
+
+# Case-insensitive alias rejected even on Linux (case-sensitive filesystems).
+CASE="$TEMP/case-app"
+mkdir -p "$CASE/templates/components/KIT"
+printf '{"name":"example/case-app","type":"project"}\n' > "$CASE/composer.json"
+printf 'EXISTING\n' > "$CASE/templates/components/KIT/Card.html.twig"
+if php "$INSTALLER" card --namespace=Kit --project="$CASE" > /dev/null 2> "$TEMP/case-error.txt"; then
+    echo "ERROR: case alias was accepted" >&2; exit 1
+fi
+grep -q 'Collision insensible à la casse' "$TEMP/case-error.txt"
+test ! -e "$CASE/public/guilloche"
+test "$(cat "$CASE/templates/components/KIT/Card.html.twig")" = "EXISTING"
+if php "$INSTALLER" card --project="$CUSTOM" > /dev/null 2> "$TEMP/legacy-case.txt"; then
+    echo "ERROR: default ui clobbered existing Ui" >&2; exit 1
+fi
+grep -q 'Collision insensible à la casse' "$TEMP/legacy-case.txt"
+
+# Symlink ancestors, including broken symlinks.
+SYMLINK_APP="$TEMP/link-app"
+mkdir -p "$SYMLINK_APP/templates/components"
+printf '{"name":"example/link-app","type":"project"}\n' > "$SYMLINK_APP/composer.json"
+ln -s "$TEMP/elsewhere-not-created" "$SYMLINK_APP/templates/components/Kit"
+if php "$INSTALLER" button --project="$SYMLINK_APP" --namespace=Kit > /dev/null 2> "$TEMP/link-parent.txt"; then
+    echo "ERROR: symlink directory accepted" >&2; exit 1
+fi
+grep -q 'Lien symbolique dans la destination' "$TEMP/link-parent.txt"
+test ! -e "$SYMLINK_APP/public/guilloche"
+
+# Strict ASCII, no traversal or separator, reserved legacy identifier.
+for invalid in 'kit' 'ui' 'Ui' 'Kit/Sub' '../Kit' 'Kit..' 'Kit--Other' 'Kit\Other' 'Kït' '' 'Kit:Other' ' Kit' 'Kit-Other'; do
+    if php "$INSTALLER" card --namespace="$invalid" --project="$CUSTOM" --dry-run >/dev/null 2>&1; then
+        echo "ERROR: unsafe namespace accepted: $invalid" >&2; exit 1
+    fi
+done
+if php "$INSTALLER" card --namespace=Kit --namespace=Other --project="$CUSTOM" --dry-run >/dev/null 2>&1; then
+    echo "ERROR: duplicated namespace accepted" >&2; exit 1
+fi
+
+php "$INSTALLER" card --namespace=Other --project="$CUSTOM" >/dev/null
+test -f "$CUSTOM/templates/components/Other/Card.html.twig"
+test -f "$CUSTOM/templates/components/Kit/Card.html.twig"
+
+echo "OK: namespace Kit/Stimulus, collisions, idempotence, symlinks and legacy installation."

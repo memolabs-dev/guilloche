@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# Run in CI with a temporary, independent guilloche-workspace checkout.
+# This script only modifies the disposable consumer checkout, never upstream.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+APP="$ROOT/consumer"
+test -f "$APP/composer.json"
+test -f "$APP/templates/components/Ui/Rosette.html.twig"
+test -f "$APP/templates/kit_lab/dashboard.html.twig"
+cd "$ROOT"
+baseline="$(sha256sum "$APP/templates/components/Ui/Rosette.html.twig" | cut -d ' ' -f1)"
+rm -rf "$APP/templates/components/Kit"
+# Install all recipes used by the real consumer from this installer, not by hand.
+for recipe in alert badge button card description-list field form-section input page-header select stat table textarea timeline rosette; do
+    php bin/guilloche-install "$recipe" --namespace=Kit --project="$APP" > /dev/null
+done
+test -s "$APP/templates/components/Kit/Card.html.twig"
+test -s "$APP/templates/components/Kit/Rosette.html.twig"
+test -s "$APP/assets/controllers/kit/rosette_controller.js"
+grep -q 'data-controller="kit--rosette"' "$APP/templates/components/Kit/Rosette.html.twig"
+test "$baseline" = "$(sha256sum "$APP/templates/components/Ui/Rosette.html.twig" | cut -d ' ' -f1)"
+
+# A real Symfony application may manually register Stimulus controllers.
+# Prove custom controllers work in precisely that integration configuration.
+python3 - "$APP" <<'PY'
+from pathlib import Path
+import sys
+app=Path(sys.argv[1])
+bootstrap=app/'assets/stimulus_bootstrap.js'
+s=bootstrap.read_text()
+anchor="import RosetteController from './controllers/rosette_controller.js';"
+assert s.count(anchor)==1
+s=s.replace(anchor,anchor+"\nimport KitRosetteController from './controllers/kit/rosette_controller.js';",1)
+anchor="application.register('ui--rosette', RosetteController);"
+assert s.count(anchor)==1
+s=s.replace(anchor,anchor+"\napplication.register('kit--rosette', KitRosetteController);",1)
+bootstrap.write_text(s)
+
+layout=app/'templates/kit_lab/base.html.twig'
+s=layout.read_text()
+anchor='<link rel="stylesheet" href="{{ asset('
+assert anchor in s
+s=s.replace('<link rel="stylesheet" href="{{ asset(', "{{ importmap('app') }}\n  <link rel=\"stylesheet\" href=\"{{ asset(",1)
+layout.write_text(s)
+
+page=app/'templates/kit_lab/dashboard.html.twig'
+s=page.read_text()
+anchor='<section class="gp gp--dashboard" aria-label="Pilotage des missions">'
+assert s.count(anchor)==1
+s=s.replace(anchor,anchor+'\n  <twig:Kit:Rosette seed="kit-integration-ci-42" :size="40" label="Rosette du kit en namespace personnalisé" />',1)
+page.write_text(s)
+
+e2e=app/'tests/e2e/browser.mjs'
+s=e2e.read_text()
+anchor="""        check(await js('document.querySelectorAll(".gp__stats .ui-stat").length===3'), 'kit lab renders dynamic stats');"""
+assert s.count(anchor)==1
+addition="""        await until('document.querySelector("[data-controller=kit--rosette] .ui-rosette__main")?.getAttribute("d")?.length > 1000');
+        check(await js('document.querySelector("[data-controller=kit--rosette] .ui-rosette__main").getAttribute("d").length > 1000'),
+            'external Symfony consumer registers kit--rosette and renders real client geometry');
+"""
+s=s.replace(anchor,anchor+"\n"+addition,1)
+e2e.write_text(s)
+PY
+
+cd "$APP"
+composer install --no-interaction --no-progress
+php bin/console lint:container
+php bin/console lint:twig templates
+php bin/console sass:build
+APP_SECRET=secret-ci php bin/console asset-map:compile
+php bin/phpunit --filter 'KitLabControllerTest|GuillocheKitIntegrationTest'
+APP_ENV=dev APP_SECRET=secret-ci php -S 127.0.0.1:8087 -t public tests/e2e/router.php > /tmp/guilloche-consumer-integration.log 2>&1 &
+server_pid=$!
+trap 'kill "$server_pid" >/dev/null 2>&1 || true' EXIT
+for attempt in $(seq 1 50); do
+    if curl -sf -o /dev/null http://127.0.0.1:8087/kit-lab/dashboard; then
+        break
+    fi
+    sleep 1
+done
+curl -sf -o /dev/null http://127.0.0.1:8087/kit-lab/dashboard
+CHROME_BIN=/usr/bin/google-chrome node tests/e2e/browser.mjs
+echo 'OK: external Symfony consumer, Twig SSR, Stimulus kit--rosette, browser E2E.'

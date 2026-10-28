@@ -76,6 +76,39 @@ php vendor/memolabs-dev/guilloche/bin/guilloche-install button --project=.
 php vendor/memolabs-dev/guilloche/bin/guilloche-install rosette --project=.
 ```
 
+**Installer dans un namespace distinct pour éviter les collisions :**
+
+~~~sh
+php vendor/memolabs-dev/guilloche/bin/guilloche-install card --project=. --namespace=Kit --dry-run
+php vendor/memolabs-dev/guilloche/bin/guilloche-install card --project=. --namespace=Kit
+php vendor/memolabs-dev/guilloche/bin/guilloche-install rosette --project=. --namespace=Kit
+~~~
+
+Les composants Twig sont installés dans templates/components/Kit (utilisation
+de <twig:Kit:Card>), et les contrôleurs Stimulus dans assets/controllers/kit
+avec des identifiants kit--*. L'installateur adapte les attributs Stimulus
+du Twig ; les classes CSS ui-* restent inchangées. Le namespace personnalisé
+doit être ASCII PascalCase, sans séparateur ni caractère spécial, et ne
+peut pas être Ui (réservé au mode historique sans option). Les collisions
+insensibles à la casse sont refusées avant toute écriture, sur tous les OS.
+
+Le CSS précompilé définit des tokens globaux. Dans une application ayant déjà
+un thème, ne chargez pas cette feuille sur les pages historiques : réservez
+le chargement du CSS Guilloche au layout des nouvelles pages. Assurez-vous que
+StimulusBundle détecte les contrôleurs sous assets/controllers/kit.
+Si l'application enregistre les contrôleurs manuellement, ajouter par exemple
+dans son bootstrap Stimulus :
+
+~~~js
+import KitRosetteController from './controllers/kit/rosette_controller.js';
+application.register('kit--rosette', KitRosetteController);
+~~~
+
+Les fichiers JS ne sont pas enregistrés automatiquement par tous les setups
+Symfony / AssetMapper. Vérifiez l'initialisation Stimulus avant de publier un
+composant interactif. Aucune migration automatique ni écrasement des
+composants Ui n'est effectué.
+
 L'installateur fonctionne **sans toucher aux fichiers existants personnalisés** : il refuse toute modification conflictuelle avant de créer quoi que ce soit. Relancer la même installation est sans effet ; `--dry-run` affiche le plan sans écrire. Il copie les templates dans `templates/components/ui/`, les contrôleurs éventuels dans `assets/controllers/ui/`, ainsi que le CSS précompilé et les polices auto-hébergées dans `public/guilloche/`.
 
 Dans le layout Twig, ajouter les deux feuilles de style (une seule fois) :
