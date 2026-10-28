@@ -32,7 +32,7 @@ Guilloche se positionne donc comme un **design system natif Symfony pour les app
 
 ## Catalogue
 
-Le kit livre 74 recettes (dont la fondation `theme`), couvrant : primitives, formulaires, navigation et surfaces, donnees, patterns d'ecran, composants avances, groupes, listes, media, navigation avancee, calendrier et code a usage unique.
+Le kit livre 74 recettes (dont la fondation `theme`) : primitives, formulaires, navigation et surfaces, donnees, patterns d'ecran, composants avances, groupes, listes, media, navigation avancee, calendrier et code a usage unique.
 
 Le catalogue detaille, les principes et les vagues suivantes sont dans [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
 
@@ -58,7 +58,13 @@ En attendant, déclarer le dépôt VCS dans le `composer.json` de l'application 
 }
 ```
 
-Puis installer une version stable taguée avec Composer, ou `dev-main` si aucun tag compatible n'est encore disponible.
+Puis installer la version stable depuis cette source VCS :
+
+```shell
+composer require 'memolabs-dev/guilloche:^2.0'
+```
+
+La résolution fonctionne après création du tag `v2.0.0`. Avant cela, utiliser une référence explicite `dev-main` (moins stable) dans un environnement de test.
 
 ### 2. Installer les recettes du kit
 
