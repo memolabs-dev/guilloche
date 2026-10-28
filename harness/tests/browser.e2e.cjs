@@ -611,3 +611,80 @@ test('numeric and checkbox playgrounds have SSR fallback when JavaScript is off'
         await context.close();
     } finally { await browser.close(); }
 });
+
+
+test('playground navigation wave: real accordion, slider, route tabs and dropdown', { timeout: 180_000 }, async () => {
+    const browser = await chromium.launch({ headless: true });
+    try {
+        for (const v of [
+            { name: 'desktop-light', width: 1440, height: 900, scheme: 'light' },
+            { name: 'mobile-dark', width: 390, height: 844, scheme: 'dark' },
+        ]) {
+            const page = await browser.newPage({ viewport: { width: v.width, height: v.height },
+                colorScheme: v.scheme, reducedMotion: 'reduce' });
+            const errors = [];
+            page.on('pageerror', err => errors.push(err.message));
+            await page.addInitScript(theme => localStorage.setItem('guilloche-doc-theme', theme), v.scheme);
+
+            await page.goto(BASE + '/components/accordion', { waitUntil: 'networkidle' });
+            await page.locator('#pg-open').check();
+            const accordion = page.locator('.ds__playground-preview details.ui-accordion');
+            await page.waitForFunction(() => document.querySelector('.ds__playground-preview details.ui-accordion')?.open);
+            await accordion.locator('summary').click();
+            assert.equal(await accordion.evaluate(el => el.open), false, 'native summary should close');
+            assert.ok((await page.locator('[data-playground-code]').textContent()).includes(' open'));
+
+            await page.goto(BASE + '/components/slider', { waitUntil: 'networkidle' });
+            await page.locator('#pg-value').fill('70');
+            await page.locator('.ds__playground-preview input.ui-slider__input[value="70"]').waitFor({state:'attached'});
+            await page.selectOption('#pg-step', '10');
+            await page.locator('.ds__playground-preview input.ui-slider__input[step="10"]').waitFor({state:'attached'});
+            const range = page.locator('.ds__playground-preview input.ui-slider__input');
+            await range.focus();
+            await page.keyboard.press('ArrowRight');
+            assert.equal(await range.inputValue(), '80', 'range keyboard respects 10-step');
+            assert.ok((await page.locator('[data-playground-code]').textContent()).includes(':value="70"'));
+
+            await page.goto(BASE + '/components/tabs', { waitUntil: 'networkidle' });
+            await page.selectOption('#pg-current', 'settings');
+            const selected = page.locator('.ds__playground-preview a[aria-current="page"]');
+            await page.waitForFunction(() => document.querySelector('.ds__playground-preview a[aria-current="page"]')?.getAttribute('href') === '?section=settings');
+            assert.equal(await selected.count(), 1);
+            assert.ok((await page.locator('[data-playground-code]').textContent()).includes('current: true'));
+
+            await page.goto(BASE + '/components/dropdown-menu', { waitUntil: 'networkidle' });
+            await page.selectOption('#pg-preset', 'exports');
+            await page.locator('.ds__playground-preview .ui-dropdown__item[href="?format=csv"]').waitFor({state:'attached'});
+            const dropdown = page.locator('.ds__playground-preview details.ui-dropdown');
+            await dropdown.locator('summary').click();
+            assert.equal(await dropdown.evaluate(el => el.open), true);
+            await dropdown.locator('summary').click();
+            assert.equal(await dropdown.evaluate(el => el.open), false);
+            assert.ok((await page.evaluate(() => document.documentElement.scrollWidth)) <= v.width+2);
+            assert.deepEqual(errors, [], 'no JS errors: ' + v.name);
+            await page.evaluate(() => window.scrollTo(0, 0));
+            await page.screenshot({ path: path.join(DIR, 'playground-navigation-'+v.name+'.png'),
+                fullPage: true, animations:'disabled' });
+            await page.close();
+        }
+    } finally { await browser.close(); }
+});
+
+test('accordion and dropdown props apply without JavaScript', { timeout: 75_000 }, async () => {
+    const browser = await chromium.launch({headless:true});
+    try {
+        const ctx = await browser.newContext({javaScriptEnabled:false, viewport:{width:390,height:844}});
+        const page = await ctx.newPage();
+        await page.goto(BASE+'/components/accordion');
+        await page.locator('#pg-open').check();
+        await page.locator('[data-playground-form] [type=submit]').click();
+        assert.equal(await page.locator('.ds__playground-preview details.ui-accordion').evaluate(el=>el.open), true);
+        await page.goto(BASE+'/components/dropdown-menu');
+        await page.selectOption('#pg-preset','exports');
+        await page.locator('[data-playground-form] [type=submit]').click();
+        assert.equal(await page.locator('.ds__playground-preview .ui-dropdown__item[href="?format=csv"]').count(),1);
+        await page.locator('.ds__playground-preview summary.ui-dropdown__trigger').click();
+        assert.equal(await page.locator('.ds__playground-preview details.ui-dropdown').evaluate(el=>el.open),true);
+        await ctx.close();
+    } finally { await browser.close(); }
+});

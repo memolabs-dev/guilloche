@@ -1496,3 +1496,16 @@ body {
     width: min(100%, 420px);
     min-width: 0;
 }
+
+// Playground de navigation : fournir un vrai contexte de largeur pour les éléments natifs.
+.ds__playground-preview > .ui-accordion,
+.ds__playground-preview > .ui-slider,
+.ds__playground-preview > .ui-tabs { width: min(100%, 355px); }
+.ds__playground-preview > .ui-dropdown { max-width: 100%; }
+.ds__playground-preview > .ui-accordion .ui-accordion__content { overflow-wrap: anywhere; }
+.ds__playground-preview:has(> .ui-dropdown) { min-height: 275px; justify-content: flex-start; padding-top: 48px; }
+.ds__playground-preview:has(> .ui-dropdown) .ui-dropdown__menu { position: relative; top: 7px; }
+.ds__playground-preview > .ui-tabs { min-width: 0; }
+@media (max-width: 430px) {
+    .ds__playground-preview > .ui-tabs .ui-tabs__tab { padding-inline: 9px; font-size: 12px; }
+}

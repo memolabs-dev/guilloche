@@ -69,6 +69,23 @@ final class Playground
             'label' => ['label' => 'Libellé accessible', 'type' => 'text', 'default' => 'Avancement du dossier'],
             'showValue' => ['label' => 'Afficher le pourcentage', 'type' => 'checkbox', 'default' => true],
         ],
+        'accordion' => [
+            'summary' => ['label' => 'Titre de section', 'type' => 'text', 'default' => 'Conditions de la mission'],
+            'open' => ['label' => 'Ouvert au chargement', 'type' => 'checkbox', 'default' => false],
+        ],
+        'slider' => [
+            'value' => ['label' => 'Valeur', 'type' => 'number', 'default' => 50, 'min' => 0, 'max' => 100],
+            'step' => ['label' => 'Pas', 'type' => 'select', 'default' => '1', 'options' => ['1', '5', '10']],
+            'label' => ['label' => 'Libellé', 'type' => 'text', 'default' => 'Niveau de priorité'],
+        ],
+        'tabs' => [
+            'current' => ['label' => 'Onglet actif', 'type' => 'select', 'default' => 'overview', 'options' => ['overview', 'activity', 'settings']],
+            'label' => ['label' => 'Nom accessible', 'type' => 'text', 'default' => 'Navigation du dossier'],
+        ],
+        'dropdown-menu' => [
+            'label' => ['label' => 'Déclencheur', 'type' => 'text', 'default' => 'Actions du dossier'],
+            'preset' => ['label' => 'Jeu de liens', 'type' => 'select', 'default' => 'actions', 'options' => ['actions', 'exports']],
+        ],
         'table' => [
             'caption' => ['label' => 'Titre du tableau', 'type' => 'text', 'default' => 'Missions récentes'],
             'serial' => ['label' => 'Références mono', 'type' => 'checkbox', 'default' => true],
@@ -138,7 +155,45 @@ final class Playground
             'switch' => '<twig:ui:Switch id="mission-alerts" label="' . $a('label') . '"' . ($v['checked'] ? ' checked' : '') . ($v['disabled'] ? ' disabled' : '') . ' />',
             'alert' => '<twig:ui:Alert type="' . $a('type') . '" title="' . $a('title') . '" message="' . $a('message') . '" />',
             'progress' => '<twig:ui:Progress :value="' . $v['value'] . '" :max="100" label="' . $a('label') . '"' . ($v['showValue'] ? ' showValue' : '') . ' />',
+            'accordion' => '<twig:ui:Accordion summary="' . $a('summary') . '"' . ($v['open'] ? ' open' : '') . '>' . "
+  <p>Texte de la section.</p>
+" . '</twig:ui:Accordion>',
+            'slider' => '<twig:ui:Slider id="priority" label="' . $a('label') . '" :min="0" :max="100" :step="' . $a('step') . '" :value="' . $v['value'] . '" />',
+            'tabs' => self::tabsSnippet($v, $a),
+            'dropdown-menu' => self::dropdownSnippet($v, $a),
             default => '',
         };
     }
+
+    /** @param array<string, string|bool|int> $values */
+    private static function tabsSnippet(array $values, callable $escape): string
+    {
+        $entries = [];
+        foreach ([
+            'overview' => 'Aperçu',
+            'activity' => 'Activité',
+            'settings' => 'Paramètres',
+        ] as $key => $title) {
+            $entries[] = "{ label: '" . $title . "', href: '?section=" . $key . "'" .
+                ($values['current'] === $key ? ', current: true' : '') . ' }';
+        }
+
+        return '<twig:ui:Tabs label="' . $escape('label') . '" :items="[' .
+            "\n  " . implode(",\n  ", $entries) . "\n" . ']" />';
+    }
+
+    /** @param array<string, string|bool|int> $values */
+    private static function dropdownSnippet(array $values, callable $escape): string
+    {
+        // Les cibles sont des exemples fixes, jamais une URL fournie par le visiteur.
+        $items = $values['preset'] === 'exports'
+            ? ["{ label: 'Télécharger le CSV', href: '?format=csv' }",
+               "{ label: 'Télécharger le PDF', href: '?format=pdf' }"]
+            : ["{ label: 'Voir le dossier', href: '?view=detail' }",
+               "{ label: 'Voir l’activité', href: '?view=activity' }"];
+
+        return '<twig:ui:DropdownMenu label="' . $escape('label') . '" :items="[' .
+            "\n  " . implode(",\n  ", $items) . "\n" . ']" />';
+    }
+
 }

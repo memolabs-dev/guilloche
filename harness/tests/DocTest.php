@@ -309,6 +309,48 @@ final class DocTest extends WebTestCase
         self::assertStringNotContainsString('<script>', $crawler->filter('[data-playground-code]')->text());
     }
 
+    public function testNavigationPlaygroundsUseActualNativeControlsAndMatchingTwig(): void
+    {
+        $client = self::createClient();
+        $cases = [
+            ['/components/accordion?p_summary=Modalit%C3%A9s&p_open=1', '.ds__playground-preview details.ui-accordion[open] summary', 'summary="Modalités"'],
+            ['/components/slider?p_value=70&p_step=10', '.ds__playground-preview input.ui-slider__input[value="70"][step="10"]', ':step="10"'],
+            ['/components/tabs?p_current=activity&p_label=Dossier', '.ds__playground-preview .ui-tabs__tab[aria-current="page"][href="?section=activity"]', 'label="Dossier"'],
+            ['/components/dropdown-menu?p_preset=exports&p_label=Exporter', '.ds__playground-preview details.ui-dropdown .ui-dropdown__item[href="?format=csv"]', 'label="Exporter"'],
+        ];
+
+        foreach ($cases as [$path, $selector, $snippet]) {
+            $crawler = $client->request('GET', $path);
+            $this->assertResponseIsSuccessful();
+            self::assertCount(1, $crawler->filter($selector), $path);
+            self::assertStringContainsString($snippet, $crawler->filter('[data-playground-code]')->text(), $path);
+        }
+    }
+
+    public function testNavigationPlaygroundsBoundParametersAndEscapeUserText(): void
+    {
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/components/slider?p_value=9999&p_step=0');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.ds__playground-preview input[type="range"][value="50"][step="1"]');
+        self::assertStringContainsString(':value="50"', $crawler->filter('[data-playground-code]')->text());
+
+        $crawler = $client->request('GET', '/components/accordion?p_summary=%3Cscript%3Ealert(1)%3C%2Fscript%3E&p_open=1');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(0, $crawler->filter('.ds__playground-preview script'));
+        self::assertStringNotContainsString('<script>', $crawler->filter('[data-playground-code]')->text());
+
+        $crawler = $client->request('GET', '/components/dropdown-menu?p_preset=http%3A%2F%2Fevil.invalid%2F&p_label=Menu');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(0, $crawler->filter('.ds__playground-preview .ui-dropdown__item[href^="http"]'));
+        self::assertCount(1, $crawler->filter('.ds__playground-preview .ui-dropdown__item[href="?view=detail"]'));
+
+        $crawler = $client->request('GET', '/components/tabs?p_current=doesnotexist');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(1, $crawler->filter('.ds__playground-preview a[aria-current="page"]'));
+        self::assertCount(1, $crawler->filter('.ds__playground-preview a[href="?section=overview"][aria-current="page"]'));
+    }
+
     public function testUnknownRecipeIsNotFound(): void
     {
         self::createClient()->request('GET', '/components/inconnu');
