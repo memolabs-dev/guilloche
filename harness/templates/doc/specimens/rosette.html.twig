@@ -1,79 +1,90 @@
 {% import 'doc/_macros.html.twig' as m %}
 <div class="ds__example">
-  <div class="ds__example-head"><h3 class="ds__example-title">Tailles</h3></div>
-  <div class="ds__example-render ds__example-render--compact">
-    <twig:ui:Rosette seed="AR-2026-042" :size="16" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="20" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="24" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="32" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="64" />
+  <div class="ds__example-head"><h3 class="ds__example-title">Une signature reconnaissable</h3></div>
+  <div class="ds__example-render ds__rosette-intro">
+    <div class="ds__rosette-hero">
+      <div class="ds__rosette-hero-mark"><twig:ui:Rosette seed="AR-2026-042" :size="64" label="Empreinte de la mission AR-2026-042" /></div>
+      <div class="ds__rosette-hero-text">
+        <span class="ds__rosette-kicker">EMPREINTE DÉTERMINISTE</span>
+        <h4>Chaque dossier a sa signature.</h4>
+        <p>Une même référence produit toujours le même tracé. Un motif discret pour identifier, suivre et retrouver un dossier.</p>
+        <code>AR-2026-042</code>
+      </div>
+    </div>
+    <div class="ds__rosette-scale" aria-label="Aperçus de taille de la même rosette">
+      <figure><twig:ui:Rosette seed="AR-2026-042" :size="16" /><figcaption>16 px</figcaption></figure>
+      <figure><twig:ui:Rosette seed="AR-2026-042" :size="20" /><figcaption>20 px</figcaption></figure>
+      <figure><twig:ui:Rosette seed="AR-2026-042" :size="24" /><figcaption>24 px</figcaption></figure>
+      <figure><twig:ui:Rosette seed="AR-2026-042" :size="32" /><figcaption>32 px</figcaption></figure>
+      <figure><twig:ui:Rosette seed="AR-2026-042" :size="40" /><figcaption>40 px</figcaption></figure>
+    </div>
   </div>
-  {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :size="32" />') }}
+  {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :size="64" label="Empreinte de la mission" />') }}
 </div>
 
 <div class="ds__example">
-  <div class="ds__example-head"><h3 class="ds__example-title">Progression et chargement</h3></div>
-  <div class="ds__example-render ds__example-render--compact">
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="25" label="Avancement 25 %" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="60" label="Avancement 60 %" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="100" label="Terminé" />
-    <twig:ui:Rosette seed="AR-2026-042" :size="32" loading label="Chargement" />
+  <div class="ds__example-head"><h3 class="ds__example-title">Un tracé qui accompagne l’avancement</h3></div>
+  <div class="ds__example-render ds__rosette-progress-grid">
+    <figure class="ds__rosette-state"><twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="25" label="Avancement 25 %" /><figcaption><strong>25 %</strong><span>En préparation</span></figcaption></figure>
+    <figure class="ds__rosette-state"><twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="60" label="Avancement 60 %" /><figcaption><strong>60 %</strong><span>En cours</span></figcaption></figure>
+    <figure class="ds__rosette-state"><twig:ui:Rosette seed="AR-2026-042" :size="40" :progress="100" label="Terminé" /><figcaption><strong>100 %</strong><span>Terminé</span></figcaption></figure>
+    <figure class="ds__rosette-state"><twig:ui:Rosette seed="AR-2026-042" :size="32" loading label="Chargement" /><figcaption><strong>—</strong><span>Chargement</span></figcaption></figure>
   </div>
   {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :progress="60" label="Avancement 60 %" />') }}
 </div>
 
 <div class="ds__example">
   <div class="ds__example-head"><h3 class="ds__example-title">Planche : 48 références</h3></div>
+  <p class="ds__rosette-grid-note">48 graines, 48 tracés distincts : une empreinte reproductible, pas une icône choisie au hasard.</p>
   <div class="ds__example-render ds__planche">
-      <twig:ui:Rosette seed="AR-2026-001" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-002" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-003" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-004" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-005" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-006" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-007" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-008" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-009" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-010" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-011" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-012" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-013" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-014" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-015" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-016" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-017" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-018" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-019" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-020" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-021" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-022" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-023" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-024" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-025" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-026" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-027" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-028" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-029" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-030" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-031" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-032" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-033" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-034" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-035" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-036" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-037" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-038" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-039" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-040" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-041" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-042" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-043" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-044" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-045" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-046" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-047" :size="32" />
-      <twig:ui:Rosette seed="AR-2026-048" :size="32" />
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-001" :size="32" /><figcaption>001</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-002" :size="32" /><figcaption>002</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-003" :size="32" /><figcaption>003</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-004" :size="32" /><figcaption>004</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-005" :size="32" /><figcaption>005</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-006" :size="32" /><figcaption>006</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-007" :size="32" /><figcaption>007</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-008" :size="32" /><figcaption>008</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-009" :size="32" /><figcaption>009</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-010" :size="32" /><figcaption>010</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-011" :size="32" /><figcaption>011</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-012" :size="32" /><figcaption>012</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-013" :size="32" /><figcaption>013</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-014" :size="32" /><figcaption>014</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-015" :size="32" /><figcaption>015</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-016" :size="32" /><figcaption>016</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-017" :size="32" /><figcaption>017</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-018" :size="32" /><figcaption>018</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-019" :size="32" /><figcaption>019</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-020" :size="32" /><figcaption>020</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-021" :size="32" /><figcaption>021</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-022" :size="32" /><figcaption>022</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-023" :size="32" /><figcaption>023</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-024" :size="32" /><figcaption>024</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-025" :size="32" /><figcaption>025</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-026" :size="32" /><figcaption>026</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-027" :size="32" /><figcaption>027</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-028" :size="32" /><figcaption>028</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-029" :size="32" /><figcaption>029</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-030" :size="32" /><figcaption>030</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-031" :size="32" /><figcaption>031</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-032" :size="32" /><figcaption>032</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-033" :size="32" /><figcaption>033</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-034" :size="32" /><figcaption>034</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-035" :size="32" /><figcaption>035</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-036" :size="32" /><figcaption>036</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-037" :size="32" /><figcaption>037</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-038" :size="32" /><figcaption>038</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-039" :size="32" /><figcaption>039</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-040" :size="32" /><figcaption>040</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-041" :size="32" /><figcaption>041</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-042" :size="32" /><figcaption>042</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-043" :size="32" /><figcaption>043</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-044" :size="32" /><figcaption>044</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-045" :size="32" /><figcaption>045</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-046" :size="32" /><figcaption>046</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-047" :size="32" /><figcaption>047</figcaption></figure>
+      <figure class="ds__rosette-reference"><twig:ui:Rosette seed="AR-2026-048" :size="32" /><figcaption>048</figcaption></figure>
   </div>
   {{ m.code('<twig:ui:Rosette seed="AR-2026-042" :size="32" />') }}
 </div>
