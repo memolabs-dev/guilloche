@@ -422,7 +422,7 @@ test('P0 interactive surfaces render and work in Chromium across themes and view
                         assert.equal(await page.locator('dialog.ui-dialog').first().evaluate((d) => d.open), false);
                     }
                     if (name === 'tabs') {
-                        const current = page.locator('.ui-tabs__tab[aria-current="page"]');
+                        const current = page.locator('.ds__example-render .ui-tabs__tab[aria-current="page"]');
                         assert.equal(await current.count(), 1, 'navigation tabs must have one current link');
                         assert.equal(await current.evaluate((e) => getComputedStyle(e).minHeight), '40px');
                     }
