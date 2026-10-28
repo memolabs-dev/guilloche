@@ -503,6 +503,7 @@ test('real server-rendered playground updates six Twig recipes with no overflow'
             assert.equal(await page.locator('[data-playground-preview]').getAttribute('class'),
                 'ds__playground-preview is-compact');
             assert.deepEqual(errors, [], 'playground JavaScript errors: ' + vp.name);
+            await page.evaluate(() => window.scrollTo(0, 0));
             await page.screenshot({
                 path: path.join(DIR, 'playground-' + vp.name + '-' + vp.theme + '.png'),
                 fullPage: true, animations: 'disabled',
