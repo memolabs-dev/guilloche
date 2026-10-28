@@ -7,6 +7,24 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /** La documentation rend le catalogue et une fiche par composant. */
 final class DocTest extends WebTestCase
 {
+    public function testFormControlsSubmitTheirIdsByDefault(): void
+    {
+        $client = self::createClient();
+
+        $client->request('GET', '/components/input');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('input#x-mail[name="x-mail"]');
+        $this->assertSelectorExists('input#x-text[name="x-text"]');
+
+        $client->request('GET', '/components/select');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('select#x-select[name="x-select"]');
+
+        $client->request('GET', '/components/textarea');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('textarea#s-textarea[name="s-textarea"]');
+    }
+
     public function testCatalogueListsRecipes(): void
     {
         self::createClient()->request('GET', '/');
