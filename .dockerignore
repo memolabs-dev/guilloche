@@ -1,0 +1,11 @@
+.git
+.github
+**/.env
+**/.env.*
+**/vendor
+**/var
+**/node_modules
+**/.phpunit.cache
+harness/public/assets
+harness/public/bundles
+.DS_Store
