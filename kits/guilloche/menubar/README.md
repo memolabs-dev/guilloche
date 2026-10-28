@@ -11,4 +11,4 @@ Barre de menus horizontale, avec sous-menus natifs.
 
 ## Accessibilite
 
-`rôle="menubar"`, `rôle="menu"` et `rôle="menuitem"`. Les sous-menus reposent sur `details`, donc le clavier et Echap fonctionnent sans JavaScript.
+Ce composant est une **navigation structurée** (liens et `details/summary` natifs), pas un widget ARIA de type `menubar`. Le clavier suit l'ordre Tab/Maj+Tab et Entrée ; les flèches de `menubar` ne sont pas simulées. Utiliser un vrai composant menubar uniquement en implémentant intégralement le modèle clavier WAI-ARIA.
