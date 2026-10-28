@@ -230,7 +230,8 @@ final class DocTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         self::assertCount(1, $crawler->filter('[data-playground-result]'));
         self::assertCount(1, $crawler->filter('.ds__playground-preview .ui-button--outline.ui-button--sm'));
-        self::assertCount(0, $crawler->filter('html, body, form[data-playground-form]'));
+        self::assertCount(0, $crawler->filter('form[data-playground-form]'));
+        self::assertStringNotContainsString('<html', (string) $client->getResponse()->getContent());
         self::assertStringContainsString('size="sm"', $crawler->filter('[data-playground-code]')->text());
     }
 
