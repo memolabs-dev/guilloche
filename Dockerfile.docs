@@ -1,0 +1,27 @@
+# Catalogue Symfony autonome ; la démo guilloche-workspace reste un service distinct.
+FROM dunglas/frankenphp:1-php8.4-bookworm AS base
+RUN install-php-extensions mbstring opcache
+WORKDIR /app/harness
+
+FROM base AS builder
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates git unzip nodejs npm \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+RUN npm install --global sass@1.106.1
+COPY kits/ /app/kits/
+COPY harness/ /app/harness/
+# Aucun secret réel n'est requis pendant la compilation des assets.
+ENV APP_ENV=prod APP_DEBUG=0 APP_SECRET=build-only-guilloche-docs
+RUN composer install --no-dev --no-scripts --no-interaction --no-progress --prefer-dist --optimize-autoloader \
+    && php bin/console importmap:install \
+    && php bin/console sass:build \
+    && php bin/console asset-map:compile
+
+FROM base AS runtime
+ENV APP_ENV=prod APP_DEBUG=0 SERVER_NAME=:80
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY --from=builder /app/kits/ /app/kits/
+COPY --from=builder /app/harness/ /app/harness/
+RUN mkdir -p var/cache var/log
+EXPOSE 80
