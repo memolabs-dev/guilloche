@@ -18,7 +18,7 @@ final class DocTest extends WebTestCase
             $name = $recipe['name'];
             $crawler = $client->request('GET', '/components/' . $name);
             $this->assertResponseIsSuccessful();
-            self::assertGreaterThan(0, $crawler->filter('.ds__example-render')->count(),
+            self::assertGreaterThan(0, $crawler->filter($name === 'theme' ? '.ds__swatches' : '.ds__example-render')->count(),
                 'Recette sans aperçu visible : ' . $name);
             $specimen = dirname(__DIR__) . '/templates/doc/specimens/' . $name . '.html.twig';
             if (!is_file($specimen)) {
