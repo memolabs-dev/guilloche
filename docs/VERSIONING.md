@@ -1,6 +1,6 @@
 # Versionnement
 
-Le kit suit semver. La version courante est declaree dans `kits/guilloche/manifest.json` et dans `composer.json`.
+Le kit suit semver. La version courante est déclarée dans `kits/guilloche/manifest.json` et par le tag Git annoté `vX.Y.Z`. Composer déduit la version des tags ; **ne pas définir de champ `version` dans composer.json**.
 
 | Changement | Version |
 |---|---|
