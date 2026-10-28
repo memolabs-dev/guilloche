@@ -11,6 +11,10 @@ printf '{"name":"example/symfony-app","type":"project"}\n' > "$APP/composer.json
 INSTALLER="$ROOT/bin/guilloche-install"
 
 php "$INSTALLER" --list | grep -qx 'rosette'
+# Toutes les recettes du dépôt doivent avoir un manifeste copiable.
+while IFS= read -r entry; do
+    php "$INSTALLER" "$entry" --project="$APP" --dry-run > /dev/null
+done < <(php "$INSTALLER" --list)
 php "$INSTALLER" button --project="$APP" --dry-run > "$TEMP/dry-run.txt"
 grep -q 'CREER templates/components/ui/Button.html.twig' "$TEMP/dry-run.txt"
 test ! -e "$APP/templates/components/ui/Button.html.twig"
