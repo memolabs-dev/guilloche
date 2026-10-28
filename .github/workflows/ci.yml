@@ -52,6 +52,9 @@ jobs:
       - name: Dependances du harnais
         run: composer install --no-interaction --no-progress --no-scripts
         working-directory: harness
+      - name: Dépendances JS importmap du harnais
+        run: php bin/console importmap:install
+        working-directory: harness
       - name: CSS compile du harnais
         run: php bin/console sass:build
         working-directory: harness
@@ -88,6 +91,7 @@ jobs:
       - name: Installer et compiler le harnais Symfony
         run: |
           composer install --no-interaction --no-progress --no-scripts --working-dir=harness
+          php harness/bin/console importmap:install
           php harness/bin/console sass:build
           php harness/bin/console asset-map:compile
       - name: Démarrer Symfony sur un port local
