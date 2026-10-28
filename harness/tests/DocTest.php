@@ -86,6 +86,21 @@ final class DocTest extends WebTestCase
         $this->assertSelectorExists('.ui-table tbody tr');
     }
 
+    public function testRosetteShowcasePreservesAllShapesAndLabelsEachReference(): void
+    {
+        $crawler = self::createClient()->request('GET', '/components/rosette');
+        $this->assertResponseIsSuccessful();
+        self::assertCount(48, $crawler->filter('.ds__planche figure.ds__rosette-reference'));
+        self::assertCount(48, $crawler->filter('.ds__planche .ui-rosette'));
+        self::assertCount(5, $crawler->filter('.ds__rosette-scale figure'));
+        self::assertCount(4, $crawler->filter('.ds__rosette-state'));
+        self::assertCount(58, $crawler->filter('.ui-rosette__main'));
+        $this->assertSelectorTextContains('.ds__rosette-hero-text h4', 'Chaque dossier');
+        $this->assertSelectorTextContains('.ds__rosette-reference:first-child figcaption', '001');
+        $this->assertSelectorTextContains('.ds__rosette-reference:last-child figcaption', '048');
+        $this->assertSelectorExists('.ds__rosette-hero-mark .ui-rosette[role="img"]');
+    }
+
     public function testRosetteHasAccessibleNameOnWrapperNotInnerSvg(): void
     {
         self::createClient()->request('GET', '/components/rosette');
