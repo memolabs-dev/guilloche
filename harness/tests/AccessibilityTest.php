@@ -59,4 +59,43 @@ final class AccessibilityTest extends WebTestCase
             $this->assertTrue($named, 'dialog sans nom accessible : ' . $node->getNodePath());
         }
     }
+
+    public function testNativeDialogsHaveActualAriaLabelledbyTargets(): void
+    {
+        $client = self::createClient();
+        foreach (['dialog', 'sheet', 'confirm-dialog'] as $recipe) {
+            $crawler = $client->request('GET', '/components/' . $recipe);
+            $this->assertResponseIsSuccessful();
+
+            $dialogs = $crawler->filter('dialog[aria-labelledby]');
+            self::assertGreaterThan(0, $dialogs->count(), 'Dialogue sans nom : ' . $recipe);
+            foreach ($dialogs as $dialog) {
+                $titleId = $dialog->getAttribute('aria-labelledby');
+                self::assertNotSame('', $titleId);
+                self::assertSame(1, (new \DOMXPath($dialog->ownerDocument))
+                    ->query('//*[@id="' . $titleId . '"]')->length,
+                    'Le titre doit réellement exister : ' . $titleId);
+                $descriptionId = $dialog->getAttribute('aria-describedby');
+                if ($descriptionId !== '') {
+                    self::assertSame(1, (new \DOMXPath($dialog->ownerDocument))
+                        ->query('//*[@id="' . $descriptionId . '"]')->length);
+                }
+            }
+        }
+    }
+
+    public function testNavigationPatternsUseNativeLinksNotBrokenAriaWidgets(): void
+    {
+        $client = self::createClient();
+        foreach (['tabs', 'menubar', 'dropdown-menu'] as $recipe) {
+            $client->request('GET', '/components/' . $recipe);
+            $this->assertResponseIsSuccessful();
+            $this->assertSelectorNotExists('[role="tablist"], [role="tab"], [role="menubar"], [role="menuitem"], [role="menu"]');
+        }
+        $client->request('GET', '/components/tabs');
+        $this->assertSelectorExists('.ui-tabs__tab[aria-current="page"]');
+        $client->request('GET', '/components/menubar');
+        $this->assertSelectorExists('nav.ui-menubar[aria-label] details summary');
+    }
+
 }
