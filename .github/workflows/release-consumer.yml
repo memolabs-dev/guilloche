@@ -44,7 +44,7 @@ jobs:
           composer require --no-interaction --no-progress --no-scripts 'memolabs-dev/guilloche:^2.0'
           composer show memolabs-dev/guilloche --format=json | php -r '
             $package = json_decode(stream_get_contents(STDIN), true, flags: JSON_THROW_ON_ERROR);
-            if (!in_array("2.0.0", $package["versions"] ?? [], true)) {
+            if (!array_intersect(["v2.0.0", "2.0.0"], $package["versions"] ?? [])) {
                 fwrite(STDERR, "Version stable 2.0.0 non résolue depuis VCS\n");
                 exit(1);
             }
