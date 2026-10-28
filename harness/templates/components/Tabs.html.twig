@@ -3,11 +3,10 @@
    le retour arriere du navigateur fonctionne. aria-current marque l'onglet actif. #}
 {% props items = [], label = 'Tabs' %}
 <nav {{ attributes.defaults({ class: 'ui-tabs', 'aria-label': label }) }}>
-  <ul class="ui-tabs__list" role="tablist">
+  <ul class="ui-tabs__list">
     {% for item in items %}
-      <li role="presentation">
+      <li>
         <a class="ui-tabs__tab{{ item.current|default(false) ? ' is-current' : '' }}"
-           role="tab"
            href="{{ item.href ?? '#' }}"
            {{ item.current|default(false) ? 'aria-current="page"' }}>
           {{ item.label }}
