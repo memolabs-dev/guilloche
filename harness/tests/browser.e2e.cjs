@@ -752,6 +752,8 @@ test('composition form validates without sending data and Twig copy works', {tim
         assert.match(await page.locator('[data-gp-status]').textContent(),/Aucun enregistrement/);
         assert.deepEqual(nonGet,[],'the demo must never submit data');
         await page.locator('button[data-gp-copy="gp-pattern-twig"]').click();
+        await page.waitForFunction(() =>
+            document.querySelector('[data-gp-copy-status]')?.textContent?.trim().length > 0);
         assert.match(await page.locator('[data-gp-copy-status]').first().textContent(),/Copié/);
         const copied=await page.evaluate(()=>navigator.clipboard.readText());
         assert.match(copied,/twig:ui:FormSection/);
