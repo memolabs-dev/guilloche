@@ -367,6 +367,9 @@ test('P0 core recipes preserve control geometry and hover/invalid states in both
                         const h = await page.locator('.ds__example-render .ui-table tbody tr').first()
                             .evaluate((e) => parseFloat(getComputedStyle(e).height));
                         assert.ok(h >= 46, 'table rows must retain readable spacing');
+                        const serialCellWrap = await page.locator('.ui-table--serial-first tbody td:first-child').first()
+                            .evaluate((el) => getComputedStyle(el).whiteSpace);
+                        assert.equal(serialCellWrap, 'nowrap', 'serial numbers should not split on narrow screens');
                     }
                 }
                 await page.close();
