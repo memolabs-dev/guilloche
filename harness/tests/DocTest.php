@@ -69,6 +69,7 @@ final class DocTest extends WebTestCase
         $this->assertSelectorCount(3, '.studio__tabs [role="tab"]');
         $this->assertSelectorExists('.studio .ui-card');
         $this->assertSelectorExists('.studio .ui-table');
+        $this->assertSelectorCount(3, '.ds__feature-preview .ds__rosette-strip .ui-rosette');
         $this->assertSelectorExists('article.ds__card');
         $this->assertSelectorExists('a[href="/components/button"]');
         $this->assertSelectorExists('a[href="/components/table"]');
