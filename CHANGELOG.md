@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.0] - 2026-10-28
+
+### Distribué
+- 74 recettes Guilloche, fondation incluse ; composants Twig, contrôleurs Stimulus, styles SCSS et CSS compilé, polices auto-hébergées.
+- Installer autonome `bin/guilloche-install` pour les kits externes : simulation, installation idempotente, détection préalable des conflits, refus des liens symboliques et copies de fichiers modifiés.
+- Intégration Symfony serveur : `RosetteGeometry` et `AutoGeometrySubscriber` (SVG deterministe de Rosette et Seal dès le HTML).
+- Composants métiers de signature (`Rosette`, `Seal`), numéros de série, filigranes sombres et tokens cuivre réservés aux décisions humaines.
+- Harnais Symfony avec synchronisation vérifiée, tests fonctionnels, contraste, parité PHP/JavaScript et navigateur Chromium (28 captures, clair/sombre, mobile/desktop, sans JS).
+
+### À noter
+- Une dépendance Composer externe ne rend pas automatiquement le nom de kit disponible pour `ux:install --kit`. Utiliser `php vendor/memolabs-dev/guilloche/bin/guilloche-install` et suivre le README.
+- Packagist n'est pas déclaré automatiquement lors d'une release GitHub. Il faut soumettre le dépôt depuis le compte propriétaire.
+
+
 ## [1.10.0] - 2026-10-27
 
 ### Ajoute
