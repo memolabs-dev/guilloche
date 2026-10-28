@@ -15,3 +15,7 @@ Panneau lateral modal, ancre a droite ou a gauche.
 ## Contrôleur
 
 `assets/controllers/sheet_controller.js`, identifiant `ui--sheet`. Meme comportement que `Ui:Dialog`, avec un panneau ancre.
+
+## Accessibilité
+
+Le panneau est un `<dialog>` natif nommé par son titre via `aria-labelledby`; la description facultative est reliée par `aria-describedby`. Échap et le focus modal sont gérés par le navigateur. Fournir un `id` unique et un titre explicite.
