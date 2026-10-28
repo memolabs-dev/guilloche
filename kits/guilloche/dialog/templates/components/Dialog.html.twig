@@ -6,12 +6,12 @@
   {% if trigger %}
     <button class="ui-dialog__trigger" type="button" data-action="ui--dialog#open">{{ trigger }}</button>
   {% endif %}
-  <dialog class="ui-dialog" id="{{ id }}" data-ui--dialog-target="dialog" data-action="click->ui--dialog#backdrop">
+  <dialog class="ui-dialog" id="{{ id }}" aria-labelledby="{{ id }}-title"{% if description %} aria-describedby="{{ id }}-description"{% endif %} data-ui--dialog-target="dialog" data-action="click->ui--dialog#backdrop">
     <div class="ui-dialog__panel">
       <header class="ui-dialog__header">
         <div>
-          <h2 class="ui-dialog__title">{{ title }}</h2>
-          {% if description %}<p class="ui-dialog__description">{{ description }}</p>{% endif %}
+          <h2 class="ui-dialog__title" id="{{ id }}-title">{{ title }}</h2>
+          {% if description %}<p class="ui-dialog__description" id="{{ id }}-description">{{ description }}</p>{% endif %}
         </div>
         <button class="ui-dialog__close" type="button" data-action="ui--dialog#close" aria-label="{{ closeLabel }}">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="m6.5 6.5 11 11M6.5 17.5l11-11"/></svg>
