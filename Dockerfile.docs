@@ -12,8 +12,11 @@ RUN npm install --global sass@1.106.1
 COPY kits/ /app/kits/
 COPY harness/ /app/harness/
 # Aucun secret réel n'est requis pendant la compilation des assets.
-ENV APP_ENV=prod APP_DEBUG=0 APP_SECRET=build-only-guilloche-docs
-RUN composer install --no-dev --no-scripts --no-interaction --no-progress --prefer-dist --optimize-autoloader \
+ENV APP_ENV=prod APP_DEBUG=0
+# SymfonyRuntime requiert le fichier .env même si APP_ENV est défini.
+# Seules des variables publiques y figurent, jamais la clé applicative.
+RUN printf 'APP_ENV=prod\\nAPP_DEBUG=0\\n' > .env
+RUN export APP_SECRET=build-only-guilloche-docs && composer install --no-dev --no-scripts --no-interaction --no-progress --prefer-dist --optimize-autoloader \
     && php bin/console importmap:install \
     && php bin/console sass:build \
     && php bin/console asset-map:compile
